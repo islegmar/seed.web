@@ -1,0 +1,221 @@
+/* Grid */
+.show-grid {
+	margin-bottom: 15px;
+}
+.show-grid [class^="col-"],
+.show-grid [class^="w-"] {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #eee;
+	border: 1px solid #ddd;
+	background-color: rgba(180,180,180,.2);
+	border: 1px solid rgba(86,61,124,.2);
+}
+.show-grid.show-space [class^="col-"]:after,
+.show-grid.show-space [class^="w-"]:after {
+	display: block;
+	content: '';
+	margin-top: -20px;
+	padding-top: 20px;
+	background-color: rgba(86,61,124,.15);
+}
+
+/* General example box */
+.example {
+	position: relative;
+	padding: 55px 15px 15px;
+	margin: 0 0 15px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+.example:after {
+	content: "Example";
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 10px 15px;
+	font-size: 12px;
+	font-weight: 700;
+	color: #ccc;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	width: 100%;
+	background: #f9f9f9;
+	border-bottom: 1px solid #ccc;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+.example.is-contrast {
+	background-color: #000;
+}
+.example.is-contrast:after {
+	content: "Example is-contrast";
+	background: #333;
+	color: #999;
+	border-bottom: 1px solid #fff;
+}
+.example.is-text-medium:after {
+	content: "Example is-text-medium";
+}
+.example.is-text-large:after {
+	content: "Example is-text-large";
+}
+
+/* Code box */
+.snippet-container {
+	position: relative;
+}
+.snippet-wrap:after {
+	content: "Code";
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 10px 15px;
+	font-size: 12px;
+	font-weight: 700;
+	color: #ccc;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	width: 100%;
+	background: #f9f9f9;
+	border: 1px solid #ccc;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+.sh_zellner.snippet-wrap {
+	padding-top: 38px;
+}
+.snippet-wrap pre.sh_sourceCode {
+	border-top-left-radius: 0 !important;
+	border-top-right-radius: 0 !important;
+}
+.sh_zellner .sh_sourceCode {
+	background-color: #f9f9f9 !important;
+}
+.sh_zellner .sh_sourceCode .sh_keyword {
+	color: #4b6980;
+}
+.sh_zellner .sh_sourceCode .sh_type {
+	color: #6b02bd !important;
+}
+.sh_zellner .sh_sourceCode .sh_string {
+	color: #a0292f !important;
+}
+.sh_zellner .sh_sourceCode .sh_comment {
+	color: #737373 !important;
+}
+.sh_zellner .sh_sourceCode .sh_value {
+	color: #a3282e !important;
+}
+.sh_zellner .sh_sourceCode .sh_url {
+	color: #737373 !important;
+}
+
+/* Typography examples */
+.doc-text-sizes > * {
+	line-height: 42px;
+}
+.is-text-medium .doc-text-sizes > *,
+.is-text-large .doc-text-sizes > * {
+	line-height: 80px;
+}
+
+/* Code examples */
+.cm {
+	color: #999;
+}
+.k {
+	color: #006699;
+}
+.nt {
+	color: #2f6f9f;
+}
+.na {
+	color: #4f9fcf;
+}
+.s {
+	color: #d44950;
+}
+
+/* log md box */
+.log-box {
+	border: 1px solid #eee;
+	max-height: 250px;
+	padding: 15px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	font-size: 0.857em;
+}
+.log-box h3,
+.log-box h4,
+.log-box  h5,
+.log-box  h6 {
+	font-size: 1.083em;
+}
+
+/* responsive-utilities */
+.responsive-utilities td.is-visible {
+	text-align: center;
+	color: #174b18;
+	background-color: #dff0d8!important;
+}
+.responsive-utilities td.is-hidden {
+	text-align: center;
+	color: #5f5f5f;
+	background-color: #f9f9f9!important;
+}
+
+/* contact page */
+.contact-box {
+	min-height: 270px;
+}
+
+/* dir-switcher */
+.dir-switcher {
+	position: fixed;
+	right: 0;
+	bottom: 100px;
+	z-index: 1200;
+	width: 48px;
+	font-size: 0.8em;
+}
+.btn-rtl {
+	position: fixed;
+	right: 0;
+	bottom: 20%;
+	width: 44px;
+	height: 44px;
+	margin-bottom: -46px;
+	background: #292929;
+	color: #A8A49E;
+	text-align: center;
+	font-size: 1em;
+	z-index: 1035;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	text-transform: uppercase;
+}
+.btn-rtl .ci.ci-chevron-up {
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	font-size: 4em;
+	height: auto;
+	font-weight: bold;
+	top: 0;
+	left: 0;
+}
+.btn-rtl .back-to-top-text {
+	top: -10px;
+	position: absolute;
+	top: 25px;
+	width: 100%;
+	text-align: center;
+}
+.btn-rtl:hover {
+	color: #fff;
+	text-decoration: none;
+	background: #000;
+	cursor: pointer;
+}

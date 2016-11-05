@@ -1,0 +1,112 @@
+## Shows a git grid full of checkboxes where we can 
+{include({startHTML})}
+{include({startWidgetHTML})}
+
+<h1>{i18n({MODULE}:{ActionName}:Title)}</h1>
+
+<form>
+  <div class="panel-footer">
+    <button type="submit" class="btn btn-primary _i18n">{i18n({MODULE}:{ActionName}:Submit)}</button>
+  </div>
+
+  <table class="table table-striped">
+  </table> 
+
+  <div class="panel-footer">
+    <button type="submit" class="btn btn-primary _i18n">{i18n({MODULE}:{ActionName}:Submit)}</button>
+  </div>
+</form>    
+<script>
+$('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
+  $.getJSON(
+    "{urlBE(/service/{MODULE}/service/{ActionName}{MODULE})}",
+    {ActionParamsObject(widgetData['actionParams'])},
+    function(data) {
+      var permissions = data['permissions'];
+      var roles = data['roles'];
+      var matrix = data['matrix'];
+      var $table =$('#{CurrentWidgetID} form table'); 
+
+      // Header with the roles
+      var $tHead=$('<thead></thead>');
+      $table.append($tHead);  
+      var $trHeader=$('<tr></tr>');
+      $tHead.append($trHeader);  
+      // Let first header's cell empry for the Permission
+      $trHeader.append($('<th scope="col">Permissions</th>'));        
+      for (var indR=0; indR<roles.length; ++indR) {
+        var $cell=$('<th scope="col">' + roles[indR]['Name'] + '</th>');
+        $trHeader.append($cell);  
+      }
+
+      // Build the matrix
+      var $tBody=$('<tbody></tbody>');
+      $table.append($tBody);  
+      for (var indP=0; indP<permissions.length; ++indP) {
+        var $row=$('<tr></tr>');
+        $tBody.append($row);  
+        
+        // First column : permission name
+        $row.append($('<td>' + permissions[indP]['Name'] + '</td>'));  
+        
+        for (var indR=0; indR<roles.length; ++indR) {
+          var $cb=$('<input type="checkbox"></input>');
+          $cb.data('RolePermissionIDs', {
+            'PermissionId' : permissions[indP]['Id'], 
+            'RoleId'       : roles[indR]['Id']
+          });
+          if ( matrix[indP][indR]['value']==1 ) {
+            $cb.attr('checked', 'checked');
+          }
+          $row.append($('<td></td>').append($cb));  
+        }
+      }
+    } 
+  );
+
+  // Capture the submit to build the JSON that will be sent to the server
+  $("#{CurrentWidgetID} form  button[type='submit']").click(function(evt){
+    evt.preventDefault();
+    var matrix=[];
+    $("#{CurrentWidgetID} form input[type='checkbox']").each(function(){
+      var $this=$(this);
+      var data=$this.data('RolePermissionIDs');
+      /*
+      console.log(
+        'RoleId'       + data['RoleId']       +
+        'PermissionId' + data['PermissionId'] + 
+        'value'        
+      );
+      */
+      // Only keep the checked, because in the server we're going to remove the
+      // entire _Role_permission and insert only those cheked
+      if ( $this.is(':checked') ) {
+        matrix.push(
+          {
+            'PermissionId' : data['PermissionId'],   
+            'RoleId'       : data['RoleId']
+          }
+        );
+      }
+    });
+
+    // Send the data
+    $.post(
+      "{urlBE(/service/{MODULE}/service/SaveMassiveUpdate{MODULE})}",
+      {
+        "matrix" : matrix
+      },
+      function(data) {
+        if ( data.errors ) {
+          displayFormErrorMessages(data.errors, $('#p{CurrentWidgetID}Errors'));
+        } else {
+          document.location = updateURLParameter(document.location.href, 'msgCode', '{i18n({MODULE}:{ActionName}:OK)}'); 
+        }
+      }
+    );
+  });
+}); //custom.ready
+</script>
+
+{include({endWidgetHTML})}
+{include({endHTML})}

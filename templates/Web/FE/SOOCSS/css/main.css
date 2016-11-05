@@ -1,0 +1,150 @@
+/*
+ * The CSS order is:
+ * + <SOOCSS>/css/soocss.css
+ * + <SOOCSS>/css/style.css
+ * + This CSS
+ * + The one provided DYNAMICALLY from the web.
+ */
+@CHARSET "UTF-8";
+
+/* In the tabbed panels, the title for every widget is not shown */
+.tab-content .widgetPanel .page-title h1 {
+  display: none;
+}
+
+/* Make the log bigger */
+img._goHome {               
+  width:100px !important;   
+}
+
+/* -------------------------------------------------------------------------- */
+/* Modify some pages' layout */
+/* -------------------------------------------------------------------------- */
+
+/* Hide ALL back buttons with the new breadcrumb */
+._btnBack {
+  display: none !important;
+}
+
+/* Hide the download links WITHOUT file */
+a.FilePresentadaURL[href=''], 
+a.FileProclamadaURL[href=''] {
+  display: none !important;
+}
+
+/* Hide the images WITHOUT file */
+img[src=''] {
+  display: none !important;
+} 
+
+ul.ui-autocomplete {
+  height:150px;
+  width:385px;
+  overflow:scroll;
+  padding:5px;
+  list-style:none;
+}
+
+ul.ui-autocomplete > li.ui-menu-item.ui-state-focus {
+  background: #084FA9;
+  font-weight:normal;
+  color:#FFF;
+  padding:5px;
+  cursor:pointer;
+}
+
+ul.ui-autocomplete {
+  width:31%;
+}
+
+/* Search "lupa" */
+/* @TODO : add a class to indentify those elements */
+._lupa .form-group label::before {
+content: "\e687";
+font-family: "customicons";
+position: absolute;
+top: 31px;
+left: 8px;
+}
+
+._lupa .form-group input {
+padding-left: 25px;
+}
+
+/* Temporal */
+li.Logo img.LogoURL {
+  width:50%;
+}
+
+/* new line, so the image is shown BELOW the text "Logo" */
+li.Logo > p {
+  display:block !important;
+}
+
+/* List filter */
+._listFilter {
+  background-color:#eee;
+  border-color: #ddd;
+}
+
+._listFilter .btn {
+  text-transform: none;
+}
+
+._listFilter ._clearFilter {
+  color:#333;
+  background-color:#eaeaea;
+  border-color: #c4c4c4;
+}
+
+/* Login Page */
+#doLogin .form-group:not(.has-error) #error {
+  display: none;
+}
+#doLogin .alert:last-child {
+    margin-bottom: 10px !important;
+}
+
+/* Mark the required fields */
+div.form-group.required > label:after {
+  content : " *" !important;
+  color : red !important;
+}
+
+/* This matches all the required input elements
+input:required {
+  background-color: red !important;
+}
+*/
+
+/* Unfortunatelly the :after seems not to work 100% with the input elements
+(in fact with the replaced elements), see
+http://stackoverflow.com/questions/6949148/css-after-not-adding-content-to-certain-elements
+for more info.
+input:required:after {
+  content : " *" !important;
+  color : red !important;
+}*/
+
+/* --------------------------------------------------------------------------- */
+/* _MailTemplate */
+/* --------------------------------------------------------------------------- */
+#_MailTemplate_AddAll .Content,
+#_MailTemplate_ModAll .Content {
+  clear: left;
+  width: 100%;
+}
+
+#_MailTemplate_AddAll .Content textarea[name='Content'],
+#_MailTemplate_ModAll .Content textarea[name='Content']{
+  width: 100%;
+  height: 400px;
+}
+
+/* --------------------------------------------------------------------------- */
+/* Public Register */
+/* --------------------------------------------------------------------------- */
+#_User_PublicRegister div.pwd1,
+#_User_PublicRegister div.pwd2 {
+  clear: left;
+}

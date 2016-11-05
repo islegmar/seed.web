@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+  
+  <script src="../../external/jquery/jquery-1.9.1.min.js"></script>
+  <script src="jquery.jsonform.js"></script>
+  
+  <style type="text/css">
+  ._template {
+    display:none;
+    border:1px solid black;
+    position:relative;
+    background-color: green;
+  }
+  ._templateGenerated {
+    border:1px solid black;
+    position:relative;
+    margin:5px;
+  }
+  .bAdd:after {
+    content: "+";
+  }
+  .bDel:after {
+    content: "X";
+  }
+  /*
+  .bDel {
+    position:absolute;
+    right:0px;
+    top:0xp;
+  }*/
+  /* Add button */
+  </style>
+</head>
+<body>
+<h1>Test de jquery.dynForm</h1>
+<!-- 
+<h2>1 Level</h2>
+<form>
+  <div class="_template">
+    Name : <input type="text" name="name"></input><br/>
+    Age  : <input type="text" name="age"></input><br/>
+  </div>
+</form>
+-->
+<h2>Goup & Repeat</h2>
+<form>
+  <div data-jsonform-group="address">
+    <div class="_template">
+      Street : <input type="text" name="name" value="Beat Almato"/><br/>
+      Number : <input type="text" name="number" value="26"/><br/>
+    </div>
+  </div>
+  <input type="submit"/>
+</form>
+<h2>Grouping</h2>
+<form id="grouping">
+  <input type="text" name="ele" value="Root"></input><br/>
+  <div>
+    <div>
+      <div>
+        <div id="gr0" data-dynform='{"group" : "gr0"}'>
+          <div>
+            <input type="text" name="ele" value="ele0"></input><br/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="gr1" data-dynform='{"group" : "gr1"}'>
+    <input type="text" name="ele" value="ele1"></input><br/>
+    <div>
+      <div>
+        <div id="gr1.1" data-dynform='{"group" : "gr1.1"}'>
+          <div>
+            <input type="text" name="ele" value="ele1.1"></input><br/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div>
+      <div id="gr2" data-dynform='{"group" : "gr2"}'>
+        <input type="text" name="ele" value="ele2"></input><br/>
+      
+        <div id="gr2.1" data-dynform='{"group" : "gr2.1"}'>
+          <input type="text" name="ele" value="ele2.1"></input><br/>
+        </div>
+      </div>
+      <div>
+        <div>
+          <div id="gr3" data-dynform='{"group" : "gr3"}'>
+            <input type="text" name="ele" value="ele3"></input><br/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <input type="submit"></input>
+</form>
+
+<h2>2 Levels</h2>
+<form id="2Levels">
+  Name : <input type="text" name="name" value="Pepe"></input><br/>
+  Age  : <input type="text" name="age" value="22"></input><br/>
+  <div class="addresses" data-dynform='{"group" : "addresses"}'>
+    <h3>Addresses</h3>
+    <div id="level0" class="_template">
+      Street : <input type="text" name="street" value="Beat Almnató"></input><br/>
+      Number  : <input type="text" name="number" value="26"></input><br/>
+      <div class="bares" data-dynform='{"group" : "bares"}'>
+        <h4>Bares cerca</h4>
+        <div id="level1" class="_template">
+        Bar : <input type="text" name="bar" value="Reynolds"></input><br/>
+        </div>  
+      </div>
+    </div>
+  </div>
+  
+  <input id="submit" type="submit"></input>
+</form>
+
+<h2>Menu 3 levels</h2>
+<form id="3Levels">
+  <div class="menus" data-dynform='{"group" : "menus"}'>
+    <div id="level1" class="_template">
+      <input type="text" name="desc" value="level1"></input>
+      <div class="menus" data-dynform='{"group" : "menus"}'>
+        <div id="level2" class="_template">
+          <input type="text" name="desc" value="level1.1"></input>
+          <div class="menus" data-dynform='{"group" : "menus"}'>
+            <div id="level3" class="_template">
+              <input type="text" name="desc" value="level1.1.1"></input>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <input type="submit"></input>
+</form>
+
+<script>
+$('form').jsonform({
+  'preSave' : function(data) { alert("Data to be sent : " + JSON.stringify(data)); }
+});
+</script>
+
+</body>
+</html>

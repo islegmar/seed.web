@@ -1,0 +1,105 @@
+<?php
+require_once(INTERNAL_ROOT_DIR . '/service/ServiceWebrad.php');
+require_once(INTERNAL_ROOT_DIR . '/BeanValidateException.php');
+require_once(INTERNAL_ROOT_DIR . '/utils/FactoryObject.php');
+require_once(INTERNAL_ROOT_DIR . '/utils/ValidateBeanData.php');
+require_once(INTERNAL_ROOT_DIR . '/security/ActionDeniedException.php');
+
+/**
+ * Generic service for {MODULE} - generated code
+ * It is based in the fact that:
+ * - It receives a serie of params that need to be validated
+ * - Execute an action that is not necessary to be database related
+ */
+class _{ActionName}{MODULE}Srv extends ServiceWebrad {
+  protected $beanValidate = null;
+
+  // ------------------------------------------------------------------- Service
+  protected function performImpl() {
+    // Create an instance, so it is accessible by the derived data
+    $beanValidate = new ValidateBeanData();
+
+    // Validate the data
+    $this->validateInputData($obj);
+
+    // Everything has gone fine, update the bean in the database
+    $this->fillBean($obj);
+    $this->updateInDatabase($obj);
+
+    // Return the errors (if any)
+    $errors = $this->beanValidate->getErrors(); 
+    if ( !empty($errors) ) {
+      throw new BeanValidateException($errors);
+    // Return a custom 'OK' response
+    } else {
+
+    }
+
+    // Return the minimum info 
+    return array(
+      "msgOK" => "{i18n({MODULE}:{ActionName}:OK)}"
+    );    
+  }
+
+  protected function getPermissionNeeded () {
+    return '{PermissionName}';
+  }
+
+  // ----------------------------------------------- To be overwritten if needed  
+  /**
+   * Validate the data coming from the client
+   * In order to obtain the values use the method:
+   * $this->getParamValue(<paramName>,<defaultValue>)
+   * @param : $obj an empty instance of {MODULE} (used in some validators)
+   */
+  public function validateInputData($o{MODULE}) {  
+    $beanValidate = new ValidateBeanData();
+
+    {BeanValidations($o{MODULE}, $this->beanValidate)}
+
+    // Return the errors (if any)
+    $errors = $beanValidate->getErrors(); 
+    if ( !empty($errors) ) {
+      throw new BeanValidateException($errors);
+    }
+  }
+
+  /**
+   * The OK response. This must be overwritten
+   * NOTE : we do NOT create a default response because it must be I18N and 
+   * if it is overwritten 
+   */
+
+
+  // Fill the Bean with data coming from the request
+  // In order to obtain the values use the method:
+  // $this->getParamValue(<paramName>,<defaultValue>)
+  // @param : $obj an empty instance of {MODULE} 
+  public function fillBean($obj) {
+    // Set the value IdOwner
+    // @TODO : review if we do it here.....
+    $ppal = WebSession::getInstance()->getPrincipal();
+    if ( !$ppal->isAnonymous() ) {
+      $obj->setIdOwner($ppal->getId());
+    } 
+
+    // Fill the bean ONLY with those fields we have defined in the action
+    {FillBean($obj)}
+  } 
+
+  // Persist the bean in the database
+  // @param $obj empty instance of {MODULE}. 
+  public function updateInDatabase($obj) {
+    $obj->updateInDatabase();
+  }  
+
+  // Methods for log info
+  protected function getAction4Logger() {
+    return "{MODULE}:{ActionName}";
+  }
+
+  protected function getParamsAsString() {
+    return {ParamsAsString4Log};
+  }
+}
+?>

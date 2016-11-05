@@ -1,0 +1,37 @@
+{
+  "fields" : [
+    { 
+      "name" : "Name", 
+      "type" : "String", 
+      "max_len" : 128
+    }
+  ],
+  "actions" : [
+    {
+      "name" : "ListNotInRole",
+      "type" : "list",
+      "fields" : [
+        { "name" : "Name"}
+      ],
+      "onClick" : null,
+      "params" : [
+        { "name" : "IdRole" }
+      ]
+    },
+    { 
+      "name" : "Load",
+      "type" : "load",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "ListAll",
+      "type" : "list",
+      "onClick" : null
+    }
+  ],
+  "values" : {
+    "sqlOrder" : 1020
+  } 
+}

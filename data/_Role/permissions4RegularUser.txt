@@ -1,0 +1,3 @@
+_User:ViewMySelf
+_User:ModMySelf
+_User:ChangeMyPassword

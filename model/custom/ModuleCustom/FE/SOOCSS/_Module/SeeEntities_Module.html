@@ -1,0 +1,86 @@
+{include({startHTML})}
+
+<!-- =========================================== START : strathausen-dracula -->
+<!-- jQuery is needed but has been already loaded -->
+<!--  The Raphael JavaScript library for vector graphics display  -->
+<script type="text/javascript" src="{urlExternal(/strathausen-dracula/19-04-2015/vendor/raphael.js)}"></script>
+<script type="text/javascript" src="{urlExternal(/strathausen-dracula/19-04-2015/lib/dracula_graffle.js)}"></script>
+<script type="text/javascript" src="{urlExternal(/strathausen-dracula/19-04-2015/lib/dracula_graph.js)}"></script>
+<!-- ============================================= END : strathausen-dracula -->
+
+<h1>_Module:SeeEntities</h1>
+    
+<div id="canvas"></div>
+
+<script>
+var THIS_PAGE_PERMISSION = '{PermissionName}';
+$.getJSON(
+  '{urlBE(/list/_Module/dao/ListFull_Module)}',
+  {
+    "totPerPage" : 100
+  },
+  function(data) {
+    var g = new Graph();
+    var nodes = data.data;
+
+    // Conver strings in JSON 
+    for (var ind=0; ind<nodes.length; ++ind ) {
+      var node=nodes[ind];
+      node['Config']=JSON.parse(node['Config']);
+    }
+
+    /* Custom render, so we can set event handler */
+    /*var render = function(r, n) {
+      var color = Raphael.getColor();
+      var ellipse = r.ellipse(0, 0, 30, 20).attr({
+        fill: node.fill || color,
+        stroke: node.stroke || color,
+        "stroke-width": 2
+      }).click(function(){
+      });
+
+      ellipse.node.id = node.id || node.label;
+      if(node.class)ellipse.node.classList.add(node.class);
+      shape = r.set().push(ellipse).push(r.text(0, 30, node.label || node.id));
+      
+      return shape;
+    };*/
+
+    // Create the nodes
+    for (var ind=0; ind<nodes.length; ++ind ) {
+      node=nodes[ind];
+      var eNode = g.addNode(node.Name, { 
+        label : node.Name,
+        data : node
+      });
+    }
+
+    // Create the relations (FK)
+    for (var ind=0; ind<nodes.length; ++ind ) {
+      var node=nodes[ind];
+      console.log('>>> ' + JSON.stringify(node));
+      var nodeName=node['Name'];
+      var nodeCfg=node['Config'];
+      var fields=nodeCfg['fields'];
+
+      for (var indF=0; indF<fields.length; ++indF ) {
+        fieldCfg=fields[indF];
+        if ( fieldCfg['type']=='FK' ) {
+          dstEntity=fieldCfg['config']['FK']['module'];
+
+          g.addEdge(node.Name, dstEntity , {directed : true});
+        } 
+      }
+    }
+
+    // Draw
+    var layouter = new Graph.Layout.Spring(g);
+    var renderer = new Graph.Renderer.Raphael('canvas', g, 800, 800);
+    layouter.layout();
+    renderer.draw();
+  } 
+); 
+</script>
+
+{include({endHTML})}
+

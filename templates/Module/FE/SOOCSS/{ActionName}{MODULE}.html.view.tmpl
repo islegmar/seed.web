@@ -1,0 +1,81 @@
+{include({startHTML})}
+{include({startWidgetHTML})}
+
+<!-- !back -->
+<button id="b{CurrentWidgetID}Back" class="btn btn-secondary btn-previous mvm _btnBack" onClick="history.go(-1);return true;">
+  <span class="ci ci-chevron-left d-table-cell v-middle"></span>
+  <span class="d-table-cell v-middle _i18n">{i18n(PreviousPage)}</span>
+</button>
+<!-- /back -->
+
+<!-- !title -->
+<div class="page-title">
+  <h1>
+    <span class="_i18n">{i18n({MODULE}:{ActionName}:Title)}</span>
+  </h1>
+
+  <div id="p{CurrentWidgetID}GlobalActions" class="page-title-addons w-55">
+    <span class="_template">
+      <a class="btn btn-default url">
+        <span class="name"></span>
+      </a>
+    </span>
+  </div>  
+</div>
+<!-- /title -->
+
+<div class="panel panel-visualization _mainContent">
+  <div id="frm{CurrentWidgetID}" class="panel-body">
+    <div class="d-table w-100">
+      <div class="d-table-row">
+        @@if {HasViewCol(0)}
+        <div class="d-table-cell v-middle w-50">
+          <ul class="list-shift">
+            {FormViewFieldsNoI18N(0)}
+          </ul>
+        </div>
+        @@endif
+
+        @@if {HasViewCol(1)}
+        <div class="d-table-cell v-top w-50 plm">
+          <ul class="list-shift">
+            {FormViewFieldsNoI18N(1)}
+          </ul>
+        </div>
+        @@endif
+
+      </div>
+    </div>    
+  </div>    
+</div>
+
+<script>
+$('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
+  var $container = $('#frm{CurrentWidgetID}');
+  $.getJSON(
+    {LoadDataURL},
+    {
+      '_completeFK' : true
+    }, 
+    function(data) {
+      renderData($container, null);
+      renderData($container, data);
+
+      // Render the global actions
+      ## This is the source of the data that will be used when build the urls in for
+      ## the global actions
+      buildGlobalActions(
+        $('#p{CurrentWidgetID}GlobalActions'), 
+        $('#p{CurrentWidgetID}Errors'),
+        {GlobalActions(widgetData["actionParams"])}, 
+        widgetData['User']
+      );
+
+      $container.trigger('custom.dataLoaded', [data, widgetData]); 
+    }
+  );
+});
+</script>
+
+{include({endWidgetHTML})}
+{include({endHTML})}

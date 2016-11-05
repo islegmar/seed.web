@@ -1,0 +1,116 @@
+<?php
+require_once(INTERNAL_ROOT_DIR . '/service/ServiceWebrad.php');
+require_once(INTERNAL_ROOT_DIR . '/BeanValidateException.php');
+require_once(INTERNAL_ROOT_DIR . '/utils/FactoryObject.php');
+require_once(INTERNAL_ROOT_DIR . '/utils/ValidateBeanData.php');
+require_once(INTERNAL_ROOT_DIR . '/security/ActionDeniedException.php');
+
+/**
+ * Update a {MODULE} - generated code
+ */
+class _{ActionName}{MODULE}Srv extends ServiceWebrad {
+  protected $onlyOwnerCanModify = {OnlyOwnerCanModify};
+
+  // ------------------------------------------------------------------- Service
+  protected function performImpl() {
+    // Get the bean that is going to be udpated
+    $obj = $this->getObject2Update();
+
+    // In case we only allow that the owner can modify the bean
+    if ( $this->onlyOwnerCanModify ) {
+      $ppal = WebSession::getInstance()->getPrincipal();   
+      if ( $ppal->isAnonymous() ) {
+        throw new Exception('No anonymous allowed');
+      }      
+      if ( $obj->getIdOwner()!=$ppal->getId() ) {
+        throw new Exception('Only owner can modify');
+      }
+    }
+
+    // Validate the data
+    $this->validateInputData($obj);
+
+    // Everything has gone fine, update the bean in the database
+    $this->fillBean($obj);
+    $this->updateInDatabase($obj);
+
+    // Return the minimum info 
+    return array(
+      "msgOK" => "{i18n({MODULE}:{ActionName}:OK)}"
+    );    
+  }
+
+  protected function getPermissionNeeded () {
+    return '{PermissionName}';
+  }
+
+  // ----------------------------------------------- To be overwritten if needed
+  /**
+   * Returns an instance of the object that will be updated.
+   */
+  protected function getObject2Update() {
+    // IMPORTAMT : get all the fields, otherwise when the update action is 
+    // performed, because it update all the fields, will fail or update with 
+    // null the fields not loaded here.  
+    $sql=<<<EOD
+    SELECT *
+      FROM {MODULE}
+    WHERE 1=1
+      ## Correpond to 'params' in the JSON 
+      {SQLParamNames4PaggedList}
+EOD;
+
+    $data = array();
+    {ParamValues4Query($data,$this->getParamValue)}
+
+    return FactoryObject::newObject('{MODULE}')->loadOne($sql, $data);
+  }
+
+  // Validate the data
+  // In order to obtain the values use the method:
+  // $this->getParamValue(<paramName>,<defaultValue>)
+  // @param : $obj an empty instance of {MODULE} (used in some validators)
+  public function validateInputData($obj) {  
+    $beanValidate = new ValidateBeanData();
+
+    {BeanValidations($obj, $beanValidate)}
+
+    // Return the errors (if any)
+    $errors = $beanValidate->getErrors(); 
+    if ( !empty($errors) ) {
+      throw new BeanValidateException($errors);
+    }
+  }
+
+  // Fill the Bean with data coming from the request
+  // In order to obtain the values use the method:
+  // $this->getParamValue(<paramName>,<defaultValue>)
+  // @param : $obj an empty instance of {MODULE} 
+  public function fillBean($obj) {
+    // Set the value IdOwner
+    // @TODO : review if we do it here.....
+    $ppal = WebSession::getInstance()->getPrincipal();
+    if ( !$ppal->isAnonymous() ) {
+      $obj->setIdOwner($ppal->getId());
+    } 
+
+    // Fill the bean ONLY with those fields we have defined in the action
+    {FillBean($obj)}
+  } 
+
+  // Persist the bean in the database
+  // @param $obj empty instance of {MODULE}. 
+  public function updateInDatabase($obj) {
+    $obj->updateInDatabase();
+  }  
+
+  // Methods for log info
+  protected function getAction4Logger() {
+    return "{MODULE}:{ActionName}";
+  }
+
+  protected function getParamsAsString() {
+    return {ParamsAsString4Log};
+  }
+}
+?>

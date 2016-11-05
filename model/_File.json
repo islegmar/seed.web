@@ -1,0 +1,49 @@
+{
+  "fields" : [
+    {
+      "name" : "Mimetype",
+      "type" : "String",
+      "max_len" : 50
+    },
+    {
+      "_desc" : "If the file is stored in the file system",
+      "name" : "Path",
+      "type" : "String",
+      "max_len" : 512
+    },
+    {
+      "_desc" : "A user firendly name",
+      "name" : "FileName",
+      "type" : "String",
+      "max_len" : 512
+    },
+    {
+      "_desc" : "If the file is stored in the database itself",
+      "name" : "Content",
+      "type" : "Binary"
+    }
+  ],
+  "actions" : [
+     { 
+      "name" : "Load",
+      "type" : "load",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+   { 
+      "name" : "ListAll", 
+      "type" : "list"
+    },
+    {                                                                  
+      "name" : "ViewAll",                                              
+      "type" : "view",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    }
+  ],
+  "values" : {
+    "sqlOrder" : 1070
+  }
+}

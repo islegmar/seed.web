@@ -1,0 +1,27 @@
+<?php
+require_once(INTERNAL_ROOT_DIR . '/service/ServiceWebrad.php');
+require_once(INTERNAL_ROOT_DIR . '/security/ActionDeniedException.php');
+
+/**
+ * Generic service for {MODULE} - generated code
+ */
+class _{ActionName}{MODULE}Srv extends ServiceWebrad {
+  // ------------------------------------------------------------------- Service
+  protected function performImpl() {
+    return array();
+  }
+
+  protected function getPermissionNeeded () {
+    return '{PermissionName}';
+  }
+
+  // Methods for log info
+  protected function getAction4Logger() {
+    return "{MODULE}:{ActionName}";
+  }
+
+  protected function getParamsAsString() {
+    return {ParamsAsString4Log};
+  }
+}
+?>

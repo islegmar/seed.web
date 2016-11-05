@@ -1,0 +1,70 @@
+{
+  "fields" : [
+    {
+      "name" : "Name",
+      "type" : "String",
+      "max_len" : 50
+    },
+    { 
+      "name" : "Template", 
+      "type" : "File" 
+    },
+    { 
+      "name" : "Xsl", 
+      "type" : "File" 
+    }
+  ],
+  "actions" : [
+    { 
+      "name" : "AddAll", 
+      "type" : "add"
+    },
+    { 
+      "name" : "ModAll",
+      "type" : "mod",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    { 
+      "name" : "DelAll",
+      "type" : "del",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    { 
+      "name" : "Load",
+      "type" : "load",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {                                                                  
+      "name" : "ViewAll",                                              
+      "type" : "view",
+      "globalActions" : [
+        { 
+          "module" : "_DocTemplate", 
+          "name" : "DelAll",
+          "params" : [ 
+            { "name" : "Id", "value" : "$Id" } 
+          ]
+        }
+      ],
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    { 
+      "name" : "ListAll", 
+      "type" : "list",
+      "globalActions" : [
+        { "module" : "_DocTemplate" , "name" : "AddAll" }
+      ]
+    }
+  ],
+  "values" : {
+    "sqlOrder" : 1100
+  }
+}

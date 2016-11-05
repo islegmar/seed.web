@@ -1,0 +1,51 @@
+<?php
+require_once(INTERNAL_ROOT_DIR . '/service/ETLCSVExtractorSrv.php');
+require_once(INTERNAL_ROOT_DIR . '/utils/FactoryObject.php');
+require_once(INTERNAL_ROOT_DIR . '/security/ActionDeniedException.php');
+
+/**
+ * Import data into $MODULE using CSV file - generated code
+ */
+class _{ActionName}{MODULE}Srv extends ETLCSVExtractorSrv {
+  // ------------------------------------------------------------- ServiceWebrad
+  protected function getPermissionNeeded () {
+    return '{PermissionName}';
+  }
+
+  // -------------------------------------------------------------------- ETLSrv
+  protected function getTransformer() {
+    $transformer = FactoryObject::newObject('Transformer');
+
+    $transformer->config(
+      json_decode('{Transformers}')
+    );
+  
+    return $transformer;
+
+  }
+
+  /**
+   * Persist the data in the Database using the rigth bean
+   */
+  protected function getLoader() {
+    $loader = FactoryObject::newObject('LoaderDBBean');
+
+    $loader->config( 
+      array(
+        'beanName' => '{MODULE}'
+      )
+    );
+
+    return $loader;
+  }
+
+  // Methods for log info
+  protected function getAction4Logger() {
+    return "{MODULE}:{ActionName}";
+  }
+
+  protected function getParamsAsString() {
+    return {ParamsAsString4Log};
+  }
+}
+?>

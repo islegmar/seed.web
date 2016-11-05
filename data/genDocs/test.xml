@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+  <title>User's List</title>
+  <cols>
+    <col>User's name</col>
+    <col>Email</col>
+  </cols>
+  <data>
+    <row>
+      <Name>User1</Name>
+      <Email>mail1@mail.com</Email>
+    </row> 
+    <row>
+      <Name>User2</Name>
+      <Email>mail2@mail.com</Email>
+    </row> 
+  </data>
+</list>

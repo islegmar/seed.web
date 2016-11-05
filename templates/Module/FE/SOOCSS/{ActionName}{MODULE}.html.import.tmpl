@@ -1,0 +1,180 @@
+{include({startHTML})}
+{include({startWidgetHTML})}
+
+<!-- !back -->
+<button id="b{CurrentWidgetID}Back" class="btn btn-secondary btn-previous mvm _btnBack" onClick="history.go(-1);return true;">
+  <span class="ci ci-chevron-left d-table-cell v-middle"></span>
+  <span class="d-table-cell v-middle _i18n">{i18n(PreviousPage)}</span>
+</button>
+<!-- /back -->
+
+<!-- !title -->
+<div class="page-title">
+  <h1>
+    <span class="_i18n">{i18n({MODULE}:{ActionName}:Title)}</span>
+  </h1>
+
+  <div id="p{CurrentWidgetID}GlobalActions" class="page-title-addons w-55">
+    <span class="_template">
+    <a class="btn btn-default url">
+      <span class="name"></span>
+    </a>
+  </span>
+  </div>  
+</div>
+<!-- /title -->
+
+<!-- !content -->
+<div id="p{CurrentWidgetID}UploadCSV">
+  <!-- Progress info -->
+  <div class="_progressInfo">
+  </div>
+  
+  <!-- Submit form -->
+  <form method="post" enctype="multipart/form-data" class="form-block {MODULE} _mainContent">
+    <div class="panel panel-default">
+      ## <div class="panel-heading">
+      ##   <h2 class="mvn _i18n">{i18n({MODULE}:{ActionName}:Overview)}</h2>
+      ## </div>
+      <div class="panel-body ">
+        ## <p class="fsm w-100 w-md-60 mbl _i18n">{i18n({MODULE}:{ActionName}:Caption)}</p>            
+        ## @TODO : Add here the params. I have tried to add them in Formdata (below) but not success :-(
+        {ActionParamsAsInputHidden}
+
+        <input type="hidden" name="notifyID" value="{MODULE}:{ActionName}"/>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 CSVSeparator">
+            <div class="form-group">
+              <label class="control-label _i18n">{i18n(CSVSeparator)}</label>
+              <input type="text" name="sepCSV" class="form-control w-100 w-md-50" value="|" maxlength="1" size="1" required>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-12 CSVFile">
+            <div class="form-group">
+              <label class="control-label _i18n">{i18n(CSVFile)}</label>
+              <input type="file" name="fData" id="fData" required>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button type="submit" class="btn btn-primary _i18n">{i18n({MODULE}:{ActionName}:Submit)}</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- /content -->
+
+## =============================================================================
+##
+## Scripts
+##
+## =============================================================================
+<script>
+$('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
+  var $form = $('#p{CurrentWidgetID}UploadCSV form');
+  var $pProgress = $('#p{CurrentWidgetID}UploadCSV ._progressInfo');
+  var timer;
+
+  /**
+   * Show the progress for that import. This function is called every certain 
+   * amount of time
+   */
+  function showProgress() {
+    $.getJSON(
+      '{urlBE(/service/ImportProgress)}',
+      {
+        notifyID : '{MODULE}:{ActionName}'
+      },
+      /**
+       * data contains 
+       * + indTotal
+       * + totRecordsToImport
+       * + time
+       */
+      function(data) {
+        if ( !data['indTotal'] ) {
+          $pProgress.html('{i18n(ImportWaitingServerResponse)}'.translate());
+        } else {
+          // Show the progress
+          // data contains the keys:
+          // - indTotal : processed so far
+          // - totRecordsToImport : total records to import
+          $pProgress.html('{i18n(ImportProcessing)}'.translate(data));
+        }
+
+        // We are done
+        // data contains the keys:
+        // - totRecordsToImport : total records to import
+        if ( data['status']=='done' ) {
+          $pProgress.html('{i18n(ImportFinished)}'.translate(data));
+        // Continue asking  
+        } else {
+          timer = setTimeout(showProgress, 1000);
+        }
+      }
+    );
+  }
+  
+  // @TODO : see note before : I have tried to add a new element actionParams
+  // but not success :-(. So the approach now (maybe it's more clear...) is to
+  // create input hidden fields
+  renderData($form, {ActionParamsObject(widgetData['actionParams'],ignoreRuntimeValuesIfPresent)});
+
+  // ---------------------------------------------------------------- Upload CSV
+  $form.on('submit',(function(e) {
+    e.preventDefault();
+    hideFormErrorMessages($('#p{CurrentWidgetID}Errors'));
+
+    // Hide the form and start the process to ask to the server about how 
+    // is that going : @TODO work better with CSS
+    $form.hide();
+    $pProgress.html();
+    $pProgress.show();
+    timer = setTimeout(showProgress,1000);
+    
+    var formData = new FormData(this);
+    $.ajax({
+      url: "{urlBE(/service/{MODULE}/service/{ActionName}{MODULE})}", // Url to which the request is send
+      type: "POST",             // Type of request to be send, called as method
+      data: formData, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+      contentType: false,       // The content type used when sending data to the server.
+      cache: false,             // To unable request pages to be cached
+      processData:false,        // To send DOMDocument or non processed data file it is set to false
+      // A function to be called if request succeeds
+      success: function(data) {
+        // Go to the next url with the code of the message that need to be shown
+        if ( data.errors )  {
+
+          displayFormErrorMessagesSeparated(data.errors, $('#p{CurrentWidgetID}Errors'));
+          $('#frm{CurrentWidgetID} button[type=submit]').attr("disabled", false);
+
+          $form.show();
+          $pProgress.hide();
+
+          clearTimeout(timer);
+
+          return;
+        } else {
+
+          storeMsgOK('{i18n({MODULE}:{ActionName}:OK)}'.translate(data));
+          document.location = {OnActionDoneURL(data)};
+        }
+      },
+      error : function(jqXHR, textStatus, errorThrown ) {
+        $form.show();
+        $pProgress.hide();
+
+        ## @TODO :fix me!
+        displayFormErrorMessages( {"<ignore>" : "ErrorImport{MODULE}"}, $('#p{CurrentWidgetID}Errors') );
+      }
+    });
+  }));
+}); // custom.ready
+</script>
+
+{include({endWidgetHTML})}
+{include({endHTML})}

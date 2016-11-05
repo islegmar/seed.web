@@ -1,0 +1,89 @@
+<?php
+require_once(INTERNAL_ROOT_DIR . '/db/IListabePreparedStmt.php');
+require_once(INTERNAL_ROOT_DIR . '/utils/FactoryObject.php');
+require_once(EXTERNAL_ROOT_DIR . '/log4php/Logger.php'); 
+
+/**
+ * List instances of {MODULE} - generated code
+ */
+class _{ActionName}{MODULE} implements IListabePreparedStmt  {
+  protected $filterValues=null;
+  protected $logger=null;
+
+  public function __construct() {
+    $this->logger = Logger::getLogger("main");
+    FactoryObject::newObject('SecurityUtil')->checkPermission('{PermissionName}');    
+  }
+
+  // ------------------------------------------------------ IListabePreparedStmt
+  public function getQuery($db, $params=null) {
+    return $this->addFilter2Query($this->getBaseQuery($db,$params), $db, $params);
+  }
+
+  // Complete some data, like fex. if one of the returned fields is a FK and 
+  // from the query we get the Id, return another field (like the name,
+  // description, ...) instead the Id.
+  // @TODO : this is not the most optimal, just for demo porpouses
+  public function completarData(&$data, $db) {
+    foreach($data as &$row) {
+      {DaoListCompletarRow}
+    }   
+  }
+
+  public function getData4PreparedStmt() {
+    $data = array();
+    // Add the NON OPTIONAL filter's values (coming from 'params' in the JSON)
+    ## Those values can be are not specified in the filter[] coming from 'FE'
+    ## if they are literal
+    {SQLParamValues4PaggedList}
+    
+    if ( !is_null($this->filterValues) ) {
+      // Add the OPTIONAL filter's values, specified by the user wehn filtering 
+      // the list (coming from 'listFilter' in the JSON)
+      {SQLFilterValues4PaggedList}
+    }
+
+    // Return array with the values
+    if ( $this->logger->isDebugEnabled()) {
+      $this->logger->debug('Data for query [' . json_encode($data) . ']');
+    }
+
+    return $data;
+  }       
+
+  // ------------------------------------------------------- Protected Functions
+  // The base query where we add the params defined in the JSON (NON OPTIONAL)
+  protected function getBaseQuery($db, $params=null) {
+    $sql=<<<EOD
+      SELECT {MODULE}.Id, {AllFieldNamesCommaSeparated({MODULE})}
+        FROM {MODULE}
+      WHERE 1=1
+        ## Correpond to 'params' in the JSON and represents a STATIC filter 
+        ## that uses as value:
+        ## - A request parameter when calling this action
+        ## - A static valued specified in the JSON itself
+        ## Together with this filter, we will add later to this query a DYNAMIC 
+        ## filter (or user defined) that correspond the 'listFilter' in the JSON
+        ## and represents teh values filled by the user
+        ## Anyway, we are going to add here (in getQuery()) the placeholders and 
+        ## later on, in getData4PreparedStmt() we will add the values
+        {SQLParamNames4PaggedList}
+EOD;
+
+    return $sql;
+  }
+
+  // Add to the query the filter fields coming from the user. 
+  // We will filter ONLY using the fields that has been defined in the JSON 
+  // (and they will be used only if a value has been specified) NOT using any
+  // field coming from the request (OPTIONAL)
+  protected function addFilter2Query($sql, $db, $params=null) {
+    $this->filterValues = $params->getParam('filter', null);
+    if ( !is_null($this->filterValues) ) {
+      {SQLFilterNames4PaggedList}
+    }
+
+    return $sql;
+  }
+}
+?>

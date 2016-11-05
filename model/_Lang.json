@@ -1,0 +1,79 @@
+{
+  "fields" : [
+    { 
+      "name" : "Locale", 
+      "type" : "String", 
+      "max_len" : 2
+    },
+    { 
+      "name" : "Orientation", 
+      "type" : "String", 
+      "values" : [ "RTL", "LTR" ],
+      "max_len" : 10
+    }
+  ],
+  "actions" : [
+    { 
+      "name" : "AddAll", 
+      "type" : "add"
+    },
+    { 
+      "name" : "ModAll",
+      "type" : "mod",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    { 
+      "name" : "DelAll",
+      "type" : "del",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    { 
+      "name" : "Load",
+      "type" : "load",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name": "ListAll",
+      "type": "list",
+      "onClick" : {
+        "module" : "_I18N",            
+        "actionName" : "ListBy_Lang",              
+        "params" : [                           
+          { "name" : "Id_Lang", "value" : "$Id" }   
+        ]
+      }
+    },
+    {                                                                  
+      "name" : "ViewAll",                                              
+      "type" : "view",
+      "globalActions" : [
+        { 
+          "module" : "_Lang", 
+          "name" : "DelAll",
+          "params" : [ 
+            { "name" : "Id", "value" : "$Id" } 
+          ]
+        },
+        { 
+          "module" : "_I18N", 
+          "name" : "AddByLang",
+          "params" : [ 
+            { "name" : "Id_Lang", "value" : "$Id" } 
+          ]
+        }        
+      ],
+      "params" : [
+        { "name" : "Id" }
+      ]
+    }
+  ],
+  "values" : {
+    "sqlOrder" : 1000
+  }
+}

@@ -1,0 +1,102 @@
+{include({startHTML})}
+{include({startWidgetHTML})}
+
+<!-- !back -->
+<button class="btn btn-secondary btn-previous mvm _btnBack" onClick="history.go(-1);return true;">
+  <span class="ci ci-chevron-left d-table-cell v-middle"></span>
+  <span class="d-table-cell v-middle _i18n">{i18n(PreviousPage)}</span>
+</button>
+<!-- /back -->
+
+<!-- !title -->
+<div class="page-title">  
+  <h1>
+    <span class="_i18n">{i18n({MODULE}:{ActionName}:Title)}</span>
+  </h1>
+</div>
+<!-- /title -->
+
+<form id="frm{CurrentWidgetID}" action="{urlBE(/service/{MODULE}/service/{ActionName}{MODULE})}" class="form-block {MODULE} _mainContent">
+  <div class="panel panel-default">
+    ## <div class="panel-heading">
+    ##   <h2 class="mvn _i18n">{i18n({MODULE}:{ActionName}:Overview)}</h2>
+    ## </div>
+    <div class="panel-body ">
+      ## Enable if needed
+      ## <p class="fsm w-100 w-md-60 mbl _i18n">{i18n({MODULE}:{ActionName}:Caption)}</p>
+      <input type="hidden" name="Id"></input>
+      <div class="row">
+        {FormFieldsNoI18N}
+      </div>
+    </div>
+    <div class="panel-footer">
+      <button type="submit" class="btn btn-primary _i18n">{i18n(SubmitAddAction)}</button>
+      <button class="btn btn-secundary _i18n" onClick="history.go(-1);return false;">{i18n(CancelAction)}</button>
+    </div>
+  </div>
+</form>
+
+<script>
+$('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
+  var $form = $('#frm{CurrentWidgetID}');
+
+  // Clean the form
+  renderData($form, null);
+  
+  // Create the jsonform 
+  $form.jsonform({
+    'createEmptyRepeatedElement' : false,
+    'validateFormUsingClientBrowser' : false,
+    'url2UploadFiles' : '{urlBE(/service/UploadFileDB)}',
+    'hash4PwdFields' : false,
+    'preSave' : function () {
+      hideFormErrorMessages($('#p{CurrentWidgetID}Errors'));
+      // Disable the submit button to avoid multiple clicks
+      $('#frm{CurrentWidgetID} button[type=submit]').attr("disabled", true);
+      return true;
+    },
+    'cbSave' : function(data) {
+      if ( data.errors )  {
+        displayFormErrorMessages(data.errors, $('#p{CurrentWidgetID}Errors'));
+        $('#frm{CurrentWidgetID} button[type=submit]').attr("disabled", false);
+        return;
+      } else {
+        // Go to the next url with the code of the message that need to be shown
+        storeMsgOK('{i18n({MODULE}:{ActionName}:OK)}'.translate(data));
+        document.location = {OnActionDoneURL(data)};
+      }					
+    } // cbSave
+  }); // jsonform()
+  
+  // Put in the form the values we have received as params
+  renderData(
+    $form, 
+    {ActionParamsObject(widgetData['actionParams'],ignoreRuntimeValuesIfPresent)}, 
+    null, null, true, null, null, {'notFillIfAlreadyHaveValue' : false}
+  );
+
+  @@if {IsPropertyDefined(loadDataURL)}
+  // Request to the server for some values
+  $.getJSON(
+    {LoadDataURL},
+    {
+      '_completeFK' : true
+    }, 
+    function(data) {
+      // Clean the form
+      renderData($form, null);
+      
+      renderData($form, data, 
+        null, null, true, null, null, {'notFillIfAlreadyHaveValue' : true});
+
+      $form.trigger('custom.dataLoaded', [data, widgetData]); 
+    } // function(data)
+  ); // getJSON
+  @@else
+  $form.trigger('custom.dataLoaded', [null, widgetData]); 
+  @@endif
+}); // custom.ready
+</script>
+
+{include({endWidgetHTML})}
+{include({endHTML})}

@@ -1,0 +1,52 @@
+## @TODO : this custom file can be avoided once we have the 'generic'. Now
+## it is a combination of 'other' with a 'mod' service
+## The only difference is in the url of the service called and the code after
+## the submit (to display ok/error messages)
+{include({startHTML})}
+{include({startWidgetHTML})}
+
+<!-- !title -->
+<div class="page-title">
+  <h1>
+    <span class="_i18n">{i18n({MODULE}:{ActionName}:Title)}</span>
+  </h1>
+  <div id="p{CurrentWidgetID}GlobalActions" class="page-title-addons w-55">
+    <span class="_template">
+      <a class="btn btn-default url">
+        <span class="name"></span>
+      </a>
+    </span>
+  </div>  
+</div>
+<!-- /title -->
+
+<div id="{CurrentWidgetID}ShowOK" class="_i18n" style="display:none;">{i18n({MODULE}:{ActionName}:OK)}</div>
+
+<script>
+$('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
+  $.getJSON(
+    "{urlBE(/service/{MODULE}/service/ActivateByCode{MODULE})}",
+    {ActionParamsObject(widgetData)},
+    function(data) {
+      if ( data.errors )  {
+        displayFormErrorMessages(data.errors, $('#p{CurrentWidgetID}Errors'));
+        return;
+      } else {
+        $('#{CurrentWidgetID}ShowOK').show();
+      }         
+    } 
+  ); 
+  
+  @@if {IsPropertyDefined(globalActions)}
+  buildGlobalActions(
+    $('#p{CurrentWidgetID}GlobalActions'), 
+    $('#p{CurrentWidgetID}Errors'),
+    {GlobalActions(widgetData["actionParams"])}, 
+    widgetData['User']
+  );
+  @@endif
+}); //custom.ready
+</script>
+
+{include({endWidgetHTML})}
+{include({endHTML})}

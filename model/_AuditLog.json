@@ -1,0 +1,77 @@
+{
+  "fields" : [
+    {                                          
+      "name" : "Id_User",                         
+      "type" : "FK",                           
+      "module"  : "_User",
+      "actionName"  : "ListAll",
+      "fieldName" : "Name",
+      "relationType" : "aggregation"
+    },
+    {                                          
+      "name" : "Module",                         
+      "type" : "String",
+      "unique" : true,                           
+      "max_len" : 255
+    },
+    {                                          
+      "name" : "Action",                         
+      "type" : "String",
+      "max_len" : 255
+    },
+    {                                          
+      "name" : "Info",                         
+      "type" : "String",
+      "max_len" : 512
+    },
+    {                                          
+      "name" : "TheDate",                         
+      "type" : "DateTime",
+      "format" : "dd/MM/yy HH:mm"
+    },
+    {                                          
+      "name" : "Hash",                 
+      "type" : "Text",
+      "readOnly" : true,                           
+      "max_len" : 255
+    },
+    {                                          
+      "name" : "IsValid",                         
+      "transient" : true,
+      "type" : "String",
+      "max_len" : 10
+    }
+  ],
+  "actions" : [
+    { 
+      "name" : "Load",
+      "type" : "load",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {                                                                  
+      "name" : "ListAll",                                              
+      "type" : "list",                                                 
+      "fields" : [  
+        {"name" : "TheDate"}, 
+        {"name" : "Id_User"}, 
+        {"name" : "Module"},
+        {"name" : "Action"},
+        {"name" : "Info"},
+        {"name" : "Hash"},
+        {"name" : "IsValid"} 
+      ]                                                                
+    },
+    {  
+      "name" : "ViewAll", 
+      "type" : "view",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    }
+  ],
+  "values" : {
+    "sqlOrder" : 1080
+  }
+}

@@ -1,0 +1,231 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+  <title>Test Image Painter</title>  
+  
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+  <script src="../MouseDraw.js"></script>
+  <script src="../UtilImg.js"></script>
+  <script src="../jquery.imagecontainer.js"></script>
+  <script src="../jquery.canvaspainter.js"></script>
+  <script src="../jquery.rotable.js"></script>
+
+  <script type="text/javascript">
+  $(document).ready(function(){
+    var $viewer = $('#viewer');
+    var $container = $('#container');
+    var $editingImage;
+    
+    // Image Painter
+    $('#painter').canvaspainter({
+      'scaleFactor' : 1.5
+    });
+    
+    $('#painter .bSave').click(function(){
+      // Delete the existinf image  
+      $editingImage.find("img").remove();
+      
+      // Get the new image (scale it) and replace
+      var imgBase64Encoded = $('#painter').canvaspainter('getImage');
+      //console.log('getImage : ' + imgBase64Encoded);
+      
+      // Put the image
+      //UtilImg.base642Img = function(imgBase64Encoded) {
+      var img = new Image();
+      img.src = imgBase64Encoded;
+  
+      $editingImage.append(img);
+      
+      // Clear the canvas
+      $('#painter').dialog('close');
+    });
+    
+    // Image Container
+    $('#container').imagecontainer({
+      'onDrop' : function($imageContainer, image, position, event) {
+        $imageContainer.resizable().rotable().draggable();
+        $imageContainer.dblclick(function(){
+          $editingImage = $(this);
+          console.log("Edit image");
+          $('#painter').canvaspainter('putImage', $(this).find("img").get(0));
+          // Show popup with the painting tool
+          $('#painter').dialog({
+            modal : true,
+            width : 'auto',
+            show: {
+              effect: 'fade',
+              duration: 2000
+            },
+            hide: {
+              effect: 'fade',
+              duration: 1000
+            }
+          });
+        });
+      }
+    });
+  });
+  </script>
+  
+  <style>
+  body > div {
+    display: inline-block;
+  }
+  #container {
+    margin:40px;
+    background-color: grey;
+    width: 200px;
+    height: 400px;
+    font-size:150%; 
+  }
+  .asTable {
+    display:table;
+  }
+  
+  .asTable > * {
+    display:table-row;
+  }
+  
+  .asTable > * > * {
+    display:table-cell;
+    padding: 10px;
+    border:1px solid black;
+  }
+  
+  .asTable.table-noPadding > * > * {
+    padding: 0px;
+  }
+
+  /* ----------------------------------------------------------------  Rotate */  
+  ._rotating {
+    border : 2px green dashed; 
+  }
+  
+  /* -------------------------------------------------------------  Draw Tool */  
+  /* Colors and grosores */
+  .pColores > *, .pGrosores > * {
+    width: 20px;
+    height: 20px;
+    margin: 10px;
+  }
+
+  /* Selected */  
+  .pColores > *._selected, .pGrosores > *._selected {
+    width: 30px;
+    height: 30px;
+  }
+
+  /* Colores */
+  .pColores > * {
+    display: inline-block;
+  }
+  
+  /* Grosores */
+  .pGrosores > * {
+    display: block;
+    border: 1px dashed black;
+    background-color: #FFFFFE;
+  }
+  
+  .pGrosores > *._selected {
+    border: 3px solid black;
+    background-color: #FEF0C9;
+  }
+
+  .pGrosores > *.grosorExtraFino {
+    width: 10px; 
+    height: 10px; 
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -khtml-border-radius: 20px;
+    border-radius: 20px;
+  }
+  
+  .pGrosores > *.grosorFino {
+    width: 15px; 
+    height: 15px; 
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
+    -khtml-border-radius: 30px;
+    border-radius: 30px;
+  }
+  
+  .pGrosores > *.grosorNormal {
+    width: 20px; 
+    height: 20px; 
+    -moz-border-radius: 40px;
+    -webkit-border-radius: 40px;
+    -khtml-border-radius: 40px;
+    border-radius: 40px;
+  }
+  
+  .pGrosores > *.grosorGrueso {
+    width: 25px; 
+    height:25px; 
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -khtml-border-radius: 50px;
+    border-radius: 50px;
+  }
+  
+  .pGrosores > *.grosorExtraGrueso {
+    width: 30px; 
+    height: 30px; 
+    -moz-border-radius: 60px;
+    -webkit-border-radius: 60px;
+    -khtml-border-radius: 60px;
+    border-radius: 60px;
+  }
+  
+  </style>
+</head>
+<body>
+
+<div id="container">
+  <p>Drag an image here!</p>
+</div>
+
+<div id="viewer">
+  <h1>Visor</h1>
+</div>
+
+
+<div id="popup" style="display:none;">
+  <div class="fondo"></div>
+  <div class="container">
+    <h1>My Popup</h1>
+    <span class="_close">X</span>
+    <div class="_content"></div>
+  </div>
+</div>
+
+<!--  Hidden -->
+<div style="display:none;">
+  <!--  The painter -->
+  <div id="painter" class="asTable table-noPadding">
+    <div>
+      <div></div>
+      <div class="pColores">
+      </div>
+      <div></div>
+    </div>
+    <div>
+      <div class="pBorrar"></div>
+      <div class="pLienzo"></div>
+      <div class="pGrosores"></div>
+    </div>
+    <div>
+      <div></div>
+      <div class="pComandos">
+        <button type="button" class="bSave">Save</button>
+      </div>
+      <div></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

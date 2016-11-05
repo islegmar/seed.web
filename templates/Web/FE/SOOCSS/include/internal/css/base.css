@@ -1,0 +1,214 @@
+@CHARSET "UTF-8";
+
+/* ----------------------------------------------------------------- Generics */
+._template {
+  display:none !important;
+}
+
+.clicable:hover {
+  cursor: pointer;
+}
+
+script, style {
+  display: none !important;
+}
+
+.horizontalContainer > *:not(script) {
+  display:inline-block;
+  vertical-align: top;
+}
+
+/* Show a component as a button */
+.asButton {
+  display: inline-block;
+  border: 1px solid black;
+  margin: 1px;
+  padding: 1px;
+  border-style: inset;
+  padding: 1px 6px;
+  -webkit-box-align: center;
+  text-align: center;
+  cursor: default;
+  color: buttontext;
+  padding: 2px 6px 3px;
+  border: 2px outset buttonface;
+  border-image: initial;
+  background-color: buttonface;
+  box-sizing: border-box;
+}
+
+a.asButton {
+  color: inherit;
+  text-decoration: none;
+} 
+
+/* After reset */
+pre {
+  font-family: monospace;
+}
+/* ------------------------------------------------------------- Table Layout */
+.asTable, .asTableNoPadding {
+  display: table;
+}
+
+.asTable>*, .asTableNoPadding>*, .asTableRow {
+  display: table-row;
+}
+
+.asTable>*>* { 
+  display: table-cell;
+  padding: 10px;
+}
+
+.asTableNoPadding>*>*, .asTableRow > *, .asTableCell {
+  display: table-cell;
+}
+
+.asTable.table-noPadding>*>* {
+  padding: 0px;
+}
+
+/* --------------------------------------------------------------- Cubre Todo */
+.cubreTodo {
+  position: absolute;
+  top:0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+
+.cubreTodo.gris {
+  background-color: gray; 
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -moz-opacity:0.5;
+  -khtml-opacity: 0.5;
+  opacity: 0.5;
+}
+
+/* -------------------------------------------------------------- Tabbed Menu */
+/* By default, all contents that does not have the active class are hidden 
+IL - 21/01/14 - By default, content is a direct child of tabbedMenu, otherwise
+we can have problems with tabbedMenu inside tabbedMenu
+*/
+.tabbedMenu  > .content > *:not(.active) {
+  display:none;
+}
+
+/* Horizontal : the headers are shown horizontal */
+.tabbedMenu .header.horizontal > * {
+  display:inline-block;
+}
+
+/* Active header is bold */
+.tabbedMenu  .header > *.active {
+  font-weight: bold;
+}
+
+/* Put boxes */
+.tabbedMenu .header > * {
+  border: 1px solid black;
+  border-bottom: none;  
+  padding : 2px;
+  margin-right: 2px;
+}
+
+.tabbedMenu .content > *.active {
+  border: 1px solid black;
+}
+
+/* Delete the line under */
+.tabbedMenu .header > * {
+  position: relative;
+}
+  
+.tabbedMenu .header > *.active:after {
+  position: absolute;  
+  bottom:-1px;
+  left:0px;
+  width:100%;
+  height:1px;
+  z-index:10;
+  content:"";
+  background: red;
+}
+
+/* If there is only one children in the header, don't show it */
+.tabbedMenu  > .header > *:only-child {
+  display:none;
+}
+
+/* If there is only one children in the content, do not show the border */
+.tabbedMenu  > .content > *:only-child {
+  border:none;
+}
+
+/* Give some space */
+.tabbedMenu  > .content > * {
+  padding:10px;
+}
+/* ----------------------------------------------------- Turn Card, two sides */
+/* Based on http://desandro.github.io/3dtransforms/docs/card-flip.html */
+/**
+ * The card has this structure:
+ * flipCardWrapper
+ * |- card
+ *    |- front side
+ *    |- back side
+ */
+ 
+.flipCardWrapper {
+  -webkit-perspective: 800px;
+     -moz-perspective: 800px;
+       -o-perspective: 800px;
+          perspective: 800px;
+}
+
+/**
+ * .flipCardWrapper > * represents the card, that inside contains bot sides
+ */
+.flipCardWrapper > * {
+  position: relative;
+  /*
+   * width, height
+   * NOTE : We have to set the dimensions to that class NO to its children because
+   * they are absolute and then the dimensions will be wrong calculted.
+   */
+  -webkit-transition: -webkit-transform 3s;
+     -moz-transition: -moz-transform 3s;
+       -o-transition: -o-transform 3s;
+          transition: transform 3s;
+  -webkit-transform-style: preserve-3d;
+     -moz-transform-style: preserve-3d;
+       -o-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+}
+
+/* Turn the card */
+.flipCardWrapper > *.flipped {
+  -webkit-transform: rotateY( 180deg );
+     -moz-transform: rotateY( 180deg );
+       -o-transform: rotateY( 180deg );
+          transform: rotateY( 180deg );
+}
+
+/* The both sides, we put one under the other */
+.flipCardWrapper > * > * {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+     -moz-backface-visibility: hidden;
+       -o-backface-visibility: hidden;
+          backface-visibility: hidden;
+}
+
+/* Turn the back side */
+.flipCardWrapper > * > *:nth-child(2) {
+  -webkit-transform: rotateY( 180deg );
+     -moz-transform: rotateY( 180deg );
+       -o-transform: rotateY( 180deg );
+          transform: rotateY( 180deg );
+} 

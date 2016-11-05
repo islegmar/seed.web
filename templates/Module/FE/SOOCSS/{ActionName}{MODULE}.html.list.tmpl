@@ -1,0 +1,461 @@
+{include({startHTML})}
+{include({startWidgetHTML})}
+
+<!-- !back -->
+<button id="b{CurrentWidgetID}Back" class="btn btn-secondary btn-previous mvm _btnBack" onClick="history.go(-1);return true;">
+  <span class="ci ci-chevron-left d-table-cell v-middle"></span>
+  <span class="d-table-cell v-middle _i18n">{i18n(PreviousPage)}</span>
+</button>
+<!-- /back -->
+
+<!-- !title -->
+<div class="page-title">
+  <h1 class="_i18n">{i18n({MODULE}:{ActionName}:Title)}</h1>
+
+  @@if {IsItemActions(outrow)}
+  ## Item actions marked as outrow, so they are NOT rendered in the row but
+  ## out the table
+  <div id="p{CurrentWidgetID}ItemActionsOutRow" class="pull-right v-middle">
+    ## A panel when all the buttons for a certain row are rendered, but only
+    ## one of the panels is shown when clicking in the radio button
+    <div class="_template" style="display:none;">          
+      <span class="_template">
+        <a class="btn btn-default url">
+          <span class="name"></span>
+        </a>
+      </span>
+    </div>  
+  </div>
+  @@endif
+
+  <div id="p{CurrentWidgetID}GlobalActions" class="pull-right v-middle">
+    <span class="_template">
+      <a class="btn btn-default url">
+        <span class="name"></span>
+      </a>
+    </span>
+  </div>    
+</div>
+<!-- /title -->
+
+<div class="_mainContent">
+  <!-- !list options -->
+  <div class="d-table w-100 ">
+    <div class="d-table-row">
+      @@if {IsPropertyDefined(printDoc)}
+      <div class="d-table-cell v-middle">
+        <ul class="list-inline phn">
+          <li>
+            <a href="#" id="do{CurrentWidgetID}PrintDoc" class="btn btn-default btn-sm">
+              <span class="ci ci-print fsxl"></span>
+              <span class="">{i18n(Print)}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      @@endif
+    </div>
+  </div>
+
+  @@if {IsPropertyDefined(listFilter)}
+  ## Search Form
+  <div id="p{CurrentWidgetID}Filter" class="panel panel-default _listFilter">
+    <div class="panel-body">
+      <div class="row">
+        <input type="hidden" name="orderBy"></input>
+        <form>
+          {GUIListFilterFields(p{CurrentWidgetID}Filter)}
+        </form>
+        <div class="col-xs-12">
+          <button id="do{CurrentWidgetID}Search" class="btn btn-primary mts _i18n">
+            {i18n(ListSearch)}
+          </button>
+          <button class="btn btn-primary mts _i18n _clearFilter">
+            {i18n(ListClear)}
+          </button>
+        </div>      
+      </div>
+    </div>
+  </div>
+  <!-- /list-options -->
+  @@endif
+
+  ## ---------------------------------------------------------------- START : List  
+  <!-- !datatable -->
+  <div id="p{CurrentWidgetID}List" class='generatedList demo-table'>
+    <!-- !listado -->    
+    <div class="listado">    
+      ## ---------------------------------------------------- START : List Content
+      <!-- table responsive -->
+      <table class="table table-responsive content" data-role="table" data-mode="reflow">
+        <thead>
+          <tr>
+            @@if {IsItemActions(outrow)}
+            ## Contains the radio buttons to select a single element
+            <th class="_itemSelector"></th>
+            @@endif
+
+            ## The names of all the fields shown in the list
+            {GUIListHeader}
+
+            @@if {IsItemActions(onrow)}
+            ## In case we have defined item actios that must be shown in the row, 
+            ## in this column the buttons are rendered
+            <th class="actions _i18n">{i18n(ListActions)}</th>
+            @@endif
+          </tr>
+        </thead>
+
+        ## Loading message
+        <tbody class="loading">
+          <tr>
+            <td colspan="{ListTotCols}" class="text-center">
+              <div class="spinner">
+                <span class="spinner-dot-01"></span>
+                <span class="spinner-dot-02"></span>
+                <span class="spinner-dot-03"></span>
+                <span class="spinner-dot-04"></span>
+                <span class="spinner-dot-05"></span>
+                <span class="spinner-dot-06"></span>
+                <span class="spinner-dot-07"></span>
+                <span class="spinner-dot-08"></span>
+              </div>
+            </td>
+          </tr>  
+        </tbody>
+
+        ## No Data message
+        <tbody class="empty" style="display:none;">
+          <tr>
+            <td colspan="{ListTotCols}" class="text-center">
+              <span class="_i18n">
+              {i18n({MODULE}:{ActionName}:NoData)}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+        
+        ## The list data
+        <tbody class="content">
+          <tr class="_template">
+            @@if {IsItemActions(outrow)}
+            ## A radio button to select an element. We have to get the same name
+            ## to all the radios in the list, so ONLY one is selected. We have
+            ## to use also 'CurrentWidgetID' in case we have several lists in 
+            ## the same page
+            <td class="_itemSelector">
+              ## <input type="radio" name="listSelector{CurrentWidgetID}"></input>
+              <div class="radio form-custom mvn">
+                <input type="radio" value="option1" name="listSelector{CurrentWidgetID}">
+                <label for="input_check_presencial">&nbsp;</label>
+              </div>
+            </td>
+            @@endif
+
+            ## The field values
+            {GUIListBodyTmpl}
+            
+            @@if {IsItemActions(onrow)}
+            ## The itemActios that are rendered in the row
+            <td class="actions">
+              <span class="_template">
+                <a class="url btn btn-primary">
+                  <span class="name"></span>
+                </a>
+              </span>
+            </td>
+            @@endif
+          </tr>
+        </tbody>
+      </table>
+      <!-- /table-responsive -->   
+      ## ------------------------------------------------------ END : List Content
+
+      ## ------------------------------------------------------ START : Pagination
+      <div class="row _footerList">
+        <div class="col-xs-3 col-xs-12 ">
+          <span class="totRecords"></span>&nbsp;
+          <span class="_i18n">{i18n(ListTotRecords)}</span>&nbsp;
+        </div>
+        <div class="col-xs-9 col-xs-12 ">    
+          <div class="pagination mbn">
+            <div class="pagination-pages">
+
+              <button type="button" class="bPrev btn btn-tertiary" title="First page" disabled="disabled">
+                <span class="ci ci-chevron-left"></span>
+              </button>
+              
+              <span class="_i18n">{i18n(ListPage)}</span>&nbsp;
+              <span class="indPag"></span>&nbsp;
+              <span class="_i18n">{i18n(ListPageOf)}</span>&nbsp; 
+              <span class="totPag"></span>
+
+              <button type="button" class="bNext btn btn-tertiary" title="Last page">
+                <span class="ci ci-chevron-right"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      ## -------------------------------------------------------- END : Pagination
+    </div>
+    <!-- /listado -->
+  </div>  
+  <!-- /datatable -->
+</div>
+
+## =============================================================================
+##
+## Scripts
+##
+## =============================================================================
+<script>
+$('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
+  // Reset the search form
+  $('#{CurrentWidgetID} ._clearFilter').click(function(){
+    $('#p{CurrentWidgetID}Filter form')[0].reset();
+  });
+
+  // -------------------------------------------------------------------- Filter
+  // The filter is used also when generating the doc
+  // Some of the parameters in the URL act as a filter when getting the list
+  // This is defined in teh JSON in the 'filter' entry
+  // @todo : we could parametrice that, maybe in some cases we do not want that behaviour
+  ## This variable (urlParams) is going to be referenced for example in 
+  ## GUIListFilterRequest
+  var urlParams = getUrlParams();
+  // This is the filter build using the request parameters and needed to build
+  // the initial list, corresponding to NON OPTIONAL filter (see 'params' in 
+  // the JSON). When the user filters, we will add some aditional parameteres 
+  // to this filter
+  var filter=widgetData['actionParams'];
+
+  /**
+   * Add the user filter to the original filter so we ceate a new comined filter
+   */
+  ## @TODO : Instead belief in the inputs we have defined, we can also use the
+  ## list defined in the JSON 
+  function buildFinalFilter() {
+    var newFilter = {};
+
+    ## @TODO : review this way of getting the data instead using json-form ...
+    $('#p{CurrentWidgetID}Filter *:input').each(function(){
+      var $this = $(this);
+      var name = $this.attr('name');
+      var val = $this.val().trim();
+      if ( val && val.length>0 ) {
+        // Is a date?
+        if ( $this.attr('data-type')=='date' ) {
+          newFilter[name] = {
+            'value' : val,
+            'type' : 'date',
+            'format' : $this.attr('data-format')
+          };
+        // Checkbox
+        } else if ( $this.is(':checkbox') ) {
+          newFilter[name] = $this.is(':checked') ? 1 : 0;
+        // Radio Button: this is the one used for the Bool fields (Yes/no/All)
+        } else if ( $this.is(':radio') ) {
+          if ( $this.is(':checked') ) {
+            newFilter[name] = $this.attr('value');
+          }
+        // The rest (input fields,...)
+        } else {
+          newFilter[name] = val;
+        }
+      }
+    });
+
+    // Add the default filter
+    for (var name in filter) {
+      newFilter[name] = filter[name];
+    };
+
+    return newFilter;
+  }
+
+  // ----------------------------------------------------------------- Ajax list
+  ## Get all the request parametres, so we can complement the row data with them
+  var urlParams = getUrlParams();
+
+  $('#p{CurrentWidgetID}List').ajaxlist({
+    ## TODO : Refractor ajaxlist. We put no 
+    ## selData = ._footerList
+    ## to hide the footer when tere are no records :-(
+    'selData' : '._footerList',
+    'url': '{urlBE(/list/{MODULE}/dao/{ActionName}{MODULE})}'
+    ,'totPerPage' : {ListTotPerPage}
+    ,'extraUrlParams' : { 'filter' : filter, 'orderBy' : {OrderByParams}}
+    ,'onListCreated' : function($table) {
+      // Retrigger, in case we have som custom code 
+      $table.trigger("custom.listCreated");
+    }
+    ,'onRowCreated'   : function(row, data) {
+      row.data('rowData', data);
+
+      @@if {IsItemActions(onrow)}
+      // Create the itemActions onrow   
+      buildGlobalActions(
+        row.find('.actions'), 
+        $('#p{CurrentWidgetID}Errors'),
+        {ListItemActions(data,onrow)}, 
+        widgetData['User']
+      );
+      @@endif
+      
+      @@if {IsItemActions(outrow)}
+      // Create the itemActions outrow 
+      var $pOutRow = 
+        $("#p{CurrentWidgetID}ItemActionsOutRow > ._template").
+        clone(true, true).
+        removeClass('_template').
+        addClass('_templateGenerated');
+
+      $("#p{CurrentWidgetID}ItemActionsOutRow").append($pOutRow);
+      buildGlobalActions(
+        $pOutRow, 
+        $('#p{CurrentWidgetID}Errors'),
+        {ListItemActions(data,outrow)}, 
+        widgetData['User']
+      );
+
+      // Add a unique id to the radio button, so we can have "nice" 
+      row.find('._itemSelector input').attr('id' , 'radio{CurrentWidgetID}' + row.index());
+      row.find('._itemSelector label').attr('for', 'radio{CurrentWidgetID}' + row.index());
+
+      // When clicking on the radio button show the rigth panel of itemActions
+      // outrow  
+      row.find('._itemSelector').click(function() {
+        // Hide all panels
+        $("#p{CurrentWidgetID}ItemActionsOutRow > ._templateGenerated").hide();
+        
+        // The index of the clicked row starting by 1 (the number 0 is the _template)
+        var index = $(this).parent('tr').index();
+
+        // The same with the panels, the one with index==0 correspond to _template
+        $("#p{CurrentWidgetID}ItemActionsOutRow").children().eq(index).show();
+      });
+      @@endif
+
+      // When clicking on a radio button to select a row, show the corresponding
+      // panel of ItemActionsOutRow
+
+      // When clicking on the row optionally we CAN perform, an action, usually
+      // see the details for that Item.
+      ## @TODO : do optional the entire block, so nothing is generated if not needed
+      ##
+      ## NOTE 
+      ## The value returned by OnClickAction can be:
+      ## - Empty
+      ## - String : '/webrad/fe/_User/ViewAll_User.html?' + 'Id=' + data['Id'];
+      ## The problem is, what does must return as Empty?
+      ## - If return "", then the line 
+      ##     document.location = {OnClickAction};
+      ##   will be rendered as
+      ##     document.location = ; => ERROR
+      ## - If return "" but we put "" in document.location then will be rendered as
+      ##     document.location = ""; => OK
+      ##   BUT when returning a String will be rendered as:
+      ##     document.location = "'/webrad/fe/_User/ViewAll_User.html?' + ..."; => ERROR
+      ## There a working solution
+      ##   var onClickAction={OnClickAction};
+      ##   if ( onClickAction && onClickAction.length>0 ) {
+      ##     row.addClass('clicable');
+      ##     row.click({"onClickAction" . eval(onClickAction)},function(e){
+      ##       document.location = e.data.onClickAction;
+      ##     });  
+      ##   }      
+      ## but it is ugly :-(
+      ## So the solution is that returns "''" (see ResolverModuleFESOOCSS.py), then
+      ## when empty
+      ##   var onClickAction='';
+      ##   document.location='';
+
+      ## Complement the row data with the ones coming from the request
+      ## @TODO : should it be parametrized?
+      for (var paramName in urlParams ) {
+        if ( !data[paramName] ) {
+          data[paramName] = urlParams[paramName];
+        }
+      }
+
+      var onClickAction={OnClickAction};
+      if ( onClickAction && onClickAction.length>0 ) {
+        row.addClass('clicable');
+        row.find("td:not(.actions):not(._itemSelector)").click(function(e){
+          document.location = {OnClickAction}; 
+        });  
+      }
+
+      $('#p{CurrentWidgetID}List').trigger('custom.rowCreated', [row, data]);
+    }
+  });
+
+  // ------------------------------------------------------------ Global Actions
+  ## This is the source of the data that will be used when build the urls in for
+  ## the global actions
+  buildGlobalActions(
+    $('#p{CurrentWidgetID}GlobalActions'), 
+    $('#p{CurrentWidgetID}Errors'),
+    {GlobalActions(widgetData["actionParams"])}, 
+    widgetData['User']
+  );
+
+  @@if {IsPropertyDefined(listFilter)}
+  // --------------------------------------------------------------- Filter List
+  $('#do{CurrentWidgetID}Search').click(function(){
+    // Remove the previous buttons (just in case)
+    $("#p{CurrentWidgetID}ItemActionsOutRow > ._templateGenerated").remove();
+
+    // Set this filter as an extra parameter that is send when listing
+    $('#p{CurrentWidgetID}List').ajaxlist('option', 'extraUrlParams', {'filter' : buildFinalFilter() });
+
+    // Get the first page, once the new filter has been applied
+    $('#p{CurrentWidgetID}List').ajaxlist('getList', 0, {ListTotPerPage});
+  });
+  @@endif
+
+  @@if {IsPropertyDefined(printDoc)}
+  // -------------------------------------------------- Document List Generation
+  $('#do{CurrentWidgetID}PrintDoc').click(function(evt){
+    evt.preventDefault();
+
+    // Get the final filter
+    var finalFilter = buildFinalFilter();
+
+    // Add the filter as parameters in the request
+    var $frmGendDoc = $('#do{CurrentWidgetID}FrmGenDoc');
+    $frmGendDoc.empty();
+    for (var key in finalFilter ) {
+      $frmGendDoc.append(
+        $('<input></input>')
+        .attr('name', key)
+        .attr('type','hidden')
+        .val(finalFilter[key])
+      );
+    }
+
+    // Add the type of document
+    $frmGendDoc.append(
+      $('<input></input>')
+      .attr('name', '_list')
+      .attr('type','hidden')
+      .val('{MODULE}/dao/{ActionName}{MODULE}')
+    );
+    
+    // Submit the form, so the document is build 
+    $frmGendDoc.submit();
+  });
+  @@endif
+});
+</script>
+
+@@if {IsPropertyDefined(printDoc)}
+<!-- Hidden Form to get the document. We do NOT use with AJAX because if the 
+file is big, we can have problems in the server serializing the response -->
+<form id="do{CurrentWidgetID}FrmGenDoc" method="POST" action="{urlBE(/action/{MODULE}/controller/GenListDoc{MODULE})}" target="_blank">
+</form>
+@@endif
+
+{include({endWidgetHTML})}
+{include({endHTML})}

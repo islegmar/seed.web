@@ -1,0 +1,125 @@
+{
+  "fields" : [
+    { 
+      "name" : "Logo", 
+      "type" : "Image" 
+    },
+    { 
+      "name" : "Css", 
+      "type" : "File" 
+    },    
+    {
+      "name" : "IsActive",
+      "type" : "Bool"
+    },
+    {
+      "_desc" : "(Development mode) Directory where the files *.properties are located. If set then the translations are get from the file instead from the database. This should be used ONLY in development mode, in production it should be empty",
+      "name" : "Path4I18N",
+      "type" : "String",
+      "max_len" : "255"
+    },    
+    {
+      "_desc" : "(Development mode) Force the server to return ALWAYS the translation, even when they are cached in the client and has not been requested. In production should be 0",
+      "name" : "ServerReturnAlwaysI18N",
+      "type" : "Bool"
+    },
+    {
+      "name" : "BaseURL",
+      "type" : "String",
+      "max_len" : "255"
+    }
+  ],
+  "actions" : [
+    { 
+      "name" : "AddAll", 
+      "type" : "add"
+    },
+    { 
+      "name" : "ModAll",
+      "type" : "mod",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    { 
+      "name" : "DelAll",
+      "type" : "del",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    { 
+      "name" : "Load",
+      "type" : "load",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {                                                                  
+      "name" : "ViewAll",                                              
+      "type" : "view",
+      "globalActions" : [
+        { 
+          "module" : "_ConfigApp", 
+          "name" : "DelAll",
+          "params" : [ 
+            { "name" : "Id", "value" : "$Id" } 
+          ]
+        },
+        {
+          "module" : "_ConfigApp",
+          "name" : "ModAll",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        }
+      ],
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    { 
+      "name" : "ListAll", 
+      "type" : "list",
+      "listFilter" : null,
+      "totPerPage" : 20,
+      "fields" : [
+        { "name" : "IsActive" },
+        { "name" : "BaseURL" },
+        { "name" : "Logo" },
+        { "name" : "Path4I18N" },    
+        { "name" : "ServerReturnAlwaysI18N" }
+      ],
+      "globalActions" : [
+        { "module" : "_ConfigApp" , "name" : "AddAll" }
+      ],
+      "itemActions" : [
+        {
+          "module" : "_ConfigApp",
+          "name" : "DoActivate",
+          "goOnActionDone" : "refresh",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        }
+      ],
+      "orderBy" : [
+        { "name" : "IsActive", "direcc" : "DESC" }
+      ]
+    },
+    { 
+      "name" : "DoActivate",
+      "type" : "mod",
+      "beOnly" : true,
+      "fields" : [
+        { "name" : "IsActive", "value" : "1", "hide" : true }
+      ],
+      "params" : [
+        { "name" : "Id" }
+      ]
+    }
+  ],
+  "values" : {
+    "sqlOrder" : 1090
+  }
+}

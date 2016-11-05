@@ -1,0 +1,71 @@
+{include({startHTML})}
+{include({startWidgetHTML})}
+
+<script src="{urlExternal(/d3/29-05-15/d3.min.js)}"></script>
+<script src="{urlExternal(/d3pie/0.1.8/d3pie.min.js)}"></script>
+
+<!-- Title -->
+<div class="page-title">
+  <h1 class="_i18n">{i18n({MODULE}:{ActionName}:Title)}</h1>
+</div>
+
+<div class="_mainContent">
+  <div class="empty _i18n" style="display:none;">
+    {i18n({MODULE}:{ActionName}:NoData)}
+  </div>
+  <div class="_pie" style="display:none;"></div>
+</div>
+
+<script>
+$('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
+  var filter=widgetData['actionParams'];
+
+  $.getJSON(
+    "{urlBE(/service/{MODULE}/service/{ActionName}{MODULE})}",
+    {
+      'filter' : filter
+    }, 
+    function(chartData) {
+      /*
+      That works!
+      var pie = new d3pie($(this).find("._pie").get(0), {
+        header: {
+          title: {
+            text: "A very simple example pie"
+          }
+        },
+        data: {
+          content: [
+            { label: "JavaScript", value: 264131, id: "test1", class : "class1" },
+            { label: "Ruby", value: 218812 },
+            { label: "Java", value: 157618},
+          ]
+        }
+      });
+      */
+      // First, transform the data, translating labels and converting values to numbers
+      var total=0;  
+      for (var ind=0; ind<chartData.length; ++ind) {
+        chartData[ind]['label'] = chartData[ind]['label'].translate();
+        chartData[ind]['value'] = parseFloat(chartData[ind]['value']);
+        total += chartData[ind]['value'];
+      }
+      // No data to display
+      if ( total==0 ) {
+        $('#{CurrentWidgetID} .empty').show();
+      // Show the pie  
+      } else {
+        $('#{CurrentWidgetID} ._pie').show();
+        var pie = new d3pie($('#{CurrentWidgetID} ._pie').get(0), {
+          data: {
+            content: chartData    
+          }
+        });        
+      }
+    }
+  );
+});
+</script>
+
+{include({endWidgetHTML})}
+{include({endHTML})}

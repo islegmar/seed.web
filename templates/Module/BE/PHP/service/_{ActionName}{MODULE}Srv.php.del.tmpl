@@ -1,0 +1,44 @@
+<?php
+require_once(INTERNAL_ROOT_DIR . '/service/ServiceWebrad.php');
+require_once(INTERNAL_ROOT_DIR . '/BeanValidateException.php');
+require_once(INTERNAL_ROOT_DIR . '/security/ActionDeniedException.php');
+
+/**
+ * Removes a {MODULE} - generated code
+ */
+class _{ActionName}{MODULE}Srv extends ServiceWebrad {
+  // ------------------------------------------------------------------- Service
+  protected function performImpl() {
+    $id = $this->getParamValue('Id', null);
+
+    if ( !is_null($id) ) {
+      try {
+        FactoryObject::newObject('{MODULE}')->loadById($id)->deleteInDatabase();       
+      } catch(Exception $e) {
+        throw new BeanValidateException (
+          array (
+            "Id" => "{i18n({MODULE}:{ActionName}:Error)}"
+          )
+        );
+      }
+    } 
+
+    return array(
+      "msgOK" => "{i18n({MODULE}:{ActionName}:OK)}"
+    );    
+  }
+
+  protected function getPermissionNeeded () {
+    return '{PermissionName}';
+  }
+
+  // Methods for log info
+  protected function getAction4Logger() {
+    return "{MODULE}:{ActionName}";
+  }
+
+  protected function getParamsAsString() {
+    return {ParamsAsString4Log};
+  }
+}
+?>

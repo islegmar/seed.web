@@ -1,0 +1,136 @@
+# ------------------------------------------------------------------------------
+# SAMPLE of model file
+#
+# The model file defines the ENTIRE data model and is the input file to generate
+# the base model/<MODULE>.json files
+# 
+# SYNTAX:
+# - Comment lines : lines starting with # are ignored
+# - Empty lines : ignored
+# - Start a module's definition : lines containing [<MODULE>]. Following lines 
+#   are the fields' definitions
+# - Field definition:
+#   + <Name> : defines a String of 255
+#   + <Name>:<Type> : defines a field of type <Type> with no arguments
+#   + <Name>:<Type>(<arg1>, ....) : defines a field of type <Type> with 
+#     some configuration parameters (depending on the type)
+#
+# Field types (not complete list)
+# - String
+# - FK. In this case the arguments are the linked Entity and the field that
+#   will be used when building <selects>
+# - Image
+# - File
+# - Integer 
+#
+# Generate the config files.
+# Once this file is ready execute
+#
+#   cd scripts
+#   python python genConfig.py --file /path/to/file
+#
+# Execute 'python python genConfig.py -h' for more help
+# ------------------------------------------------------------------------------
+[District]
+Code
+Name
+
+[Constituency]
+Code
+Name
+IdDistrict:FK(District,Code)
+
+[SubCounty]
+Code
+Name
+
+[Parish]
+Code
+Name
+IdConstituency:FK(Constituency,Code)
+IdSubCounty:FK(SubCounty,Code)
+
+[PollingStation]
+Code
+Name
+IdParish:FK(Parish,Code)
+
+[ElectionArea]
+Name
+
+[ElectionCat]
+Name
+
+[ElectionType]
+Name
+
+[ElectionStatus]
+Code
+Description
+
+[Election]
+Name
+ElectDate
+Round
+IdElectionType:FK(ElectionType,Name)
+IdElectionArea:FK(ElectionArea,Name)
+IdElectionCat:FK(ElectionCat,Name)
+IdElectionStatus:FK(ElectionStatus,Description)
+
+[Party]
+Code
+Description
+
+[Candidate]
+IdParty:FK(Party,Code)
+IdElection:FK(Election,Name)
+FirstName
+LastName
+OtherName
+Gender
+VoterID
+
+[DeclResultStatus]
+Code
+Description
+
+[ProvBatchLog]
+GenDate
+
+[TrForm]
+IdElection:FK(Election,Name)
+IdDistrict:FK(District,Name)  
+TrFormScan:Image
+
+[CandResult]
+IdDeclResult:FK(DeclResult,Id)
+IdCandidate:FK(Candidate,FirstName)
+CandResult:Integer
+
+[ElectionAreaDemarcation]
+ElectionArea:FK(ElectionArea,Name)
+IdPollingStation:FK(PollingStation,Name)
+Status
+CreatedData
+
+[PollingStationElection]
+IdElection:FK(Election,Name)
+IdPollingStation:FK(PollingStation,Name)
+IdDeclResultStatus:FK(DeclResultStatus,Description)
+IdProvBatchLog:FK(ProvBatchLog,Id)
+RejectedReason
+CreatedDate
+
+[DeclResult]
+IdPollingStationElection:FK(PollingStationElection,Id)
+RegVoters:Integer
+SpoiltVoters:Integer
+InvalidVotes:Integer
+ValidVotes:Integer
+SerialNumber
+InvalidFlag:Integer
+InvalidReason
+DrFormScan1:Image
+DrFormScan2:Image
+MaleVoters:Integer
+FemaleVoters:Integer

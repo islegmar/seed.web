@@ -1,0 +1,51 @@
+{include({startHTML})}
+{include({startWidgetHTML})}
+
+<!-- !back -->
+<button id="b{CurrentWidgetID}Back" class="btn btn-secondary btn-previous mvm _btnBack" onClick="history.go(-1);return true;">
+  <span class="ci ci-chevron-left d-table-cell v-middle"></span>
+  <span class="d-table-cell v-middle _i18n">{i18n(PreviousPage)}</span>
+</button>
+<!-- /back -->
+
+<!-- !title -->
+<div class="page-title">
+  <h1>
+    <span class="_i18n">{i18n({MODULE}:{ActionName}:Title)}</span>
+  </h1>
+
+  <div id="p{CurrentWidgetID}GlobalActions" class="page-title-addons w-55">
+    <span class="_template">
+      <a class="btn btn-default url">
+        <span class="name"></span>
+      </a>
+    </span>
+  </div>  
+</div>
+<!-- /title -->
+
+<script>
+$('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
+  @@if {IsPropertyDefined(feOnly,true)}
+  @@else
+  $.getJSON(
+    "{urlBE(/service/{MODULE}/service/{ActionName}{MODULE})}",
+    {ActionParamsObject(widgetData)},
+    function(data) {
+    } 
+  ); 
+  @@endif
+  
+  @@if {IsPropertyDefined(globalActions)}
+  buildGlobalActions(
+    $('#p{CurrentWidgetID}GlobalActions'), 
+    $('#p{CurrentWidgetID}Errors'),
+    {GlobalActions(widgetData["actionParams"])}, 
+    widgetData['User']
+  );
+  @@endif
+}); //custom.ready
+</script>
+
+{include({endWidgetHTML})}
+{include({endHTML})}

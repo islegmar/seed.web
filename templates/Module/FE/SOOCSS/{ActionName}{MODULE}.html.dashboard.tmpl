@@ -1,0 +1,16 @@
+## Dashboard page
+## In the JSON several SECTION are defined and for every section a serie of ACTION
+{include({startHTML})}
+{include({startWidgetHTML})}
+
+<h1 class="_i18n">{i18n({MODULE}:{ActionName}:Title)}</h1>
+
+{DashboardSections}
+    
+<script>
+$('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
+});
+</script>
+
+{include({endWidgetHTML})}
+{include({endHTML})}

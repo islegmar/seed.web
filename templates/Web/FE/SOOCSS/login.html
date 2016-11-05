@@ -1,0 +1,85 @@
+{include({startHTML})}
+
+
+<div class="row">
+	<!-- welcome msg -->
+	<div class="col-xs-12 col-sm-6 col-sm-offset-3 text-center">
+		<h1 class="_i18n">{i18n(Welcome2App)}</h1>
+	</div>
+
+	<!-- login form -->
+	<div class="col-xs-12 col-sm-6 col-sm-offset-3">
+		<form id="doLogin" class="form-block" action="{urlBE(/service/Login)}" role="form">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<!-- Error -->					
+          <div class="form-group">
+            <div id="error" class="alert alert-danger">
+              <span class="ci ci-error"></span>
+              <span class="fwb"></span>
+            </div>
+          </div>
+
+					<!-- Login -->					
+					<div class="form-group">
+						<label for="input_user" class="control-label fsm fwl"><i class="ci ci-profile"></i><span class="_i18n">{i18n(UserLogin)}</span></label>
+						<div class="form-control-msg _i18n" style="display:none;" role="alert" aria-live="polite">{i18n(EnterValidLogin)}</div>
+						<input id="input_user" name="login" type="text" class="form-control">
+					</div>
+
+					<!-- Password -->					
+					<div class="form-group">
+						<label for="input_password" class="control-label fsm fwl"><i class="ci ci-password"></i><span class="_i18n">{i18n(UserPassword)}</span></label>
+						<div class="form-control-msg _i18n" style="display:none;" role="alert" aria-live="polite">{i18n(EnterValidPassword)}</div>
+						<div class="input-group">
+							<input id="input_password" type="password" name="password" class="form-control">
+							<span class="input-group-addon"><input type="checkbox"><span class="pls">Show</span></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<button id="btn_login" type="submit" class="btn btn-primary w-100 text-uppercase fsm _i18n">{i18n(UserSingIn)}</button>
+					</div>
+				</div>
+
+        <div class="panel-footer">
+          <div class="row">
+            <div class="col-xs-6 mvs">
+              <a href="./_User/PublicRegister_User.html">
+                <span class="_i18n">{i18n(_User:PublicRegister:Title)}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+			   
+      </div>
+		</form>
+	</div>
+
+</div><!-- /row -->
+
+<script>
+var THIS_PAGE_PERMISSION = '';
+var $form = $('#doLogin');
+$form.jsonform({
+  'hash4PwdFields' : false,
+  'cbSave' : function(data) {
+    // Clean all errors
+    $form.find('.form-group').removeClass('has-error');
+      $form.find('#error .fwb').text('');
+
+    // Show error messages
+    if ( data.error ) {
+      $form.find('#error .fwb').text(data.error.translate());
+      $form.find('.form-group').addClass('has-error');
+    // After successful login, clean the cache of the translations
+    } else {
+    	localStorage.removeItem('__i18n__');
+
+    	// onLoginUtl has the form of /[module]/..... and this file is in the root
+      document.location='.' + data.onLoginUrl;
+    }
+  }
+}); 
+</script>
+
+{include({endHTML})}		

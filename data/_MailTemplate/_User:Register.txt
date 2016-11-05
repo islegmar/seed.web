@@ -1,0 +1,4 @@
+Welcome $name to webrad!
+
+This your activation e-mail : $url
+

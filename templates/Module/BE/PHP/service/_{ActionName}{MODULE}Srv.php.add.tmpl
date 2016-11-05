@@ -1,0 +1,98 @@
+<?php
+require_once(INTERNAL_ROOT_DIR . '/service/ServiceWebrad.php');
+require_once(INTERNAL_ROOT_DIR . '/BeanValidateException.php');
+require_once(INTERNAL_ROOT_DIR . '/utils/FactoryObject.php');
+require_once(INTERNAL_ROOT_DIR . '/utils/ValidateBeanData.php');
+require_once(INTERNAL_ROOT_DIR . '/security/ActionDeniedException.php');
+
+/**
+ * Adds a {MODULE} - generated code
+ */
+class _{ActionName}{MODULE}Srv extends ServiceWebrad {
+  // ------------------------------------------------------------------- Service
+  /**
+   * Steps to add a new object:
+   * - Validate the data
+   * - If OK, fill the object with data and create in database
+   * - If KO, return an error
+   */
+	protected function performImpl() {
+    // Get an empty instance
+    $obj = $this->getObject2Add();
+
+    // Validate the data
+    $this->validateInputData($obj);
+
+    // Everything has gone fine, create the bean in the database
+    $this->fillBean($obj);
+    $this->createInDatabase($obj);
+
+    // Return the minimum info
+    return array(
+      "Id" => $obj->getId(),
+      "msgOK" => "{i18n({MODULE}:{ActionName}:OK)}"
+    );    
+  }
+
+  protected function getPermissionNeeded () {
+    return '{PermissionName}';
+  }
+
+  // ----------------------------------------------- To be overwritten if needed
+  /**
+   * Returns an instance of the object that will be added, an empty instance
+   * of {MODULE}.
+   */ 
+  protected function getObject2Add() {
+    return FactoryObject::newObject('{MODULE}');
+  }
+
+
+  // Validate the data
+  // In order to obtain the values use the method:
+  // $this->getParamValue(<paramName>,<defaultValue>)
+  // @param : $obj an empty instance of {MODULE} (used in some validators)
+  public function validateInputData($obj) {  
+    $beanValidate = new ValidateBeanData();
+
+    {BeanValidations($obj, $beanValidate)}
+
+    // Return the errors (if any)
+    $errors = $beanValidate->getErrors(); 
+    if ( !empty($errors) ) {
+      throw new BeanValidateException($errors);
+    }
+  }
+
+  // Fill the Bean with data coming from the request
+  // In order to obtain the values use the method:
+  // $this->getParamValue(<paramName>,<defaultValue>)
+  // @param : $obj an empty instance of {MODULE} 
+  public function fillBean($obj) {
+    // Set the value IdOwner
+    // @TODO : review if we do it here.....
+    $ppal = WebSession::getInstance()->getPrincipal();
+    if ( !$ppal->isAnonymous() ) {
+      $obj->setIdOwner($ppal->getId());
+    } 
+
+    // Fill the bean ONLY with those fields we have defined in the action
+    {FillBean($obj)}
+  } 
+
+  // Create in database and return the data
+  // @param : $obj a filled instance of {MODULE} 
+  public function createInDatabase($obj) {
+    $obj->createInDatabase();
+  } 
+
+  // Methods for log info
+  protected function getAction4Logger() {
+    return "{MODULE}:{ActionName}";
+  }
+
+  protected function getParamsAsString() {
+    return {ParamsAsString4Log};
+  }
+}
+?>

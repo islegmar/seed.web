@@ -1,0 +1,547 @@
+
+# -----------------------------------------------
+# Global keys
+# -----------------------------------------------
+AskConfirmationNo=No
+AskConfirmationYes=Yes
+DayMinFr=Fr
+DayMinMo=Mo
+DayMinSa=Sa
+DayMinSu=Su
+DayMinTh=Th
+DayMinTu=Tu
+DayMinWd=Wd
+EnterSite=EnterSite
+EnterValidLogin=You must enter a valid User ID
+EnterValidPassword=You must enter a valid Password
+FilterBoolAll=FilterBoolAll
+FilterBoolNo=FilterBoolNo
+FilterBoolYes=FilterBoolYes
+Go2Login=Go2Login
+Go2PublicSite=Go2PublicSite
+GoHome=GoHome
+Languages=Languages
+ListActions=ListActions
+ListAdvancedSearch=ListAdvancedSearch
+ListPage=ListPage
+ListPageOf=ListPageOf
+ListSearch=ListSearch
+ListTotRecords=ListTotRecords
+Logout=Logout
+Month01=January
+Month02=February
+Month03=March
+Month04=April
+Month05=May
+Month06=June
+Month07=July
+Month08=August
+Month09=September
+Month10=October
+Month11=November
+Month12=December
+NoPermission=NoPermission
+Print=Print
+SelectLang=SelectLang
+SwitchLang=SwitchLang
+UserLogin=User ID
+UserPassword=Password
+UserSingIn=Sing in
+Welcome2App=Welcome2App
+ar=Arabic
+en=English
+es=Spanish
+
+# -----------------------------------------------
+# _AuditLog
+# -----------------------------------------------
+
+# Globals
+_AuditLog:Action=_AuditLog:Action
+_AuditLog:Hash=_AuditLog:Hash
+_AuditLog:Id_User=_AuditLog:Id_User
+_AuditLog:Info=_AuditLog:Info
+_AuditLog:IsValid=_AuditLog:IsValid
+_AuditLog:Module=_AuditLog:Module
+_AuditLog:TheDate=_AuditLog:TheDate
+
+# Action : ListAll
+_AuditLog:ListAll:NoData=_AuditLog:ListAll:NoData
+_AuditLog:ListAll:Title=_AuditLog:ListAll:Title
+
+# Action : ViewAll
+_AuditLog:ViewAll:Title=_AuditLog:ViewAll:Title
+
+# -----------------------------------------------
+# _ConfigApp
+# -----------------------------------------------
+
+# Globals
+_ConfigApp:Css=_ConfigApp:Css
+_ConfigApp:Logo=_ConfigApp:Logo
+
+# Action : AddAll
+_ConfigApp:AddAll:OK=_ConfigApp:AddAll:OK
+_ConfigApp:AddAll:Submit=_ConfigApp:AddAll:Submit
+_ConfigApp:AddAll:Title=_ConfigApp:AddAll:Title
+
+# Action : DelAll
+_ConfigApp:DelAll:AskConfirmation=_ConfigApp:DelAll:AskConfirmation
+_ConfigApp:DelAll:Error=_ConfigApp:DelAll:Error
+_ConfigApp:DelAll:OK=_ConfigApp:DelAll:OK
+_ConfigApp:DelAll:Title=_ConfigApp:DelAll:Title
+
+# Action : ListAll
+_ConfigApp:ListAll:NoData=_ConfigApp:ListAll:NoData
+_ConfigApp:ListAll:Title=_ConfigApp:ListAll:Title
+
+# Action : ModAll
+_ConfigApp:ModAll:OK=_ConfigApp:ModAll:OK
+_ConfigApp:ModAll:Submit=_ConfigApp:ModAll:Submit
+_ConfigApp:ModAll:Title=_ConfigApp:ModAll:Title
+
+# Action : ViewAll
+_ConfigApp:ViewAll:Title=_ConfigApp:ViewAll:Title
+
+# -----------------------------------------------
+# _DocTemplate
+# -----------------------------------------------
+
+# Globals
+_DocTemplate:Name=_DocTemplate:Name
+_DocTemplate:NameErrorTooLong=_DocTemplate:NameErrorTooLong
+_DocTemplate:Template=_DocTemplate:Template
+_DocTemplate:Xsl=_DocTemplate:Xsl
+
+# Action : AddAll
+_DocTemplate:AddAll:OK=_DocTemplate:AddAll:OK
+_DocTemplate:AddAll:Submit=_DocTemplate:AddAll:Submit
+_DocTemplate:AddAll:Title=_DocTemplate:AddAll:Title
+
+# Action : DelAll
+_DocTemplate:DelAll:AskConfirmation=_DocTemplate:DelAll:AskConfirmation
+_DocTemplate:DelAll:Error=_DocTemplate:DelAll:Error
+_DocTemplate:DelAll:OK=_DocTemplate:DelAll:OK
+_DocTemplate:DelAll:Title=_DocTemplate:DelAll:Title
+
+# Action : ListAll
+_DocTemplate:ListAll:NoData=_DocTemplate:ListAll:NoData
+_DocTemplate:ListAll:Title=_DocTemplate:ListAll:Title
+
+# Action : ModAll
+_DocTemplate:ModAll:OK=_DocTemplate:ModAll:OK
+_DocTemplate:ModAll:Submit=_DocTemplate:ModAll:Submit
+_DocTemplate:ModAll:Title=_DocTemplate:ModAll:Title
+
+# Action : ViewAll
+_DocTemplate:ViewAll:Title=_DocTemplate:ViewAll:Title
+
+# -----------------------------------------------
+# _File
+# -----------------------------------------------
+
+# Globals
+_File:Mimetype=_File:Mimetype
+_File:Path=_File:Path
+
+# Action : ListAll
+_File:ListAll:NoData=_File:ListAll:NoData
+_File:ListAll:Title=_File:ListAll:Title
+
+# Action : ViewAll
+_File:ViewAll:Title=_File:ViewAll:Title
+
+# -----------------------------------------------
+# _I18N
+# -----------------------------------------------
+
+# Globals
+_I18N:Id_Lang=_I18N:Id_Lang
+_I18N:Name=_I18N:Name
+_I18N:NameErrorTooLong=_I18N:NameErrorTooLong
+_I18N:Text=_I18N:Text
+_I18N:TextErrorTooLong=_I18N:TextErrorTooLong
+
+# Action : AddAll
+_I18N:AddAll:OK=_I18N:AddAll:OK
+_I18N:AddAll:Submit=_I18N:AddAll:Submit
+_I18N:AddAll:Title=_I18N:AddAll:Title
+
+# Action : DelAll
+_I18N:DelAll:AskConfirmation=_I18N:DelAll:AskConfirmation
+_I18N:DelAll:Error=_I18N:DelAll:Error
+_I18N:DelAll:OK=_I18N:DelAll:OK
+_I18N:DelAll:Title=_I18N:DelAll:Title
+
+# Action : ListBy_Lang
+_I18N:ListBy_Lang:NoData=_I18N:ListBy_Lang:NoData
+_I18N:ListBy_Lang:Title=_I18N:ListBy_Lang:Title
+
+# Action : ModAll
+_I18N:ModAll:OK=_I18N:ModAll:OK
+_I18N:ModAll:Submit=_I18N:ModAll:Submit
+_I18N:ModAll:Title=_I18N:ModAll:Title
+
+# Action : ViewAll
+_I18N:ViewAll:Title=_I18N:ViewAll:Title
+
+# -----------------------------------------------
+# _Lang
+# -----------------------------------------------
+
+# Globals
+_Lang:Locale=_Lang:Locale
+_Lang:LocaleErrorTooLong=_Lang:LocaleErrorTooLong
+_Lang:Orientation=_Lang:Orientation
+_Lang:OrientationErrorTooLong=_Lang:OrientationErrorTooLong
+
+# Action : AddAll
+_Lang:AddAll:OK=_Lang:AddAll:OK
+_Lang:AddAll:Submit=_Lang:AddAll:Submit
+_Lang:AddAll:Title=_Lang:AddAll:Title
+
+# Action : DelAll
+_Lang:DelAll:AskConfirmation=_Lang:DelAll:AskConfirmation
+_Lang:DelAll:Error=_Lang:DelAll:Error
+_Lang:DelAll:OK=_Lang:DelAll:OK
+_Lang:DelAll:Title=_Lang:DelAll:Title
+
+# Action : ListAll
+_Lang:ListAll:NoData=_Lang:ListAll:NoData
+_Lang:ListAll:Title=_Lang:ListAll:Title
+
+# Action : ModAll
+_Lang:ModAll:OK=_Lang:ModAll:OK
+_Lang:ModAll:Submit=_Lang:ModAll:Submit
+_Lang:ModAll:Title=_Lang:ModAll:Title
+
+# Action : ViewAll
+_Lang:ViewAll:Title=_Lang:ViewAll:Title
+
+# -----------------------------------------------
+# _MailServer
+# -----------------------------------------------
+
+# Globals
+_MailServer:Active=_MailServer:Active
+_MailServer:ActiveErrorAnotherMailServerIsActive=_MailServer:ActiveErrorAnotherMailServerIsActive
+_MailServer:Auth=_MailServer:Auth
+_MailServer:Host=_MailServer:Host
+_MailServer:HostErrorIsNotUnique=_MailServer:HostErrorIsNotUnique
+_MailServer:HostErrorRequired=_MailServer:HostErrorRequired
+_MailServer:HostErrorTooLong=_MailServer:HostErrorTooLong
+_MailServer:MID=_MailServer:MID
+_MailServer:MIDErrorIsNotUnique=_MailServer:MIDErrorIsNotUnique
+_MailServer:MIDErrorRequired=_MailServer:MIDErrorRequired
+_MailServer:MIDErrorTooLong=_MailServer:MIDErrorTooLong
+_MailServer:Password=_MailServer:Password
+_MailServer:PasswordErrorTooLong=_MailServer:PasswordErrorTooLong
+_MailServer:Port=_MailServer:Port
+_MailServer:PortErrorRequired=_MailServer:PortErrorRequired
+_MailServer:PortErrorTooLong=_MailServer:PortErrorTooLong
+_MailServer:Protocol=_MailServer:Protocol
+_MailServer:ProtocolErrorRequired=_MailServer:ProtocolErrorRequired
+_MailServer:ProtocolErrorTooLong=_MailServer:ProtocolErrorTooLong
+_MailServer:Secure=_MailServer:Secure
+_MailServer:SecureErrorTooLong=_MailServer:SecureErrorTooLong
+_MailServer:Username=_MailServer:Username
+_MailServer:UsernameErrorRequired=_MailServer:UsernameErrorRequired
+_MailServer:UsernameErrorTooLong=_MailServer:UsernameErrorTooLong
+_MailServer:content=_MailServer:content
+_MailServer:subject=_MailServer:subject
+_MailServer:to=_MailServer:to
+
+# Action : AddAll
+_MailServer:AddAll:OK=_MailServer:AddAll:OK
+_MailServer:AddAll:Submit=_MailServer:AddAll:Submit
+_MailServer:AddAll:Title=_MailServer:AddAll:Title
+
+# Action : DelAll
+_MailServer:DelAll:AskConfirmation=_MailServer:DelAll:AskConfirmation
+_MailServer:DelAll:Error=_MailServer:DelAll:Error
+_MailServer:DelAll:OK=_MailServer:DelAll:OK
+_MailServer:DelAll:Title=_MailServer:DelAll:Title
+
+# Action : ListAll
+_MailServer:ListAll:NoData=_MailServer:ListAll:NoData
+_MailServer:ListAll:Title=_MailServer:ListAll:Title
+
+# Action : ModAll
+_MailServer:ModAll:OK=_MailServer:ModAll:OK
+_MailServer:ModAll:Submit=_MailServer:ModAll:Submit
+_MailServer:ModAll:Title=_MailServer:ModAll:Title
+
+# Action : SendTestMail
+_MailServer:SendTestMail:OK=_MailServer:SendTestMail:OK
+_MailServer:SendTestMail:Submit=_MailServer:SendTestMail:Submit
+_MailServer:SendTestMail:Title=_MailServer:SendTestMail:Title
+
+# Action : ViewAll
+_MailServer:ViewAll:Title=_MailServer:ViewAll:Title
+
+# -----------------------------------------------
+# _MailTemplate
+# -----------------------------------------------
+
+# Globals
+_MailTemplate:Comments=_MailTemplate:Comments
+_MailTemplate:Content=_MailTemplate:Content
+_MailTemplate:ContentErrorRequired=_MailTemplate:ContentErrorRequired
+_MailTemplate:MID=_MailTemplate:MID
+_MailTemplate:MIDErrorIsNotUnique=_MailTemplate:MIDErrorIsNotUnique
+_MailTemplate:MIDErrorRequired=_MailTemplate:MIDErrorRequired
+_MailTemplate:MIDErrorTooLong=_MailTemplate:MIDErrorTooLong
+_MailTemplate:Subject=_MailTemplate:Subject
+_MailTemplate:SubjectErrorRequired=_MailTemplate:SubjectErrorRequired
+_MailTemplate:SubjectErrorTooLong=_MailTemplate:SubjectErrorTooLong
+_MailTemplate:jsonVars=_MailTemplate:jsonVars
+_MailTemplate:to=_MailTemplate:to
+
+# Action : AddAll
+_MailTemplate:AddAll:OK=_MailTemplate:AddAll:OK
+_MailTemplate:AddAll:Submit=_MailTemplate:AddAll:Submit
+_MailTemplate:AddAll:Title=_MailTemplate:AddAll:Title
+
+# Action : DelAll
+_MailTemplate:DelAll:AskConfirmation=_MailTemplate:DelAll:AskConfirmation
+_MailTemplate:DelAll:Error=_MailTemplate:DelAll:Error
+_MailTemplate:DelAll:OK=_MailTemplate:DelAll:OK
+_MailTemplate:DelAll:Title=_MailTemplate:DelAll:Title
+
+# Action : ListAll
+_MailTemplate:ListAll:NoData=_MailTemplate:ListAll:NoData
+_MailTemplate:ListAll:Title=_MailTemplate:ListAll:Title
+
+# Action : ModAll
+_MailTemplate:ModAll:OK=_MailTemplate:ModAll:OK
+_MailTemplate:ModAll:Submit=_MailTemplate:ModAll:Submit
+_MailTemplate:ModAll:Title=_MailTemplate:ModAll:Title
+
+# Action : SendTestMail
+_MailTemplate:SendTestMail:OK=_MailTemplate:SendTestMail:OK
+_MailTemplate:SendTestMail:Submit=_MailTemplate:SendTestMail:Submit
+_MailTemplate:SendTestMail:Title=_MailTemplate:SendTestMail:Title
+
+# Action : ViewAll
+_MailTemplate:ViewAll:Title=_MailTemplate:ViewAll:Title
+
+# -----------------------------------------------
+# _Module
+# -----------------------------------------------
+
+# Globals
+_Module:Config=_Module:Config
+_Module:Name=_Module:Name
+
+# Action : ListAll
+_Module:ListAll:NoData=_Module:ListAll:NoData
+_Module:ListAll:Title=_Module:ListAll:Title
+
+# Action : ListFull
+_Module:ListFull:NoData=_Module:ListFull:NoData
+_Module:ListFull:Title=_Module:ListFull:Title
+
+# Action : SeeActionsMap
+_Module:SeeActionsMap:Title=_Module:SeeActionsMap:Title
+
+# Action : SeeEntities
+_Module:SeeEntities:Title=_Module:SeeEntities:Title
+
+# Action : ViewAll
+_Module:ViewAll:Title=_Module:ViewAll:Title
+
+# -----------------------------------------------
+# _Permission
+# -----------------------------------------------
+
+# Globals
+_Permission:Name=_Permission:Name
+
+# Action : ListAll
+_Permission:ListAll:NoData=_Permission:ListAll:NoData
+_Permission:ListAll:Title=_Permission:ListAll:Title
+
+# Action : ListNotInRole
+_Permission:ListNotInRole:NoData=_Permission:ListNotInRole:NoData
+_Permission:ListNotInRole:Title=_Permission:ListNotInRole:Title
+
+# -----------------------------------------------
+# _Role
+# -----------------------------------------------
+
+# Globals
+_Role:Name=_Role:Name
+_Role:NameErrorRequired=_Role:NameErrorRequired
+_Role:NameErrorTooLong=_Role:NameErrorTooLong
+_Role:OnLoginUrl=_Role:OnLoginUrl
+_Role:OnLoginUrlErrorRequired=_Role:OnLoginUrlErrorRequired
+_Role:OnLoginUrlErrorTooLong=_Role:OnLoginUrlErrorTooLong
+
+# Action : AddAll
+_Role:AddAll:OK=_Role:AddAll:OK
+_Role:AddAll:Submit=_Role:AddAll:Submit
+_Role:AddAll:Title=_Role:AddAll:Title
+
+# Action : DelAll
+_Role:DelAll:AskConfirmation=_Role:DelAll:AskConfirmation
+_Role:DelAll:Error=_Role:DelAll:Error
+_Role:DelAll:OK=_Role:DelAll:OK
+_Role:DelAll:Title=_Role:DelAll:Title
+
+# Action : ListAll
+_Role:ListAll:NoData=_Role:ListAll:NoData
+_Role:ListAll:Title=_Role:ListAll:Title
+
+# Action : ModAll
+_Role:ModAll:OK=_Role:ModAll:OK
+_Role:ModAll:Submit=_Role:ModAll:Submit
+_Role:ModAll:Title=_Role:ModAll:Title
+
+# Action : ViewAll
+_Role:ViewAll:Title=_Role:ViewAll:Title
+
+# -----------------------------------------------
+# _Role_Permission
+# -----------------------------------------------
+
+# Globals
+_Role_Permission:Id_Permission=_Role_Permission:Id_Permission
+_Role_Permission:Id_Role=_Role_Permission:Id_Role
+
+# Action : Add4Role
+_Role_Permission:Add4Role:OK=_Role_Permission:Add4Role:OK
+_Role_Permission:Add4Role:Submit=_Role_Permission:Add4Role:Submit
+_Role_Permission:Add4Role:Title=_Role_Permission:Add4Role:Title
+
+# Action : DelAll
+_Role_Permission:DelAll:AskConfirmation=_Role_Permission:DelAll:AskConfirmation
+_Role_Permission:DelAll:Error=_Role_Permission:DelAll:Error
+_Role_Permission:DelAll:OK=_Role_Permission:DelAll:OK
+_Role_Permission:DelAll:Title=_Role_Permission:DelAll:Title
+
+# Action : ListPermissionsByRole
+_Role_Permission:ListPermissionsByRole:NoData=_Role_Permission:ListPermissionsByRole:NoData
+_Role_Permission:ListPermissionsByRole:Title=_Role_Permission:ListPermissionsByRole:Title
+
+# Action : MassiveUpdate
+_Role_Permission:MassiveUpdate:OK=_Role_Permission:MassiveUpdate:OK
+_Role_Permission:MassiveUpdate:Submit=_Role_Permission:MassiveUpdate:Submit
+_Role_Permission:MassiveUpdate:Title=_Role_Permission:MassiveUpdate:Title
+
+# Action : ModAll
+_Role_Permission:ModAll:OK=_Role_Permission:ModAll:OK
+_Role_Permission:ModAll:Submit=_Role_Permission:ModAll:Submit
+_Role_Permission:ModAll:Title=_Role_Permission:ModAll:Title
+
+# Action : ViewAll
+_Role_Permission:ViewAll:Title=_Role_Permission:ViewAll:Title
+
+# -----------------------------------------------
+# _User
+# -----------------------------------------------
+
+# Globals
+_User:DoB=_User:DoB
+_User:Email=_User:Email
+_User:EmailErrorIsNotEmail=_User:EmailErrorIsNotEmail
+_User:EmailErrorIsNotUnique=_User:EmailErrorIsNotUnique
+_User:EmailErrorRequired=_User:EmailErrorRequired
+_User:HomePageRootLowLevelConfigDesc=_User:HomePageRootLowLevelConfigDesc
+_User:HomePageRootLowLevelConfigTitle=_User:HomePageRootLowLevelConfigTitle
+_User:HomePageRootMailConfigDesc=_User:HomePageRootMailConfigDesc
+_User:HomePageRootMailConfigTitle=_User:HomePageRootMailConfigTitle
+_User:HomePageRootSystemConfigDesc=_User:HomePageRootSystemConfigDesc
+_User:HomePageRootSystemConfigTitle=_User:HomePageRootSystemConfigTitle
+_User:HomePageRootUsersDesc=_User:HomePageRootUsersDesc
+_User:HomePageRootUsersTitle=_User:HomePageRootUsersTitle
+_User:Id_Role=_User:Id_Role
+_User:Id_RoleErrorRequired=_User:Id_RoleErrorRequired
+_User:Id_UserStatus=_User:Id_UserStatus
+_User:Login=_User:Login
+_User:LoginErrorIsNotUnique=_User:LoginErrorIsNotUnique
+_User:LoginErrorRequired=_User:LoginErrorRequired
+_User:LoginErrorTooLong=_User:LoginErrorTooLong
+_User:OnLoginUrl=_User:OnLoginUrl
+_User:OnLoginUrlErrorTooLong=_User:OnLoginUrlErrorTooLong
+_User:PWDErrorDontMatch=_User:PWDErrorDontMatch
+_User:Password=_User:Password
+_User:PasswordErrorRequired=_User:PasswordErrorRequired
+_User:PasswordErrorTooLong=_User:PasswordErrorTooLong
+_User:pwd1=_User:pwd1
+_User:pwd1ErrorRequired=_User:pwd1ErrorRequired
+_User:pwd1ErrorTooLong=_User:pwd1ErrorTooLong
+_User:pwd2=_User:pwd2
+_User:pwd2ErrorRequired=_User:pwd2ErrorRequired
+_User:pwd2ErrorTooLong=_User:pwd2ErrorTooLong
+
+# Action : ActivateByCode
+_User:ActivateByCode:Title=_User:ActivateByCode:Title
+
+# Action : AddAll
+_User:AddAll:OK=_User:AddAll:OK
+_User:AddAll:Submit=_User:AddAll:Submit
+_User:AddAll:Title=_User:AddAll:Title
+
+# Action : DelAll
+_User:DelAll:AskConfirmation=_User:DelAll:AskConfirmation
+_User:DelAll:Error=_User:DelAll:Error
+_User:DelAll:OK=_User:DelAll:OK
+_User:DelAll:Title=_User:DelAll:Title
+
+# Action : GetCurrent
+_User:GetCurrent:Title=_User:GetCurrent:Title
+
+# Action : HomePageAdmin
+_User:HomePageAdmin:Title=_User:HomePageAdmin:Title
+
+# Action : HomePageRoot
+_User:HomePageRoot:Title=_User:HomePageRoot:Title
+
+# Action : ListAll
+_User:ListAll:NoData=_User:ListAll:NoData
+_User:ListAll:Title=List of Users
+
+# Action : ModAll
+_User:ModAll:OK=_User:ModAll:OK
+_User:ModAll:Submit=_User:ModAll:Submit
+_User:ModAll:Title=_User:ModAll:Title
+
+# Action : ModMySelf
+_User:ModMySelf:OK=_User:ModMySelf:OK
+_User:ModMySelf:Submit=_User:ModMySelf:Submit
+_User:ModMySelf:Title=_User:ModMySelf:Title
+
+# Action : ViewAll
+_User:ViewAll:Title=_User:ViewAll:Title
+
+# Action : ViewMySelf
+_User:ViewMySelf:Title=_User:ViewMySelf:Title
+
+# -----------------------------------------------
+# _UserStatus
+# -----------------------------------------------
+
+# Globals
+_UserStatus:Name=_UserStatus:Name
+_UserStatus:NameErrorTooLong=_UserStatus:NameErrorTooLong
+
+# Action : AddAll
+_UserStatus:AddAll:OK=_UserStatus:AddAll:OK
+_UserStatus:AddAll:Submit=_UserStatus:AddAll:Submit
+_UserStatus:AddAll:Title=_UserStatus:AddAll:Title
+
+# Action : DelAll
+_UserStatus:DelAll:Error=_UserStatus:DelAll:Error
+_UserStatus:DelAll:OK=_UserStatus:DelAll:OK
+
+# Action : ListAll
+_UserStatus:ListAll:NoData=_UserStatus:ListAll:NoData
+_UserStatus:ListAll:Title=_UserStatus:ListAll:Title
+
+# Action : ModAll
+_UserStatus:ModAll:OK=_UserStatus:ModAll:OK
+_UserStatus:ModAll:Submit=_UserStatus:ModAll:Submit
+_UserStatus:ModAll:Title=_UserStatus:ModAll:Title
+
+# Action : ViewAll
+_UserStatus:ViewAll:Title=_UserStatus:ViewAll:Title

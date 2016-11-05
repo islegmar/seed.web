@@ -1,0 +1,38 @@
+<?php
+require_once(INTERNAL_ROOT_DIR . '/service/ServiceWebrad.php');
+require_once(INTERNAL_ROOT_DIR . '/db/DBConnectionManager.php');
+require_once(INTERNAL_ROOT_DIR . '/security/ActionDeniedException.php');
+
+/**
+ * Chart Data for {MODULE} - generated code
+ */
+class _{ActionName}{MODULE}Srv extends ServiceWebrad {
+  protected $filterValues=null;
+
+  // ------------------------------------------------------------------- Service
+  protected function performImpl() {
+    ## @TODO : Avoid the use of $this->filterValues (it comes from the list template) or add arguments to SQLParamValues4PaggedList so we can specify $data and and $this->filterValues   
+    $data = array();
+    $this->filterValues = $this->getParamValue('filter', null);
+    ## It will build $data using data coming from $this->filterValues
+    {SQLParamValues4PaggedList}
+
+    $db = DBConnectionManager::get();
+    $db->executeQuery("{ActionSQL}", $data);
+    return $db->loadResult();
+  }
+
+  protected function getPermissionNeeded () {
+    return '{PermissionName}';
+  }
+
+  // Methods for log info
+  protected function getAction4Logger() {
+    return "{MODULE}:{ActionName}";
+  }
+
+  protected function getParamsAsString() {
+    return {ParamsAsString4Log};
+  }  
+}
+?>

@@ -1,0 +1,134 @@
+{
+  "fields" : [
+    {                                          
+      "name" : "Id_Role",    
+      "type" : "FK",                           
+      "module"  : "_Role",
+      "actionName"  : "ListAll",
+      "fieldName" : "Name",
+      "relationType" : "aggregation"
+    },
+    {                                          
+      "name" : "Id_Permission",                         
+      "type" : "FK",                           
+      "module"  : "_Permission",
+      "actionName"  : "ListAll",
+      "fieldName" : "Name",
+      "relationType" : "aggregation"
+    }
+  ],
+  "actions" : [
+    { 
+      "name" : "ModAll",
+      "type" : "mod",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    { 
+      "name" : "DelAll",
+      "type" : "del",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    { 
+      "name" : "Load",
+      "type" : "load",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {                                                                  
+      "name" : "ListPermissionsByRole", 
+      "type" : "list",                                                 
+      "fields" : [  
+        {"name" : "Id_Permission"}
+      ],                                                               
+      "params" : [
+        { "name" : "Id_Role" }
+      ]                                                                
+    },
+    {                                                                  
+      "name" : "Add4Role",            
+      "type" : "add",                                                 
+      "fields" : [  
+        { 
+          "name" : "Id_Role", 
+          "hide" : "true" 
+        },
+        { 
+          "name" : "Id_Permission",
+          "type" : "FK",
+          "config" : {
+            "FK" : {
+              "actionName"  : "ListNotInRole",
+              "fieldName" : "Name",
+              "params" : [
+                { "name" : "IdRole", "value" : "$Id_Role" }
+              ]
+            }
+          }
+        }
+      ],                                                               
+      "params" : [
+        { "name" : "Id_Role" }
+      ]                                                                
+    },
+    {                                                                  
+      "name" : "ViewAll",                                              
+      "type" : "view",
+      "globalActions" : [
+        { 
+          "module" : "_Role_Permission", 
+          "name" : "DelAll",
+          "params" : [ 
+            { "name" : "Id", "value" : "$Id" } 
+          ]
+        }
+      ],
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {                                                                  
+      "_desc" : "Show a table with all the Role / Permission to update them",
+      "name" : "MassiveUpdate",
+      "type" : "other"
+    },
+    {                                                                  
+      "_desc" : "Save the data sent by MassiveUpdate",
+      "name" : "SaveMassiveUpdate",
+      "type" : "other",
+      "beOnly" : true
+    },
+    { 
+      "name" : "ImportByRole",
+      "type" : "import",
+      "transformer" : {
+        "fields" : [
+          {
+            "name" : "Id_Permission", 
+            "indexes" : [ { "index" : 0 } ],
+            "transformer" : "TransformField2PKId",
+            "config" : {
+              "beanName"  : "_Permission",
+              "fieldName" : "Name"
+            }
+          },
+          {
+            "name" : "Id_Role", 
+            "indexes" : [ { "index" : "Id_Role" } ],
+            "transformer" : "TransformString"
+          }
+        ]
+      },
+      "params" : [
+        { "name" : "Id_Role"}
+      ]
+    }
+  ],
+  "values" : {
+    "sqlOrder" : 1050
+  }
+}

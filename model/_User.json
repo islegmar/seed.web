@@ -1,0 +1,351 @@
+{
+  "fields" : [
+    { 
+      "name" : "Login",
+      "type" : "String", 
+      "required" : true,
+      "unique" : true,
+      "max_len" : 50
+    },
+    { 
+      "name" : "Password", 
+      "type" : "Password", 
+      "required" : true,
+      "max_len" : 60
+    },
+    {                                          
+      "name" : "Id_Role",
+      "type" : "FK",         
+      "required" : true,            
+      "module"  : "_Role",
+      "actionName"  : "ListAll",
+      "fieldName" : "Name"
+    },
+    {                                          
+      "name" : "Email",
+      "type" : "Email",
+      "required" : true,
+      "unique" : true
+    },
+    {                                          
+      "name" : "Id_UserStatus",
+      "type" : "FK",                           
+      "module"  : "_UserStatus",
+      "actionName"  : "ListAll",
+      "fieldName" : "Name"
+    },
+    { 
+      "name" : "OnLoginUrl", 
+      "type" : "String", 
+      "max_len" : 255
+    },
+    {
+      "name" : "ActivationCode", 
+      "type" : "String", 
+      "max_len" : 255
+    }
+  ],
+  "actions" : [
+    { 
+      "name" : "AddAll", 
+      "type" : "add"
+    },
+    { 
+      "name" : "ModAll",
+      "type" : "mod",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    { 
+      "name" : "DelAll",
+      "type" : "del",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    { 
+      "name" : "Load",
+      "type" : "load",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name": "ListAll",
+      "type": "list",
+      "fields" : [
+        { "name" : "Login"   },
+        { "name" : "Id_Role" },
+        { "name" : "Email" },
+        { "name" : "Id_UserStatus" } 
+      ],
+      "itemActions" : [
+        {
+          "module" : "_User",
+          "name" : "DelAll",
+          "style" : "outrow",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        },
+        {
+          "module" : "_User",
+          "name" : "ModAll",
+          "style" : "outrow",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        }
+      ],
+      "globalActions" : [
+        {
+          "module" : "_User",
+          "name" : "AddAll"
+        }
+      ],
+      "onClick" : {
+        "module" : "_User",            
+        "actionName" : "ViewAll",              
+        "params" : [          
+          { "name" : "Id", "value" : "$Id" },                            
+          { "name" : "userName", "value" : "$Login" }   
+        ]
+      }
+    },
+    {
+      "name": "ViewAll",
+      "type": "view",
+      "globalActions" : [
+        {
+          "module" : "_Role_Permission",
+          "name" : "Add4Role",
+          "params" : [
+            { "name" : "Id_Role", "value" : "$Id_Role" }
+          ]
+        },
+        {
+          "module" : "_User",
+          "name" : "ModAll",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        },
+        {
+          "module" : "_User",
+          "name" : "DelAll",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        }
+      ],
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "_desc" : "The user sees his own info",
+      "name": "ViewMySelf",
+      "type": "view",
+      "loadDataURL" : {
+        "module" : "_User",
+        "name" : "GetCurrent"
+      },
+      "fields" : [
+        { "name" : "Login" },
+        { "name" : "Email" }
+      ],
+      "globalActions" : [
+        {
+          "module" : "_User",
+          "name" : "ModMySelf"
+        },
+        {
+          "module" : "_User",
+          "name" : "ChangeMyPassword"
+        }
+      ]
+    },
+    {
+      "_desc" : "The user update his own info",
+      "name": "ModMySelf",
+      "type": "mod",
+      "loadDataURL" : {
+        "module" : "_User",
+        "name" : "GetCurrent"
+      },
+      "fields" : [
+        { "name" : "Login", "readOnly" : true },
+        { "name" : "Email" }
+      ]
+    },
+    {
+      "_desc" : "The user changes his password",
+      "name": "ChangeMyPassword",
+      "type": "mod",
+      "loadDataURL" : {
+        "module" : "_User",
+        "name" : "GetCurrent"
+      },
+      "fields" : [
+        { "name" : "Login", "readOnly" : true },
+        { "name" : "pwd1", "required"  : true, "type": "Password" },
+        { "name" : "pwd2", "required"  : true, "type": "Password" }
+      ]
+    },
+    {
+      "_desc" : "(Public) Active a user account after clicking a link with an activation code",
+      "name": "ActivateByCode",
+      "type": "mod",
+      "beOnly" : true,
+      "permission" : "",
+      "fields" : [
+        { "name" : "ActivationCode", "required" : true, "value" : "null" },
+        { "name" : "Id_UserStatus" , "value" : "ACTIVE" }
+      ],
+      "params" : [
+        { "name" : "ActivationCode" }
+      ]
+    },
+    {
+      "_desc" : "Get the info for the curent loggede user or empty if nobody is logged",
+      "name": "GetCurrent",
+      "type": "other",
+      "beOnly" : true,
+      "permission" : ""
+    },
+    {
+      "name": "HomePageRoot",
+      "type": "dashboard",
+      "config" : {
+        "sections" : [
+          {
+            "name" : "Users",
+            "actions" : [
+              {
+                "module" : "_User",
+                "name" : "OverviewUMS"
+              },
+              {
+                "module" : "_User",
+                "name" : "OverviewI18N"
+              },
+              {
+                "module" : "_User",
+                "name" : "OverviewSystemConfig"
+              }
+            ]
+          }                                                                                
+        ]
+      }
+    },
+    {
+      "name": "HomePageAdmin",
+      "type": "dashboard"
+    },
+    {
+      "_desc" : "Overview of all the info related with users, roles and permissions",
+      "name" : "OverviewUMS",    
+      "type": "composed",
+      "sections" : [
+        {
+          "actions" : [
+            {
+              "module" : "_User",
+              "name" : "ListAll"
+            },
+            {
+              "module" : "_Role",
+              "name" : "ListAll"
+            },
+            {
+              "module" : "_Role_Permission",
+              "name" : "MassiveUpdate"
+            }
+          ]
+        }
+      ]
+    },     
+    {
+      "_desc" : "Overview of all the info related low level configuration",
+      "name" : "OverviewSystemConfig",    
+      "type": "composed",
+      "sections" : [
+        {
+          "actions" : [
+            {
+              "module" : "_MailServer",
+              "name" : "ListAll"
+            },
+            {
+              "module" : "_MailTemplate",
+              "name" : "ListAll"
+            },
+            {
+              "module" : "_ConfigApp",
+              "name" : "ListAll"
+            },
+            {
+              "module" : "_Module",
+              "name" : "ListAll"
+            }
+          ]
+        }
+      ]
+    },     
+    {
+      "_desc" : "Overview of all the info related with I18N",
+      "name" : "OverviewI18N",    
+      "type": "composed",
+      "sections" : [
+        {
+          "actions" : [
+            {
+              "module" : "_Lang",
+              "name" : "ListAll"
+            },
+            {
+              "module" : "_I18N",
+              "name" : "ListAll"
+            },
+            {
+              "module" : "_MailTemplate",
+              "name" : "ListAll"
+            },
+            {
+              "module" : "_DocTemplate",
+              "name" : "ListAll"
+            }
+          ]
+        }
+      ]
+    },     
+    {
+      "_desc" : "(Public) User can register himself",
+      "name" : "PublicRegister",
+      "type" : "add",
+      "permission" : "",
+      "fields" : [
+        { "name" : "Login" },
+        { "name" : "Email" },
+        { "name" : "pwd1", "required" : true },
+        { "name" : "pwd2", "required" : true },
+        { "name" : "Id_UserStatus" , "value" : "INACTIVE"  , "hide" : true },
+        { "name" : "Id_Role"       , "value" : "registered", "hide" : true }
+      ]
+    },
+    {
+      "_desc" : "(Public) Page shown with info after a user has activateted his account",
+      "name" : "ActivateAccount",
+      "type" : "other",
+      "feOnly" : true,
+      "permission" : "",
+      "params" : [
+        { "name" : "ActivationCode" }
+      ]
+    }
+  ],
+  "values" : {
+    "sqlOrder" : 1060
+  }
+}

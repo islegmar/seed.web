@@ -1,0 +1,71 @@
+{
+  "fields" : [
+    { 
+      "name" : "Name", 
+      "type" : "Word", 
+      "required" : true,
+      "type" : "String",
+      "max_len" : 50
+    },
+    { 
+      "name" : "Config", 
+      "type" : "Text"
+    }
+  ],
+  "actions" : [
+    { 
+      "name" : "Load",
+      "type" : "load",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "ListAll",
+      "type" : "list",
+      "fields" : [
+        { "name" : "Name" }
+      ],
+      "globalActions" : [
+        { 
+          "module" : "_Module", 
+          "name" : "SeeEntities"
+        }             
+      ]
+    },
+    {
+      "name" : "ListFull",
+      "type" : "list"
+    },
+    {
+      "name" : "ViewAll",
+      "type" : "view",
+      "globalActions" : [
+        { 
+          "module" : "_Module", 
+          "name" : "SeeActionsMap",
+          "params" : [ 
+            { "name" : "Id", "value" : "$Id" } 
+          ]
+        }                     
+      ],
+      "params" : [
+        { "name" : "Id" }
+      ]   
+    },
+    {
+      "name" : "SeeEntities",
+      "type" : "other"
+    },
+    {
+      "name" : "SeeActionsMap",
+      "type" : "other",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    }
+  ],
+  "values" : {
+    "sqlOrder" : 1110
+  }
+}

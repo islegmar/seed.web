@@ -1,0 +1,7 @@
+RewriteEngine On
+
+RewriteRule ^service/(.*)$  php/dispatcher.php?controllerName=Service2AjaxController&serviceName=$1Srv [QSA,NC,L]
+
+RewriteRule ^action/(.*)$   php/dispatcher.php?controllerName=$1Ctr [QSA,NC,L]
+
+RewriteRule ^list/(.*)$     service/ListaPaginable?_object=$1 [QSA,NC,L]

@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+  <title>Test Image Painter</title>  
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+  <script src="../jquery.imagecontainer.js"></script>
+  <script src="../jquery.canvaspainter.js"></script>
+  <script src="../jquery.rotable.js"></script>
+  <script src="../MouseDraw.js"></script>
+
+  <script type="text/javascript">
+  $(document).ready(function(){
+    $('.imagepainter').imagecontainer().rotable();
+  });
+  </script>
+  <style>
+  .imageContainer {
+    background-color: grey;
+    width:400px;
+    height: 600px;
+  }
+  </style>
+</head>
+<body>
+<button type="button" id="bSave">Save</button>
+<div class='imagepainter'>
+  <div class='imageContainer'>
+  </div>
+  <canvas></canvas>
+</div>
+
+</body>
+</html>

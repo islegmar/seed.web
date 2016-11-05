@@ -1,0 +1,93 @@
+{
+  "fields" : [
+    { 
+      "name" : "Name", 
+      "type" : "String", 
+      "required" : true,
+      "max_len" : 20
+    },
+    { 
+      "name" : "OnLoginUrl", 
+      "type" : "String", 
+      "required" : true,
+      "max_len" : 255
+    }
+  ],
+  "actions" : [
+    { 
+      "name" : "AddAll", 
+      "type" : "add"
+    },
+    { 
+      "name" : "ModAll",
+      "type" : "mod",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    { 
+      "name" : "DelAll",
+      "type" : "del",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    { 
+      "name" : "Load",
+      "type" : "load",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {                                                                  
+      "name" : "ViewAll",                                              
+      "type" : "view",                                                 
+      "fields" : [  
+        {"name" : "Name"}
+      ],
+      "globalActions" : [
+        { 
+          "module" : "_Role_Permission", 
+          "name" : "ListPermissionsByRole",
+          "params" : [ 
+            { "name" : "Id_Role", "value" : "$Id" } 
+          ]
+        },
+        {
+          "module" : "_Role_Permission",
+          "name" : "Add4Role",
+          "params" : [
+            { "name" : "Id_Role", "value" : "$Id" }
+          ]
+        },
+        { 
+          "module" : "_Role", 
+          "name" : "DelAll",
+          "params" : [ 
+            { "name" : "Id", "value" : "$Id" } 
+          ]
+        },
+        {
+          "module" : "_Role_Permission",
+          "name" : "ImportByRole",
+          "params" : [
+            { "name" : "Id_Role", "value" : "$Id" }
+          ]
+        }
+      ],
+      "params" : [
+        { "name" : "Id" }
+      ]                                                                
+    },
+    { 
+      "name" : "ListAll", 
+      "type" : "list",
+      "globalActions" : [
+        { "module" : "_Role", "name" : "AddAll" }
+      ]
+    }
+  ],
+  "values" : {
+    "sqlOrder" : 1040
+  }
+}

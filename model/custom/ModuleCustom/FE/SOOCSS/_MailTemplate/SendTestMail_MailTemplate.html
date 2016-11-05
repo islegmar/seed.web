@@ -1,0 +1,55 @@
+## The same that mod, except we do not load data and it is IDENTICAL to the one in _MailServer
+## @TODO : this could be something generated directly from the type 'other' (or 'generic')
+
+{include({startHTML})}
+{include({startWidgetHTML})}
+
+<h1 class="_i18n">{i18n({MODULE}:{ActionName}:Title)}</h1>
+
+<form id="frm{CurrentWidgetID}" action="{urlBE(/service/{MODULE}/service/{ActionName}{MODULE})}" class="form-block {MODULE}">
+  <div class="panel panel-default">
+    <!-- !panel-body -->    
+    <div class="panel-body ">
+      <input type="hidden" name="Id"></input>
+      <!-- !row -->
+      <div class="row">
+        {FormFieldsNoI18N}
+      </div>
+      <!-- /row -->
+    </div>
+    <!-- /panel-body -->
+    <div class="panel-footer">
+      <button type="submit" class="btn btn-primary _i18n">{i18n({MODULE}:{ActionName}:Submit)}</button>
+    </div>
+  </div>
+</form>
+
+<script>
+$('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
+  var $form = $('#frm{CurrentWidgetID}');
+  renderData($form, {ActionParamsObject(widgetData['actionParams'])}, null, null, true, null, null, {'notFillIfAlreadyHaveValue' : false});
+
+  $form.jsonform({
+    'createEmptyRepeatedElement' : false,
+    'validateFormUsingClientBrowser' : false,
+    'url2UploadFiles' : '{urlBE(/service/UploadFileDB)}',
+    'hash4PwdFields' : false,
+    'preSave' : function () {
+      hideFormErrorMessages($('#p{CurrentWidgetID}Errors'));
+      return true;
+    },
+    'cbSave' : function(data) {
+      if ( data.errors )  {
+        displayFormErrorMessages(data.errors, $('#p{CurrentWidgetID}Errors'));
+        return;
+      } else {
+        // Go back (usually to the list) with the code of the message that need to be shown
+        document.location = updateURLParameter(document.referrer, 'msgCode', '{i18n({MODULE}:{ActionName}:OK)}'); 
+      }         
+    } // cbSave
+  }); // jsonform()
+}); // custom.ready
+</script>
+
+{include({endWidgetHTML})}
+{include({endHTML})}

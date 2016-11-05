@@ -1,0 +1,170 @@
+{
+  "fields" : [
+    {
+      "name" : "MID",
+      "type" : "String",
+      "required" : true,
+      "unique" : true,
+      "max_len" : 255
+    },
+    {
+      "name" : "Host",
+      "type" : "String",
+      "required" : true,
+      "unique" : true,
+      "max_len" : 255
+    },
+    {
+      "name" : "Port",
+      "type" : "String",
+      "required" : true,
+      "max_len" : 150
+    },
+    {
+      "name" : "Protocol",
+      "type" : "String",
+      "required" : true,
+      "max_len" : 150
+    },
+    {
+      "name" : "Username",
+      "type" : "String",
+      "required" : true,
+      "max_len" : 150
+    },
+    {
+      "name" : "Password",
+      "type" : "String",
+      "max_len" : 150
+    },
+    {
+      "name" : "Auth",
+      "type" : "Bool"
+    },
+    {
+      "name" : "Secure",
+      "type" : "String",
+      "max_len" : 150
+    },
+    {
+      "name" : "Active",
+      "type" : "Bool"
+    },
+    {
+      "name" : "Fake",
+      "type" : "Bool"
+    }
+  ],
+  "actions" : [
+    { 
+      "name" : "Load",
+      "type" : "load",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "AddAll",
+      "type" : "add"
+    },
+    {
+      "name" : "ViewAll",
+      "type" : "view",
+      "params" : [
+        { "name" : "Id" }
+      ],
+      "globalActions" : [
+        {
+          "module" : "_MailServer",
+          "name" : "DelAll",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        },
+        {
+          "module" : "_MailServer",
+          "name" : "ModAll",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        },
+        {
+          "module" : "_MailServer",
+          "name" : "SendTestMail"
+        }
+      ]
+    },
+    {
+      "name" : "ModAll",
+      "type" : "mod",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "ListAll",
+      "type" : "list",
+      "listFilter" : null,
+      "totPerPage" : 20,
+      "fields" : [
+        { "name" : "Active" },
+        { "name" : "MID"},
+        { "name" : "Host" },
+        { "name" : "Port" },
+        { "name" : "Protocol" },
+        { "name" : "Username" },
+        { "name" : "Auth"  },
+        { "name" : "Fake" }
+      ],
+      "itemActions" : [
+        {
+          "module" : "_MailServer",
+          "name" : "DoActivate",
+          "goOnActionDone" : "refresh",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        }
+      ],
+      "globalActions" : [
+        {
+          "module" : "_MailServer",
+          "name" : "AddAll"
+        }
+      ],
+      "orderBy" : [
+        { "name" : "Active", "direcc" : "DESC" }
+      ]
+    },
+    {
+      "name" : "SendTestMail",
+      "type" : "other",
+      "fields" : [
+        { "name" : "to"},
+        { "name" : "subject" },
+        { "name" : "content", "type" : "Text" }
+      ]
+    },
+    { 
+      "name" : "DelAll",
+      "type" : "del",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    { 
+      "name" : "DoActivate",
+      "type" : "mod",
+      "beOnly" : true,
+      "fields" : [
+        { "name" : "Active", "value" : "1", "hide" : true }
+      ],
+      "params" : [
+        { "name" : "Id" }
+      ]
+    }
+  ],
+  "values" : {
+    "sqlOrder" : 1090
+  }
+}

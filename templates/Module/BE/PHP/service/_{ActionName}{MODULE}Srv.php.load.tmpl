@@ -1,0 +1,66 @@
+<?php
+require_once(INTERNAL_ROOT_DIR . '/service/ServiceWebrad.php');
+require_once(INTERNAL_ROOT_DIR . '/utils/FactoryObject.php');
+require_once(INTERNAL_ROOT_DIR . '/security/ActionDeniedException.php');
+
+/**
+ * Load one $MODULE  - generated code
+ */
+class _{ActionName}{MODULE}Srv extends ServiceWebrad {
+  // ------------------------------------------------------------------- Service
+  protected function performImpl() {
+    $data = $this->getOneObject();
+
+    // If specified, do not return only the FKs but also a user friendly info
+    // (used fex. when see detail or fields that are RO)
+    // Fex. 
+    // - IdStatus : 1
+    // - IdStatusName : ACTIVE
+    if ( $this->getParamValue('_completeFK', False) ) {
+      $this->completarData($data, DBConnectionManager::get()); 
+    }
+    
+    return $data;
+  }
+
+  /**
+   * Return a single instance of the object based on the params received
+   */
+  public function getOneObject() {  
+    $sql=<<<EOD
+    SELECT {MODULE}.Id, {AllFieldNamesCommaSeparated({MODULE})}
+      FROM {MODULE}
+    WHERE 1=1
+      ## Correpond to 'params' in the JSON 
+      {SQLParamNames4PaggedList}
+EOD;
+
+    $data = array();
+    {ParamValues4Query($data,$this->getParamValue)}
+
+    try {
+      return FactoryObject::newObject('{MODULE}')->getOne($sql, $data);
+    } catch (Exception $e) {
+      return FactoryObject::newObject('{MODULE}');
+    }
+  }
+
+  ## @TODO : Remove the parameter $db, probably irt is not needed
+  protected function completarData(&$row, $db) {
+    {DaoListCompletarRow}
+  }
+
+  protected function getPermissionNeeded () {
+    return '{PermissionName}';
+  }
+
+  // Methods for log info
+  protected function getAction4Logger() {
+    return "{MODULE}:{ActionName}";
+  }
+
+  protected function getParamsAsString() {
+    return {ParamsAsString4Log};
+  }
+}
+?>

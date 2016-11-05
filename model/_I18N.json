@@ -1,0 +1,160 @@
+{
+  "fields" : [
+    { 
+      "name" : "Name", 
+      "type" : "String", 
+      "max_len" : 64
+    },
+    { 
+      "name" : "Text", 
+      "type" : "String", 
+      "max_len" : 512
+    },
+    {                                          
+      "name" : "Id_Lang",                         
+      "type" : "FK",                           
+      "module"  : "_Lang",
+      "actionName"  : "ListAll",
+      "fieldName" : "Locale",
+      "relationType" : "aggregation"
+    }
+  ],
+  "actions" : [
+    {                                                                  
+      "name" : "AddAll",                                              
+      "type" : "add",                                                 
+      "fields" : [  
+        {"name" : "Name" },
+        {"name" : "Text" }
+      ],                                                               
+      "params" : [
+        { "name" : "Id_Lang" }
+      ]                                                                
+    },
+        { 
+      "name" : "ModAll",
+      "type" : "mod",
+      "fields" : [
+        { "name" : "Name", "readOnly" : true },
+        { "name" : "Text" }
+      ],      
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    { 
+      "name" : "DelAll",
+      "type" : "del",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    { 
+      "name" : "Load",
+      "type" : "load",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {                                                                  
+      "name" : "ListBy_Lang",                                              
+      "type" : "list",     
+      "fields" : [
+        { "name" : "Name" },
+        { "name" : "Text" }
+      ],
+      "onClick" : null,
+      "itemActions" : [
+        {
+          "module" : "_I18N",
+          "name" : "ModAll",
+          "style" : "outrow",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        }
+      ],                                            
+      "params" : [
+        { "name" : "Id_Lang" }
+      ]                                                                
+    },
+    {                                                                  
+      "name" : "ListAll",                                              
+      "type" : "list",     
+      "fields" : [
+        { "name" : "Name" },
+        { "name" : "Text" },
+        { "name" : "Id_Lang" }
+      ],
+      "onClick" : null,
+      "itemActions" : [
+        {
+          "module" : "_I18N",
+          "name" : "ModAll",
+          "style" : "outrow",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        }
+      ]
+    },
+    {                                                                  
+      "name" : "ViewAll",                                              
+      "type" : "view",
+      "globalActions" : [
+        { 
+          "module" : "_I18N", 
+          "name" : "DelAll",
+          "params" : [ 
+            { "name" : "Id", "value" : "$Id" } 
+          ]
+        }
+      ],
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    { 
+      "name" : "Import",
+      "type" : "import",
+      "transformer" : {
+        "fields" : [
+          {
+            "name" : "Name", 
+            "indexes" : [ { "index" : 0 } ], 
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "Text", 
+            "indexes" : [ { "index" : 1 } ], 
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "Id_Lang", 
+            "transformer" : "TransformField2PKId",
+            "value" : "es",
+            "config" : {
+              "beanName"  : "_Lang",
+              "fieldName" : "Locale"          
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name" : "AddByLang",
+      "type" : "add",
+      "fields" : [
+        { "name" : "Name" },
+        { "name" : "Text" },
+        { "name" : "Id_Lang", "hide" : true }
+      ],
+      "params" : [
+        { "name" : "Id_Lang" }
+      ]
+    }
+  ],
+  "values" : {
+    "sqlOrder" : 1010
+  }
+}

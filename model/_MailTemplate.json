@@ -1,0 +1,140 @@
+{
+  "fields" : [
+    {
+      "name" : "MID",
+      "type" : "String",
+      "required" : true,
+      "unique" : true,
+      "max_len" : 255
+    },
+    {
+      "name" : "Subject",
+      "type" : "String",
+      "required" : true,
+      "max_len" : 150
+    },
+    {
+      "name" : "Content",
+      "required" : true,
+      "type" : "Text"
+    },
+    {
+      "name" : "Comments",
+      "type" : "String",
+      "max_len" : 255
+    }
+  ],
+  "actions" : [
+    { 
+      "name" : "Load",
+      "type" : "load",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "ListAll",
+      "type" : "list",
+      "listFilter" : [
+        { "name" : "MID"}
+      ],
+      "fields" : [
+        { "name" : "MID"},
+        { "name" : "Subject" },
+        { "name" : "Content" },
+        { "name" : "Comments" }
+      ],
+      "globalActions" : [
+        {
+          "module" : "_MailTemplate",
+          "name" : "AddAll"
+        }
+      ]
+    },
+    {
+      "name" : "AddAll",
+      "type" : "add",
+      "fields" : [
+        { "name" : "MID", "required"  : true},
+        { "name" : "Subject", "required"  : true },
+        { "name" : "Comments" },
+        { "name" : "Content", "required"  : true }
+      ]
+    },
+    {
+      "name": "ViewAll",
+      "type": "view",
+      "fields": [
+        { "name": "MID" },
+        { "name": "Subject" },
+        { "name": "Comments" },
+        { "name": "Content" }
+      ],
+      "globalActions": [
+        {
+          "module": "_MailTemplate",
+          "name": "DelAll",
+          "params": [
+            { "name": "Id", "value": "$Id" }
+          ]
+        },
+        {
+          "module": "_MailTemplate",
+          "name": "ModAll",
+          "params": [
+            { "name": "Id", "value": "$Id" }
+          ]
+        },
+        {
+          "module": "_MailTemplate",
+          "name": "SendTestMail",
+          "params": [
+            { "name": "Id", "value": "$Id" }
+          ]
+        }
+      ],
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "SendTestMail",
+      "type" : "other",
+      "fields" : [
+        { "name" : "to"},
+        { 
+          "_desc" : "Not working, see note in SendTestMail_MailTemplateSrv",
+          "name" : "jsonVars", 
+          "type" : "Text", 
+          "hide" : "true"
+        }
+      ],
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    { 
+      "name" : "ModAll",
+      "type" : "mod",
+      "fields": [
+        { "name": "MID" },
+        { "name": "Subject" },
+        { "name": "Comments" },
+        { "name": "Content" }
+      ],
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    { 
+      "name" : "DelAll",
+      "type" : "del",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    }
+  ],
+  "values" : {
+    "sqlOrder" : 1090
+  }
+}
