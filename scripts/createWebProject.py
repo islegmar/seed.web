@@ -24,11 +24,20 @@ from MySQLUtils import MySQLUtils
 import utils
 # import createPHPModule
 
+# Remove recursive a folder contents BUT keep the folder
+# itself. 
+def removeFolderContentKeepFolderItself(dir):
+  for root, dirs, files in os.walk(dir):
+    for f in files:
+      os.unlink(os.path.join(root, f))
+    for d in dirs:
+     shutil.rmtree(os.path.join(root, d))
+
 # ==============================================================================
 # Main
 # ==============================================================================
 
-def main(prjName=None,templatesDir=None,components={},createDB=False, verbose=False):  
+def main(prjName=None,templatesDir=None,components={},createDB=False, verbose=False, rmDstFolder=False):  
   # Check the environment has been set properly
   if not 'PRJ_NAME' in os.environ:
     raise Exception("Environment not set. Please execute '. setenv.sh' first!")
@@ -79,6 +88,7 @@ def main(prjName=None,templatesDir=None,components={},createDB=False, verbose=Fa
 + MYSQL_DB      : {MYSQL_DB}
 + MYSQL_USR     : {MYSQL_USR}
 + MYSQL_PWD     : {MYSQL_PWD}
++ rmDstFolder   : {rmDstFolder}
 ---------------------------------------------------""".format(**dict(locals(),**os.environ))
 
   # ------------------------------------------- Process the different components
@@ -86,10 +96,16 @@ def main(prjName=None,templatesDir=None,components={},createDB=False, verbose=Fa
     type=components[compoName]['type']
     dst=components[compoName]['dst']
 
+    if rmDstFolder and os.path.exists(dst):
+      # Keep the dst foldet because in some cases (eg. /var/www/html/be) maybe 
+      # the process is not the folder's owner
+      print "Removing folder contents for %s ..." % (dst)
+      removeFolderContentKeepFolderItself(dst)
+
     if not os.path.exists(dst):
       print 'Destination folder {dst} does not exist, create it.'.format(**locals())
       os.makedirs(dst)
-
+    
     # --- Generate code using template
     # @TODO : change genModule.py so we can call it as a python module
     for dir in templatesDir:
@@ -140,6 +156,7 @@ if __name__ == "__main__":
   parser.add_argument('--createDB', action="store_true", help='Create the database');
   parser.add_argument('--templates', help='Folder where the templates are located. Several locations separated by ,')
   parser.add_argument('--verbose',action="store_true", help='Print verbose messages')
+  parser.add_argument('--full',action="store_true", help='Same as --createDB and removes the build folder')
 
   args = parser.parse_args()
 
@@ -166,6 +183,7 @@ if __name__ == "__main__":
     args.name,
     None if not args.templates else args.templates.split(','),
     components,
-    args.createDB,
-    args.verbose
+    args.createDB or args.full,
+    args.verbose,
+    args.full
   )
