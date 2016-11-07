@@ -33,7 +33,7 @@
               "module" : "Tale",
               "name" : "ListByAuthor",
               "params" : [
-                { "name" : "Tale" , "value" : "$Id" }
+                { "name" : "IdAuthor" , "value" : "$Id" }
               ]
             }
           ]

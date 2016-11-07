@@ -44,7 +44,7 @@
               "module" : "TaleSessionProgram",
               "name" : "ListByTaleSession",
               "params" : [
-                { "name" : "TaleSession" , "value" : "$Id" }
+                { "name" : "IdTaleSession" , "value" : "$Id" }
               ]
             }
           ]

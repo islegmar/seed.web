@@ -45,7 +45,7 @@ Name
 # A tale that belongs to one author
 [Tale]
 Title
-Tale:FK(Author,Name,aggregation)
+IdAuthor:FK(Author,Name,aggregation)
 Summary:Text
 Contents:File
 
@@ -56,5 +56,5 @@ Title
 Place
 
 [TaleSessionProgram]
-TaleSession:FK(TaleSession,Title,aggregation)
-Tale:FK(Tale,Title,association)
+IdTaleSession:FK(TaleSession,Title,aggregation)
+IdTale:FK(Tale,Title,association)

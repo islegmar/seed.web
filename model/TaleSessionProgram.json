@@ -1,7 +1,7 @@
 {
   "fields" : [
     {
-      "name" : "TaleSession",
+      "name" : "IdTaleSession",
       "type" : "FK",
       "config" : {
         "FK" : {
@@ -13,7 +13,7 @@
       }
     },
     {
-      "name" : "Tale",
+      "name" : "IdTale",
       "type" : "FK",
       "config" : {
         "FK" : {
@@ -38,11 +38,11 @@
       "name" : "AddByTaleSession",
       "type" : "add",
       "fields" : [ 
-        { "name" : "TaleSession", "hide" : "true" }
-        ,{ "name" : "Tale" }
+        { "name" : "IdTaleSession", "hide" : "true" }
+        ,{ "name" : "IdTale" }
       ],
       "params" : [
-        { "name" : "TaleSession" }
+        { "name" : "IdTaleSession" }
       ]
     },
     {
@@ -52,12 +52,12 @@
       "transformer" : {
         "fields" : [
           {
-            "name" : "TaleSession",
-            "indexes" : [ { "index" : "TaleSession" } ],
+            "name" : "IdTaleSession",
+            "indexes" : [ { "index" : "IdTaleSession" } ],
             "transformer" : "TransformInteger"
           },
           {
-            "name" : "Tale",
+            "name" : "IdTale",
             "indexes" : [ { "index" : 0 } ],
             "transformer" : "TransformField2PKId",
             "config" : {
@@ -68,7 +68,7 @@
         ]
       },
       "params" : [
-        { "name" : "TaleSession" }
+        { "name" : "IdTaleSession" }
       ]
     },
     {
@@ -76,7 +76,7 @@
       "name" : "ListByTaleSession",
       "type" : "list",
       "fields" : [ 
-        { "name" : "Tale" }
+        { "name" : "IdTale" }
       ],
       "onClick" : {
         "module" : "TaleSessionProgram",
@@ -90,7 +90,7 @@
           "module" : "TaleSessionProgram",
           "name" : "AddByTaleSession",
           "params" : [
-            { "name" : "TaleSession", "value" : "$TaleSession" },
+            { "name" : "IdTaleSession", "value" : "$IdTaleSession" },
             { "name" : "Title", "value" : "$Title" }
           ]
         },
@@ -98,13 +98,13 @@
           "module" : "TaleSessionProgram",
           "name" : "ImportByTaleSession",
           "params" : [
-            { "name" : "TaleSession", "value" : "$TaleSession" },
+            { "name" : "IdTaleSession", "value" : "$IdTaleSession" },
             { "name" : "Title", "value" : "$Title" }
           ]
         }
       ],
       "params" : [
-        { "name" : "TaleSession" }
+        { "name" : "IdTaleSession" }
       ]
     },
     {
@@ -120,8 +120,8 @@
       "name" : "ModAll",
       "type" : "mod",
       "fields" : [ 
-        { "name" : "TaleSession" }
-        ,{ "name" : "Tale" }
+        { "name" : "IdTaleSession" }
+        ,{ "name" : "IdTale" }
       ],
       "params" : [
         { "name" : "Id" }
@@ -131,8 +131,8 @@
       "name" : "ViewAll",
       "type" : "view",
       "fields" : [ 
-        { "name" : "TaleSession" }
-        ,{ "name" : "Tale" }
+        { "name" : "IdTaleSession" }
+        ,{ "name" : "IdTale" }
       ],
       "globalActions" : [
         {
@@ -158,8 +158,8 @@
       "name" : "ListAll",
       "type" : "list",
       "fields" : [ 
-        { "name" : "TaleSession" }
-        ,{ "name" : "Tale" }
+        { "name" : "IdTaleSession" }
+        ,{ "name" : "IdTale" }
       ],
       "onClick" : {
         "module" : "TaleSessionProgram",

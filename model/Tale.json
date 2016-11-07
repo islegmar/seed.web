@@ -6,7 +6,7 @@
       "max_len" : 255
     },
     {
-      "name" : "Tale",
+      "name" : "IdAuthor",
       "type" : "FK",
       "config" : {
         "FK" : {
@@ -40,12 +40,12 @@
       "type" : "add",
       "fields" : [ 
         { "name" : "Title" }
-        ,{ "name" : "Tale", "hide" : "true" }
+        ,{ "name" : "IdAuthor", "hide" : "true" }
         ,{ "name" : "Summary" }
         ,{ "name" : "Contents" }
       ],
       "params" : [
-        { "name" : "Tale" }
+        { "name" : "IdAuthor" }
       ]
     },
     {
@@ -60,24 +60,14 @@
             "transformer" : "TransformString"
           },
           {
-            "name" : "Tale",
-            "indexes" : [ { "index" : "Tale" } ],
+            "name" : "IdAuthor",
+            "indexes" : [ { "index" : "IdAuthor" } ],
             "transformer" : "TransformInteger"
-          },
-          {
-            "name" : "Summary",
-            "indexes" : [ { "index" : 1 } ],
-            "transformer" : "TransformString"
-          },
-          {
-            "name" : "Contents",
-            "indexes" : [ { "index" : 2 } ],
-            "transformer" : "TransformString"
           }
         ]
       },
       "params" : [
-        { "name" : "Tale" }
+        { "name" : "IdAuthor" }
       ]
     },
     {
@@ -101,7 +91,7 @@
           "module" : "Tale",
           "name" : "AddByAuthor",
           "params" : [
-            { "name" : "Tale", "value" : "$Tale" },
+            { "name" : "IdAuthor", "value" : "$IdAuthor" },
             { "name" : "Name", "value" : "$Name" }
           ]
         },
@@ -109,13 +99,13 @@
           "module" : "Tale",
           "name" : "ImportByAuthor",
           "params" : [
-            { "name" : "Tale", "value" : "$Tale" },
+            { "name" : "IdAuthor", "value" : "$IdAuthor" },
             { "name" : "Name", "value" : "$Name" }
           ]
         }
       ],
       "params" : [
-        { "name" : "Tale" }
+        { "name" : "IdAuthor" }
       ]
     },
     {
@@ -132,7 +122,7 @@
       "type" : "mod",
       "fields" : [ 
         { "name" : "Title" }
-        ,{ "name" : "Tale" }
+        ,{ "name" : "IdAuthor" }
         ,{ "name" : "Summary" }
         ,{ "name" : "Contents" }
       ],
@@ -145,7 +135,7 @@
       "type" : "view",
       "fields" : [ 
         { "name" : "Title" }
-        ,{ "name" : "Tale" }
+        ,{ "name" : "IdAuthor" }
         ,{ "name" : "Summary" }
         ,{ "name" : "Contents" }
       ],
@@ -174,7 +164,7 @@
       "type" : "list",
       "fields" : [ 
         { "name" : "Title" }
-        ,{ "name" : "Tale" }
+        ,{ "name" : "IdAuthor" }
         ,{ "name" : "Summary" }
         ,{ "name" : "Contents" }
       ],
