@@ -355,9 +355,10 @@ def _genFullModuleConfig(moduleName, allBasicModulesCfg, sqlOrder, isMinimal, i1
     elif type=='Date':
       cfg += """
     {{
-      "name" : "{name}",
+      "name" : "{name}", 
       "type" : "DateTime",
-      "format": "dd/MM/yy HH:mm"
+      "format": "dd/MM/yy",
+      "time" : "00:00"
     }}""".format(**fieldCfg)
     # Others
     else:
