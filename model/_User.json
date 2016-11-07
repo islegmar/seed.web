@@ -241,7 +241,24 @@
     },
     {
       "name": "HomePageAdmin",
-      "type": "dashboard"
+      "type": "dashboard",
+      "config" : {
+        "sections" : [
+          {
+            "name" : "MyApp",
+            "actions" : [
+              {
+                "module" : "Author",
+                "name" : "ListAll"
+              },
+              {
+                "module" : "TaleSession", 
+                "name" : "ListAll"
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "_desc" : "Overview of all the info related with users, roles and permissions",

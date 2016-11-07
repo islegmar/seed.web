@@ -1,0 +1,176 @@
+{
+  "fields" : [
+    {
+      "name" : "TaleSession",
+      "type" : "FK",
+      "config" : {
+        "FK" : {
+          "module"  : "TaleSession",
+          "actionName"  : "ListAll",
+          "fieldName" : "Title",
+          "relationType" : "aggregation"
+        }
+      }
+    },
+    {
+      "name" : "Tale",
+      "type" : "FK",
+      "config" : {
+        "FK" : {
+          "module"  : "Tale",
+          "actionName"  : "ListAll",
+          "fieldName" : "Title",
+          "relationType" : "association"
+        }
+      }
+    }
+  ],
+  "actions" : [
+    {
+      "name" : "Load",
+      "type" : "load",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "_desc" : "Add a TaleSessionProgram for a certain TaleSession",
+      "name" : "AddByTaleSession",
+      "type" : "add",
+      "fields" : [ 
+        { "name" : "TaleSession", "hide" : "true" }
+        ,{ "name" : "Tale" }
+      ],
+      "params" : [
+        { "name" : "TaleSession" }
+      ]
+    },
+    {
+      "_desc" : "Import a TaleSessionProgram for a certain TaleSession",
+      "name" : "ImportByTaleSession",
+      "type" : "import",
+      "transformer" : {
+        "fields" : [
+          {
+            "name" : "TaleSession",
+            "indexes" : [ { "index" : "TaleSession" } ],
+            "transformer" : "TransformInteger"
+          },
+          {
+            "name" : "Tale",
+            "indexes" : [ { "index" : 0 } ],
+            "transformer" : "TransformField2PKId",
+            "config" : {
+              "beanName"  : "Tale",
+              "fieldName" : "Title"
+            }
+          }
+        ]
+      },
+      "params" : [
+        { "name" : "TaleSession" }
+      ]
+    },
+    {
+      "_desc" : "List TaleSessionPrograms for a certain TaleSession",
+      "name" : "ListByTaleSession",
+      "type" : "list",
+      "fields" : [ 
+        { "name" : "Tale" }
+      ],
+      "onClick" : {
+        "module" : "TaleSessionProgram",
+        "actionName" : "ViewAll",
+        "params" : [
+          { "name" : "Id", "value" : "$Id" }
+        ]
+      },
+      "globalActions" : [
+        {
+          "module" : "TaleSessionProgram",
+          "name" : "AddByTaleSession",
+          "params" : [
+            { "name" : "TaleSession", "value" : "$TaleSession" },
+            { "name" : "Title", "value" : "$Title" }
+          ]
+        },
+        {
+          "module" : "TaleSessionProgram",
+          "name" : "ImportByTaleSession",
+          "params" : [
+            { "name" : "TaleSession", "value" : "$TaleSession" },
+            { "name" : "Title", "value" : "$Title" }
+          ]
+        }
+      ],
+      "params" : [
+        { "name" : "TaleSession" }
+      ]
+    },
+    {
+      "name" : "DelAll",
+      "type" : "del",
+      "askConfirmation" : true,
+      "beOnly" : true,
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "ModAll",
+      "type" : "mod",
+      "fields" : [ 
+        { "name" : "TaleSession" }
+        ,{ "name" : "Tale" }
+      ],
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "ViewAll",
+      "type" : "view",
+      "fields" : [ 
+        { "name" : "TaleSession" }
+        ,{ "name" : "Tale" }
+      ],
+      "globalActions" : [
+        {
+          "module" : "TaleSessionProgram",
+          "name" : "DelAll",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        },
+        {
+          "module" : "TaleSessionProgram",
+          "name" : "ModAll",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        }
+      ],
+      "params" : [
+        { "name" : "Id", "value" : "$Id" }
+      ]
+    },
+    {
+      "name" : "ListAll",
+      "type" : "list",
+      "fields" : [ 
+        { "name" : "TaleSession" }
+        ,{ "name" : "Tale" }
+      ],
+      "onClick" : {
+        "module" : "TaleSessionProgram",
+        "actionName" : "ViewAll",
+        "params" : [
+          { "name" : "Id", "value" : "$Id" }
+        ]
+      }
+    }
+  ],
+  "values" : {
+    "sqlOrder" : 10030
+  }
+}

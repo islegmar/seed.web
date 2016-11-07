@@ -1,0 +1,193 @@
+{
+  "fields" : [
+    {
+      "name" : "Title",
+      "type" : "String",
+      "max_len" : 255
+    },
+    {
+      "name" : "Tale",
+      "type" : "FK",
+      "config" : {
+        "FK" : {
+          "module"  : "Author",
+          "actionName"  : "ListAll",
+          "fieldName" : "Name",
+          "relationType" : "aggregation"
+        }
+      }
+    },
+    {
+      "name" : "Summary",
+      "type" : "Text"
+    },
+    {
+      "name" : "Contents",
+      "type" : "File"
+    }
+  ],
+  "actions" : [
+    {
+      "name" : "Load",
+      "type" : "load",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "_desc" : "Add a Tale for a certain Author",
+      "name" : "AddByAuthor",
+      "type" : "add",
+      "fields" : [ 
+        { "name" : "Title" }
+        ,{ "name" : "Tale", "hide" : "true" }
+        ,{ "name" : "Summary" }
+        ,{ "name" : "Contents" }
+      ],
+      "params" : [
+        { "name" : "Tale" }
+      ]
+    },
+    {
+      "_desc" : "Import a Tale for a certain Author",
+      "name" : "ImportByAuthor",
+      "type" : "import",
+      "transformer" : {
+        "fields" : [
+          {
+            "name" : "Title",
+            "indexes" : [ { "index" : 0 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "Tale",
+            "indexes" : [ { "index" : "Tale" } ],
+            "transformer" : "TransformInteger"
+          },
+          {
+            "name" : "Summary",
+            "indexes" : [ { "index" : 1 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "Contents",
+            "indexes" : [ { "index" : 2 } ],
+            "transformer" : "TransformString"
+          }
+        ]
+      },
+      "params" : [
+        { "name" : "Tale" }
+      ]
+    },
+    {
+      "_desc" : "List Tales for a certain Author",
+      "name" : "ListByAuthor",
+      "type" : "list",
+      "fields" : [ 
+        { "name" : "Title" }
+        ,{ "name" : "Summary" }
+        ,{ "name" : "Contents" }
+      ],
+      "onClick" : {
+        "module" : "Tale",
+        "actionName" : "ViewAll",
+        "params" : [
+          { "name" : "Id", "value" : "$Id" }
+        ]
+      },
+      "globalActions" : [
+        {
+          "module" : "Tale",
+          "name" : "AddByAuthor",
+          "params" : [
+            { "name" : "Tale", "value" : "$Tale" },
+            { "name" : "Name", "value" : "$Name" }
+          ]
+        },
+        {
+          "module" : "Tale",
+          "name" : "ImportByAuthor",
+          "params" : [
+            { "name" : "Tale", "value" : "$Tale" },
+            { "name" : "Name", "value" : "$Name" }
+          ]
+        }
+      ],
+      "params" : [
+        { "name" : "Tale" }
+      ]
+    },
+    {
+      "name" : "DelAll",
+      "type" : "del",
+      "askConfirmation" : true,
+      "beOnly" : true,
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "ModAll",
+      "type" : "mod",
+      "fields" : [ 
+        { "name" : "Title" }
+        ,{ "name" : "Tale" }
+        ,{ "name" : "Summary" }
+        ,{ "name" : "Contents" }
+      ],
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "ViewAll",
+      "type" : "view",
+      "fields" : [ 
+        { "name" : "Title" }
+        ,{ "name" : "Tale" }
+        ,{ "name" : "Summary" }
+        ,{ "name" : "Contents" }
+      ],
+      "globalActions" : [
+        {
+          "module" : "Tale",
+          "name" : "DelAll",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        },
+        {
+          "module" : "Tale",
+          "name" : "ModAll",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        }
+      ],
+      "params" : [
+        { "name" : "Id", "value" : "$Id" }
+      ]
+    },
+    {
+      "name" : "ListAll",
+      "type" : "list",
+      "fields" : [ 
+        { "name" : "Title" }
+        ,{ "name" : "Tale" }
+        ,{ "name" : "Summary" }
+        ,{ "name" : "Contents" }
+      ],
+      "onClick" : {
+        "module" : "Tale",
+        "actionName" : "ViewAll",
+        "params" : [
+          { "name" : "Id", "value" : "$Id" }
+        ]
+      }
+    }
+  ],
+  "values" : {
+    "sqlOrder" : 10010
+  }
+}
