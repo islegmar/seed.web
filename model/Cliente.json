@@ -295,6 +295,7 @@
     {
       "name" : "ListAll",
       "type" : "list",
+      "listFilter" : null,
       "fields" : [ 
         { "name" : "Name" }
         ,{ "name" : "IdMetodoPago" }

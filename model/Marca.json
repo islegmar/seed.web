@@ -40,7 +40,11 @@
                 { "name" : "Id" , "value" : "$Id" }
               ]
             }
-            ,{
+          ]
+        },
+        {
+          "actions" : [
+            {
               "actionName" : "__IGNORE__",
               "module" : "MarcaProveedor",
               "name" : "ListByMarca",
@@ -136,6 +140,7 @@
     {
       "name" : "ListAll",
       "type" : "list",
+      "listFilter" : null,
       "fields" : [ 
         { "name" : "Name" }
         ,{ "name" : "CreadaWhen" }
