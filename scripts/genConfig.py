@@ -273,7 +273,7 @@ def _genSQLEmpty(moduleName, file, printDelete=False):
 # ------------------------------------------------------- [_genFullModuleConfig]
 # Generate the JSON with the module config
 # ------------------------------------------------------------------------------
-def _genFullModuleConfig(moduleName, allBasicModulesCfg, sqlOrder, isMinimal, i18nFile):
+def _genFullModuleConfig(moduleName, allBasicModulesCfg, sqlOrder, isMinimal, i18nFile,generateListFilter=False):
   fieldsCfg = allBasicModulesCfg[moduleName]['fieldsCfg']
   # NOTE : ok, maybe it's not needed to keep the i18n keys it I am not going
   # to generate the i18nFile, but it's just to void a lot of ifs and this
@@ -507,12 +507,18 @@ def _genFullModuleConfig(moduleName, allBasicModulesCfg, sqlOrder, isMinimal, i1
         i18nKeys["{moduleName}:ListBy{module}:Title".format(**locals())]="{moduleName}s".format(**locals())
         i18nKeys["{moduleName}:ListBy{module}:NoData".format(**locals())]="There are no {moduleName}s".format(**locals())
 
+        if generateListFilter:
+          listFilter = ""
+        else:
+          listFilter = """
+      "listFilter" : null,"""  
+    
         allFieldsBy=_listFieldsAsString(fieldsCfg, fieldName, False)
         cfg += """
     {{
       "_desc" : "List {moduleName}s for a certain {module}",
       "name" : "ListBy{module}",
-      "type" : "list",
+      "type" : "list",{listFilter}
       "fields" : [ {allFieldsBy}
       ],
       "onClick" : {{
@@ -646,10 +652,17 @@ def _genFullModuleConfig(moduleName, allBasicModulesCfg, sqlOrder, isMinimal, i1
     i18nKeys["{moduleName}:ListAll:Title".format(**locals())]="List {moduleName}s".format(**locals())
     i18nKeys["{moduleName}:ListAll:NoData".format(**locals())]="There are no {moduleName}s".format(**locals())
 
+
+    if generateListFilter:
+      listFilter = ""
+    else:
+      listFilter = """
+      "listFilter" : null,"""  
+
     cfg += """
     {{
       "name" : "ListAll",
-      "type" : "list",
+      "type" : "list",{listFilter}
       "fields" : [ {allFields}
       ],
       "onClick" : {{
@@ -748,12 +761,12 @@ def _genUserDashboard(allBasicModulesCfg, updAdminPage=False):
 # ==============================================================================
 # Main
 # ==============================================================================
-def main(moduleName, allBasicModulesCfg, isMinimal=False, dstFolder=None, sqlOrder=10, generateTestData=None, dstTestData=None, i18nFile=None):
+def main(moduleName, allBasicModulesCfg, isMinimal=False, dstFolder=None, sqlOrder=10, generateTestData=None, dstTestData=None, i18nFile=None,generateListFilter=False):
   basicModuleCfg = allBasicModulesCfg[moduleName]
 
   # -------------------------------------------------------------- Module Config
   # Build the full module config (the JSON)
-  jsonFullModuleCfg = _genFullModuleConfig(moduleName, allBasicModulesCfg, sqlOrder, isMinimal, i18nFile)
+  jsonFullModuleCfg = _genFullModuleConfig(moduleName, allBasicModulesCfg, sqlOrder, isMinimal, i18nFile, generateListFilter)
 
   # Output the config (stdout or into a file)
   if dstFolder:
@@ -798,6 +811,7 @@ if __name__ == "__main__":
   parser.add_argument('--module', help='The module name.')
   parser.add_argument('--modules', help='If --file is specified, comma separated list of modules')
   parser.add_argument('--minimal', action="store_true", help='Generates minimal configuration')
+  parser.add_argument('--generateListFilter', action="store_true", help='Generates the form to filter lists (default no)')
   parser.add_argument('--generateTestData', action="store_true", help='Generates SQL files to inser the data')
   parser.add_argument('--dstTestData', help='(Optional) Destination folder where the test data SQL will be generaterd. If not especified will be used $PRJ_HOME/model/custom/ModuleCustom/Database/$DB_TYPE/<Module>')
   parser.add_argument('--sqlOrder', default=10000, help='(Optional) Initial SQL order (def=10000, after the core objects). If the core objects have a dependency with the business objects use 10.')
@@ -881,7 +895,8 @@ if __name__ == "__main__":
         sqlOrder,
         args.generateTestData,
         args.dstTestData,
-        args.i18nFile if args.i18n else None
+        args.i18nFile if args.i18n else None,
+        args.generateListFilter
       )
     sqlOrder += 10
 
