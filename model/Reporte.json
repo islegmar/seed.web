@@ -1,0 +1,202 @@
+{
+  "fields" : [
+    {
+      "name" : "IdCampaign",
+      "type" : "FK",
+      "config" : {
+        "FK" : {
+          "module"  : "Campaign",
+          "actionName"  : "ListAll",
+          "fieldName" : "Name",
+          "relationType" : "association"
+        }
+      }
+    },
+    {
+      "name" : "Start", 
+      "type" : "DateTime",
+      "format": "dd/MM/yy",
+      "time" : "00:00"
+    },
+    {
+      "name" : "End", 
+      "type" : "DateTime",
+      "format": "dd/MM/yy",
+      "time" : "00:00"
+    },
+    {
+      "name" : "IdProveedor",
+      "type" : "FK",
+      "config" : {
+        "FK" : {
+          "module"  : "Proveedor",
+          "actionName"  : "ListAll",
+          "fieldName" : "Name",
+          "relationType" : "association"
+        }
+      }
+    },
+    {
+      "name" : "IdCliente",
+      "type" : "FK",
+      "config" : {
+        "FK" : {
+          "module"  : "Cliente",
+          "actionName"  : "ListAll",
+          "fieldName" : "Name",
+          "relationType" : "association"
+        }
+      }
+    }
+  ],
+  "actions" : [
+    {
+      "name" : "Load",
+      "type" : "load",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "DelAll",
+      "type" : "del",
+      "askConfirmation" : true,
+      "beOnly" : true,
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "ModAll",
+      "type" : "mod",
+      "fields" : [ 
+        { "name" : "IdCampaign" }
+        ,{ "name" : "Start" }
+        ,{ "name" : "End" }
+        ,{ "name" : "IdProveedor" }
+        ,{ "name" : "IdCliente" }
+      ],
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "Import",
+      "type" : "import",
+      "transformer" : {
+        "fields" : [
+          {
+            "name" : "IdCampaign",
+            "indexes" : [ { "index" : 0 } ],
+            "transformer" : "TransformField2PKId",
+            "config" : {
+              "beanName"  : "Campaign",
+              "fieldName" : "Name"
+            }
+          },
+          {
+            "name" : "Start",
+            "indexes" : [ { "index" : 1 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "End",
+            "indexes" : [ { "index" : 2 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "IdProveedor",
+            "indexes" : [ { "index" : 3 } ],
+            "transformer" : "TransformField2PKId",
+            "config" : {
+              "beanName"  : "Proveedor",
+              "fieldName" : "Name"
+            }
+          },
+          {
+            "name" : "IdCliente",
+            "indexes" : [ { "index" : 4 } ],
+            "transformer" : "TransformField2PKId",
+            "config" : {
+              "beanName"  : "Cliente",
+              "fieldName" : "Name"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name" : "AddAll",
+      "type" : "add",
+      "fields" : [ 
+        { "name" : "IdCampaign" }
+        ,{ "name" : "Start" }
+        ,{ "name" : "End" }
+        ,{ "name" : "IdProveedor" }
+        ,{ "name" : "IdCliente" }
+      ]
+    },
+    {
+      "name" : "ViewAll",
+      "type" : "view",
+      "fields" : [ 
+        { "name" : "IdCampaign" }
+        ,{ "name" : "Start" }
+        ,{ "name" : "End" }
+        ,{ "name" : "IdProveedor" }
+        ,{ "name" : "IdCliente" }
+      ],
+      "globalActions" : [
+        {
+          "module" : "Reporte",
+          "name" : "DelAll",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        },
+        {
+          "module" : "Reporte",
+          "name" : "ModAll",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        }
+      ],
+      "params" : [
+        { "name" : "Id", "value" : "$Id" }
+      ]
+    },
+    {
+      "name" : "ListAll",
+      "type" : "list",
+      "listFilter" : null,
+      "fields" : [ 
+        { "name" : "IdCampaign" }
+        ,{ "name" : "Start" }
+        ,{ "name" : "End" }
+        ,{ "name" : "IdProveedor" }
+        ,{ "name" : "IdCliente" }
+      ],
+      "onClick" : {
+        "module" : "Reporte",
+        "actionName" : "ViewAll",
+        "params" : [
+          { "name" : "Id", "value" : "$Id" }
+        ]
+      },
+      "globalActions" : [
+        {
+          "module" : "Reporte",
+          "name" : "AddAll"
+        },
+        {
+          "module" : "Reporte",
+          "name" : "Import"
+        }
+      ]
+    }
+  ],
+  "values" : {
+    "sqlOrder" : 10110
+  }
+}

@@ -40,11 +40,7 @@
                 { "name" : "Id" , "value" : "$Id" }
               ]
             }
-          ]
-        },
-        {
-          "actions" : [
-            {
+            ,{
               "actionName" : "__IGNORE__",
               "module" : "MarcaProveedor",
               "name" : "ListByMarca",

@@ -273,7 +273,11 @@
                 "name" : "ListAll"
               },
               {
-                "module" : "MarcaProveedor",
+                "module" : "Cliente",
+                "name" : "ListAll"
+              },
+              {
+                "module" : "Campaign",
                 "name" : "ListAll"
               },
               {
@@ -281,11 +285,11 @@
                 "name" : "ListAll"
               },
               {
-                "module" : "Cliente",
+                "module" : "Reporte",
                 "name" : "ListAll"
-              }            
+              }
             ]
-          }                                                                                                                                                               
+          }
         ]
       }
     },

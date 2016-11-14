@@ -1,0 +1,178 @@
+{
+  "fields" : [
+    {
+      "name" : "IdCampaign",
+      "type" : "FK",
+      "config" : {
+        "FK" : {
+          "module"  : "Campaign",
+          "actionName"  : "ListAll",
+          "fieldName" : "Name",
+          "relationType" : "aggregation"
+        }
+      }
+    },
+    {
+      "name" : "IdMarca",
+      "type" : "FK",
+      "config" : {
+        "FK" : {
+          "module"  : "Marca",
+          "actionName"  : "ListAll",
+          "fieldName" : "Name",
+          "relationType" : "association"
+        }
+      }
+    }
+  ],
+  "actions" : [
+    {
+      "name" : "Load",
+      "type" : "load",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "_desc" : "Add a CampaignMarca for a certain Campaign",
+      "name" : "AddByCampaign",
+      "type" : "add",
+      "fields" : [ 
+        { "name" : "IdCampaign", "hide" : "true" }
+        ,{ "name" : "IdMarca" }
+      ],
+      "params" : [
+        { "name" : "IdCampaign" }
+      ]
+    },
+    {
+      "_desc" : "Import a CampaignMarca for a certain Campaign",
+      "name" : "ImportByCampaign",
+      "type" : "import",
+      "transformer" : {
+        "fields" : [
+          {
+            "name" : "IdCampaign",
+            "indexes" : [ { "index" : "IdCampaign" } ],
+            "transformer" : "TransformInteger"
+          },
+          {
+            "name" : "IdMarca",
+            "indexes" : [ { "index" : 0 } ],
+            "transformer" : "TransformField2PKId",
+            "config" : {
+              "beanName"  : "Marca",
+              "fieldName" : "Name"
+            }
+          }
+        ]
+      },
+      "params" : [
+        { "name" : "IdCampaign" }
+      ]
+    },
+    {
+      "_desc" : "List CampaignMarcas for a certain Campaign",
+      "name" : "ListByCampaign",
+      "type" : "list",
+      "listFilter" : null,
+      "fields" : [ 
+        { "name" : "IdMarca" }
+      ],
+      "onClick" : {
+        "module" : "CampaignMarca",
+        "actionName" : "ViewAll",
+        "params" : [
+          { "name" : "Id", "value" : "$Id" }
+        ]
+      },
+      "globalActions" : [
+        {
+          "module" : "CampaignMarca",
+          "name" : "AddByCampaign",
+          "params" : [
+            { "name" : "IdCampaign", "value" : "$IdCampaign" },
+            { "name" : "Name", "value" : "$Name" }
+          ]
+        },
+        {
+          "module" : "CampaignMarca",
+          "name" : "ImportByCampaign",
+          "params" : [
+            { "name" : "IdCampaign", "value" : "$IdCampaign" },
+            { "name" : "Name", "value" : "$Name" }
+          ]
+        }
+      ],
+      "params" : [
+        { "name" : "IdCampaign" }
+      ]
+    },
+    {
+      "name" : "DelAll",
+      "type" : "del",
+      "askConfirmation" : true,
+      "beOnly" : true,
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "ModAll",
+      "type" : "mod",
+      "fields" : [ 
+        { "name" : "IdCampaign" }
+        ,{ "name" : "IdMarca" }
+      ],
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "ViewAll",
+      "type" : "view",
+      "fields" : [ 
+        { "name" : "IdCampaign" }
+        ,{ "name" : "IdMarca" }
+      ],
+      "globalActions" : [
+        {
+          "module" : "CampaignMarca",
+          "name" : "DelAll",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        },
+        {
+          "module" : "CampaignMarca",
+          "name" : "ModAll",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        }
+      ],
+      "params" : [
+        { "name" : "Id", "value" : "$Id" }
+      ]
+    },
+    {
+      "name" : "ListAll",
+      "type" : "list",
+      "listFilter" : null,
+      "fields" : [ 
+        { "name" : "IdCampaign" }
+        ,{ "name" : "IdMarca" }
+      ],
+      "onClick" : {
+        "module" : "CampaignMarca",
+        "actionName" : "ViewAll",
+        "params" : [
+          { "name" : "Id", "value" : "$Id" }
+        ]
+      }
+    }
+  ],
+  "values" : {
+    "sqlOrder" : 10100
+  }
+}

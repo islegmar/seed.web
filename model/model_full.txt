@@ -105,14 +105,41 @@ EdidataWhen:Date
 IdMarca:FK(Marca,Name,aggregation)
 IdProveedor:FK(Proveedor,Name,association)
 
-#[Referencia]
+[Campaign]
+Name
+Start:Date
+End:Date
+IdProveedor:FK(Proveedor,Name,association)
+IdCliente:FK(Cliente,Name,association)
+PercStart:Integer
+PercEnd:Integer
+AvisoEnviarMail:Bool
+AvisoEnviarMailDias:Integer
+AvisoRetraso:Bool
+AvisoReytasoDias:Integer
 
-#[Campaign]
+[LogCampaign]
+OnWhen:Date
+Thing
+Resultado
+Detalle
+IdCampaign:FK(Campaign,Name,aggregation)
+
+[CampaignMarca]
+IdCampaign:FK(Campaign,Name,aggregation)
+IdMarca:FK(Marca,Name,association)
+
+[Reporte]
+IdCampaign:FK(Campaign,Name,association)
+Start:Date
+End:Date
+IdProveedor:FK(Proveedor,Name,association)
+IdCliente:FK(Cliente,Name,association)
+
+#[Referencia]
 
 #[Factura]
 
 #[Calendario]
-
-#[Reporte]
 
 #[Archivo]

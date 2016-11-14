@@ -1,0 +1,305 @@
+{
+  "fields" : [
+    {
+      "name" : "Name",
+      "type" : "String",
+      "max_len" : 255
+    },
+    {
+      "name" : "Start", 
+      "type" : "DateTime",
+      "format": "dd/MM/yy",
+      "time" : "00:00"
+    },
+    {
+      "name" : "End", 
+      "type" : "DateTime",
+      "format": "dd/MM/yy",
+      "time" : "00:00"
+    },
+    {
+      "name" : "IdProveedor",
+      "type" : "FK",
+      "config" : {
+        "FK" : {
+          "module"  : "Proveedor",
+          "actionName"  : "ListAll",
+          "fieldName" : "Name",
+          "relationType" : "association"
+        }
+      }
+    },
+    {
+      "name" : "IdCliente",
+      "type" : "FK",
+      "config" : {
+        "FK" : {
+          "module"  : "Cliente",
+          "actionName"  : "ListAll",
+          "fieldName" : "Name",
+          "relationType" : "association"
+        }
+      }
+    },
+    {
+      "name" : "PercStart",
+      "type" : "Integer"
+    },
+    {
+      "name" : "PercEnd",
+      "type" : "Integer"
+    },
+    {
+      "name" : "AvisoEnviarMail",
+      "type" : "Bool"
+    },
+    {
+      "name" : "AvisoEnviarMailDias",
+      "type" : "Integer"
+    },
+    {
+      "name" : "AvisoRetraso",
+      "type" : "Bool"
+    },
+    {
+      "name" : "AvisoReytasoDias",
+      "type" : "Integer"
+    }
+  ],
+  "actions" : [
+    {
+      "name" : "Load",
+      "type" : "load",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "ViewFull",
+      "type": "composed",
+      "sections" : [
+        {
+          "actions" : [
+            {
+              "actionName" : "__IGNORE__",
+              "module" : "Campaign",
+              "name" : "ViewAll",
+              "params" : [
+                { "name" : "Id" , "value" : "$Id" }
+              ]
+            }
+            ,{
+              "actionName" : "__IGNORE__",
+              "module" : "LogCampaign",
+              "name" : "ListByCampaign",
+              "params" : [
+                { "name" : "IdCampaign" , "value" : "$Id" }
+              ]
+            }
+            ,{
+              "actionName" : "__IGNORE__",
+              "module" : "CampaignMarca",
+              "name" : "ListByCampaign",
+              "params" : [
+                { "name" : "IdCampaign" , "value" : "$Id" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name" : "DelAll",
+      "type" : "del",
+      "askConfirmation" : true,
+      "beOnly" : true,
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "ModAll",
+      "type" : "mod",
+      "fields" : [ 
+        { "name" : "Name" }
+        ,{ "name" : "Start" }
+        ,{ "name" : "End" }
+        ,{ "name" : "IdProveedor" }
+        ,{ "name" : "IdCliente" }
+        ,{ "name" : "PercStart" }
+        ,{ "name" : "PercEnd" }
+        ,{ "name" : "AvisoEnviarMail" }
+        ,{ "name" : "AvisoEnviarMailDias" }
+        ,{ "name" : "AvisoRetraso" }
+        ,{ "name" : "AvisoReytasoDias" }
+      ],
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "Import",
+      "type" : "import",
+      "transformer" : {
+        "fields" : [
+          {
+            "name" : "Name",
+            "indexes" : [ { "index" : 0 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "Start",
+            "indexes" : [ { "index" : 1 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "End",
+            "indexes" : [ { "index" : 2 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "IdProveedor",
+            "indexes" : [ { "index" : 3 } ],
+            "transformer" : "TransformField2PKId",
+            "config" : {
+              "beanName"  : "Proveedor",
+              "fieldName" : "Name"
+            }
+          },
+          {
+            "name" : "IdCliente",
+            "indexes" : [ { "index" : 4 } ],
+            "transformer" : "TransformField2PKId",
+            "config" : {
+              "beanName"  : "Cliente",
+              "fieldName" : "Name"
+            }
+          },
+          {
+            "name" : "PercStart",
+            "indexes" : [ { "index" : 5 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "PercEnd",
+            "indexes" : [ { "index" : 6 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "AvisoEnviarMail",
+            "indexes" : [ { "index" : 7 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "AvisoEnviarMailDias",
+            "indexes" : [ { "index" : 8 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "AvisoRetraso",
+            "indexes" : [ { "index" : 9 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "AvisoReytasoDias",
+            "indexes" : [ { "index" : 10 } ],
+            "transformer" : "TransformString"
+          }
+        ]
+      }
+    },
+    {
+      "name" : "AddAll",
+      "type" : "add",
+      "fields" : [ 
+        { "name" : "Name" }
+        ,{ "name" : "Start" }
+        ,{ "name" : "End" }
+        ,{ "name" : "IdProveedor" }
+        ,{ "name" : "IdCliente" }
+        ,{ "name" : "PercStart" }
+        ,{ "name" : "PercEnd" }
+        ,{ "name" : "AvisoEnviarMail" }
+        ,{ "name" : "AvisoEnviarMailDias" }
+        ,{ "name" : "AvisoRetraso" }
+        ,{ "name" : "AvisoReytasoDias" }
+      ]
+    },
+    {
+      "name" : "ViewAll",
+      "type" : "view",
+      "fields" : [ 
+        { "name" : "Name" }
+        ,{ "name" : "Start" }
+        ,{ "name" : "End" }
+        ,{ "name" : "IdProveedor" }
+        ,{ "name" : "IdCliente" }
+        ,{ "name" : "PercStart" }
+        ,{ "name" : "PercEnd" }
+        ,{ "name" : "AvisoEnviarMail" }
+        ,{ "name" : "AvisoEnviarMailDias" }
+        ,{ "name" : "AvisoRetraso" }
+        ,{ "name" : "AvisoReytasoDias" }
+      ],
+      "globalActions" : [
+        {
+          "module" : "Campaign",
+          "name" : "DelAll",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        },
+        {
+          "module" : "Campaign",
+          "name" : "ModAll",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        }
+      ],
+      "params" : [
+        { "name" : "Id", "value" : "$Id" }
+      ]
+    },
+    {
+      "name" : "ListAll",
+      "type" : "list",
+      "listFilter" : null,
+      "fields" : [ 
+        { "name" : "Name" }
+        ,{ "name" : "Start" }
+        ,{ "name" : "End" }
+        ,{ "name" : "IdProveedor" }
+        ,{ "name" : "IdCliente" }
+        ,{ "name" : "PercStart" }
+        ,{ "name" : "PercEnd" }
+        ,{ "name" : "AvisoEnviarMail" }
+        ,{ "name" : "AvisoEnviarMailDias" }
+        ,{ "name" : "AvisoRetraso" }
+        ,{ "name" : "AvisoReytasoDias" }
+      ],
+      "onClick" : {
+        "module" : "Campaign",
+        "actionName" : "ViewFull",
+        "params" : [
+          { "name" : "Id", "value" : "$Id" },
+          { "name" : "Name", "value" : "$Name" }
+
+        ]
+      },
+      "globalActions" : [
+        {
+          "module" : "Campaign",
+          "name" : "AddAll"
+        },
+        {
+          "module" : "Campaign",
+          "name" : "Import"
+        }
+      ]
+    }
+  ],
+  "values" : {
+    "sqlOrder" : 10080
+  }
+}
