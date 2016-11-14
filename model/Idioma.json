@@ -1,0 +1,110 @@
+{
+  "fields" : [
+    {
+      "name" : "Name",
+      "type" : "String",
+      "max_len" : 255
+    }
+  ],
+  "actions" : [
+    {
+      "name" : "Load",
+      "type" : "load",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "DelAll",
+      "type" : "del",
+      "askConfirmation" : true,
+      "beOnly" : true,
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "ModAll",
+      "type" : "mod",
+      "fields" : [ 
+        { "name" : "Name" }
+      ],
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "Import",
+      "type" : "import",
+      "transformer" : {
+        "fields" : [
+          {
+            "name" : "Name",
+            "indexes" : [ { "index" : 0 } ],
+            "transformer" : "TransformString"
+          }
+        ]
+      }
+    },
+    {
+      "name" : "AddAll",
+      "type" : "add",
+      "fields" : [ 
+        { "name" : "Name" }
+      ]
+    },
+    {
+      "name" : "ViewAll",
+      "type" : "view",
+      "fields" : [ 
+        { "name" : "Name" }
+      ],
+      "globalActions" : [
+        {
+          "module" : "Idioma",
+          "name" : "DelAll",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        },
+        {
+          "module" : "Idioma",
+          "name" : "ModAll",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        }
+      ],
+      "params" : [
+        { "name" : "Id", "value" : "$Id" }
+      ]
+    },
+    {
+      "name" : "ListAll",
+      "type" : "list",
+      "fields" : [ 
+        { "name" : "Name" }
+      ],
+      "onClick" : {
+        "module" : "Idioma",
+        "actionName" : "ViewAll",
+        "params" : [
+          { "name" : "Id", "value" : "$Id" }
+        ]
+      },
+      "globalActions" : [
+        {
+          "module" : "Idioma",
+          "name" : "AddAll"
+        },
+        {
+          "module" : "Idioma",
+          "name" : "Import"
+        }
+      ]
+    }
+  ],
+  "values" : {
+    "sqlOrder" : 10030
+  }
+}

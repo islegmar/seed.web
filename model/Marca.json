@@ -1,0 +1,168 @@
+{
+  "fields" : [
+    {
+      "name" : "Name",
+      "type" : "String",
+      "max_len" : 255
+    },
+    {
+      "name" : "CreadaWhen", 
+      "type" : "DateTime",
+      "format": "dd/MM/yy",
+      "time" : "00:00"
+    },
+    {
+      "name" : "EdidataWhen", 
+      "type" : "DateTime",
+      "format": "dd/MM/yy",
+      "time" : "00:00"
+    }
+  ],
+  "actions" : [
+    {
+      "name" : "Load",
+      "type" : "load",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "ViewFull",
+      "type": "composed",
+      "sections" : [
+        {
+          "actions" : [
+            {
+              "actionName" : "__IGNORE__",
+              "module" : "Marca",
+              "name" : "ViewAll",
+              "params" : [
+                { "name" : "Id" , "value" : "$Id" }
+              ]
+            }
+            ,{
+              "actionName" : "__IGNORE__",
+              "module" : "MarcaProveedor",
+              "name" : "ListByMarca",
+              "params" : [
+                { "name" : "IdMarca" , "value" : "$Id" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name" : "DelAll",
+      "type" : "del",
+      "askConfirmation" : true,
+      "beOnly" : true,
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "ModAll",
+      "type" : "mod",
+      "fields" : [ 
+        { "name" : "Name" }
+        ,{ "name" : "CreadaWhen" }
+        ,{ "name" : "EdidataWhen" }
+      ],
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "Import",
+      "type" : "import",
+      "transformer" : {
+        "fields" : [
+          {
+            "name" : "Name",
+            "indexes" : [ { "index" : 0 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "CreadaWhen",
+            "indexes" : [ { "index" : 1 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "EdidataWhen",
+            "indexes" : [ { "index" : 2 } ],
+            "transformer" : "TransformString"
+          }
+        ]
+      }
+    },
+    {
+      "name" : "AddAll",
+      "type" : "add",
+      "fields" : [ 
+        { "name" : "Name" }
+        ,{ "name" : "CreadaWhen" }
+        ,{ "name" : "EdidataWhen" }
+      ]
+    },
+    {
+      "name" : "ViewAll",
+      "type" : "view",
+      "fields" : [ 
+        { "name" : "Name" }
+        ,{ "name" : "CreadaWhen" }
+        ,{ "name" : "EdidataWhen" }
+      ],
+      "globalActions" : [
+        {
+          "module" : "Marca",
+          "name" : "DelAll",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        },
+        {
+          "module" : "Marca",
+          "name" : "ModAll",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        }
+      ],
+      "params" : [
+        { "name" : "Id", "value" : "$Id" }
+      ]
+    },
+    {
+      "name" : "ListAll",
+      "type" : "list",
+      "fields" : [ 
+        { "name" : "Name" }
+        ,{ "name" : "CreadaWhen" }
+        ,{ "name" : "EdidataWhen" }
+      ],
+      "onClick" : {
+        "module" : "Marca",
+        "actionName" : "ViewFull",
+        "params" : [
+          { "name" : "Id", "value" : "$Id" },
+          { "name" : "Name", "value" : "$Name" }
+
+        ]
+      },
+      "globalActions" : [
+        {
+          "module" : "Marca",
+          "name" : "AddAll"
+        },
+        {
+          "module" : "Marca",
+          "name" : "Import"
+        }
+      ]
+    }
+  ],
+  "values" : {
+    "sqlOrder" : 10060
+  }
+}

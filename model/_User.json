@@ -241,7 +241,53 @@
     },
     {
       "name": "HomePageAdmin",
-      "type": "dashboard"
+      "type": "dashboard",
+      "config" : {
+        "sections" : [
+          {
+            "name" : "ConfigData",
+            "actions" : [
+              {
+                "module" : "MetodoPago",
+                "name" : "ListAll"
+              },
+              {
+                "module" : "Pais",
+                "name" : "ListAll"
+              },
+              {
+                "module" : "Idioma",
+                "name" : "ListAll"
+              },
+              {
+                "module" : "Estado",
+                "name" : "ListAll"
+              }
+            ]
+          },
+          {
+            "name" : "BusinessData",
+            "actions" : [
+              {
+                "module" : "Proveedor",
+                "name" : "ListAll"
+              },
+              {
+                "module" : "MarcaProveedor",
+                "name" : "ListAll"
+              },
+              {
+                "module" : "Marca",
+                "name" : "ListAll"
+              },
+              {
+                "module" : "Cliente",
+                "name" : "ListAll"
+              }            
+            ]
+          }                                                                                                                                                               
+        ]
+      }
     },
     {
       "_desc" : "Overview of all the info related with users, roles and permissions",

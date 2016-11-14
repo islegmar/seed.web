@@ -1,0 +1,336 @@
+{
+  "fields" : [
+    {
+      "name" : "Name",
+      "type" : "String",
+      "max_len" : 255
+    },
+    {
+      "name" : "IdMetodoPago",
+      "type" : "FK",
+      "config" : {
+        "FK" : {
+          "module"  : "MetodoPago",
+          "actionName"  : "ListAll",
+          "fieldName" : "Name",
+          "relationType" : "association"
+        }
+      }
+    },
+    {
+      "name" : "InfoMetodoPago",
+      "type" : "String",
+      "max_len" : 255
+    },
+    {
+      "name" : "IdEstado",
+      "type" : "FK",
+      "config" : {
+        "FK" : {
+          "module"  : "Estado",
+          "actionName"  : "ListAll",
+          "fieldName" : "Name",
+          "relationType" : "association"
+        }
+      }
+    },
+    {
+      "name" : "IdPais",
+      "type" : "FK",
+      "config" : {
+        "FK" : {
+          "module"  : "Pais",
+          "actionName"  : "ListAll",
+          "fieldName" : "Name",
+          "relationType" : "association"
+        }
+      }
+    },
+    {
+      "name" : "IdIdioma",
+      "type" : "FK",
+      "config" : {
+        "FK" : {
+          "module"  : "Idioma",
+          "actionName"  : "ListAll",
+          "fieldName" : "Name",
+          "relationType" : "association"
+        }
+      }
+    },
+    {
+      "name" : "ContactoNombre",
+      "type" : "String",
+      "max_len" : 255
+    },
+    {
+      "name" : "ContactoApellidos",
+      "type" : "String",
+      "max_len" : 255
+    },
+    {
+      "name" : "ContactoEmailPpal",
+      "type" : "String",
+      "max_len" : 255
+    },
+    {
+      "name" : "ContactoTelfPpal",
+      "type" : "String",
+      "max_len" : 255
+    },
+    {
+      "name" : "ContactoEmailOtro",
+      "type" : "String",
+      "max_len" : 255
+    },
+    {
+      "name" : "ContactoTelfOtro",
+      "type" : "String",
+      "max_len" : 255
+    },
+    {
+      "name" : "ContactoDirecc1",
+      "type" : "String",
+      "max_len" : 255
+    },
+    {
+      "name" : "ContactoDirecc2",
+      "type" : "String",
+      "max_len" : 255
+    }
+  ],
+  "actions" : [
+    {
+      "name" : "Load",
+      "type" : "load",
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "DelAll",
+      "type" : "del",
+      "askConfirmation" : true,
+      "beOnly" : true,
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "ModAll",
+      "type" : "mod",
+      "fields" : [ 
+        { "name" : "Name" }
+        ,{ "name" : "IdMetodoPago" }
+        ,{ "name" : "InfoMetodoPago" }
+        ,{ "name" : "IdEstado" }
+        ,{ "name" : "IdPais" }
+        ,{ "name" : "IdIdioma" }
+        ,{ "name" : "ContactoNombre" }
+        ,{ "name" : "ContactoApellidos" }
+        ,{ "name" : "ContactoEmailPpal" }
+        ,{ "name" : "ContactoTelfPpal" }
+        ,{ "name" : "ContactoEmailOtro" }
+        ,{ "name" : "ContactoTelfOtro" }
+        ,{ "name" : "ContactoDirecc1" }
+        ,{ "name" : "ContactoDirecc2" }
+      ],
+      "params" : [
+        { "name" : "Id" }
+      ]
+    },
+    {
+      "name" : "Import",
+      "type" : "import",
+      "transformer" : {
+        "fields" : [
+          {
+            "name" : "Name",
+            "indexes" : [ { "index" : 0 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "IdMetodoPago",
+            "indexes" : [ { "index" : 1 } ],
+            "transformer" : "TransformField2PKId",
+            "config" : {
+              "beanName"  : "MetodoPago",
+              "fieldName" : "Name"
+            }
+          },
+          {
+            "name" : "InfoMetodoPago",
+            "indexes" : [ { "index" : 2 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "IdEstado",
+            "indexes" : [ { "index" : 3 } ],
+            "transformer" : "TransformField2PKId",
+            "config" : {
+              "beanName"  : "Estado",
+              "fieldName" : "Name"
+            }
+          },
+          {
+            "name" : "IdPais",
+            "indexes" : [ { "index" : 4 } ],
+            "transformer" : "TransformField2PKId",
+            "config" : {
+              "beanName"  : "Pais",
+              "fieldName" : "Name"
+            }
+          },
+          {
+            "name" : "IdIdioma",
+            "indexes" : [ { "index" : 5 } ],
+            "transformer" : "TransformField2PKId",
+            "config" : {
+              "beanName"  : "Idioma",
+              "fieldName" : "Name"
+            }
+          },
+          {
+            "name" : "ContactoNombre",
+            "indexes" : [ { "index" : 6 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "ContactoApellidos",
+            "indexes" : [ { "index" : 7 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "ContactoEmailPpal",
+            "indexes" : [ { "index" : 8 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "ContactoTelfPpal",
+            "indexes" : [ { "index" : 9 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "ContactoEmailOtro",
+            "indexes" : [ { "index" : 10 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "ContactoTelfOtro",
+            "indexes" : [ { "index" : 11 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "ContactoDirecc1",
+            "indexes" : [ { "index" : 12 } ],
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "ContactoDirecc2",
+            "indexes" : [ { "index" : 13 } ],
+            "transformer" : "TransformString"
+          }
+        ]
+      }
+    },
+    {
+      "name" : "AddAll",
+      "type" : "add",
+      "fields" : [ 
+        { "name" : "Name" }
+        ,{ "name" : "IdMetodoPago" }
+        ,{ "name" : "InfoMetodoPago" }
+        ,{ "name" : "IdEstado" }
+        ,{ "name" : "IdPais" }
+        ,{ "name" : "IdIdioma" }
+        ,{ "name" : "ContactoNombre" }
+        ,{ "name" : "ContactoApellidos" }
+        ,{ "name" : "ContactoEmailPpal" }
+        ,{ "name" : "ContactoTelfPpal" }
+        ,{ "name" : "ContactoEmailOtro" }
+        ,{ "name" : "ContactoTelfOtro" }
+        ,{ "name" : "ContactoDirecc1" }
+        ,{ "name" : "ContactoDirecc2" }
+      ]
+    },
+    {
+      "name" : "ViewAll",
+      "type" : "view",
+      "fields" : [ 
+        { "name" : "Name" }
+        ,{ "name" : "IdMetodoPago" }
+        ,{ "name" : "InfoMetodoPago" }
+        ,{ "name" : "IdEstado" }
+        ,{ "name" : "IdPais" }
+        ,{ "name" : "IdIdioma" }
+        ,{ "name" : "ContactoNombre" }
+        ,{ "name" : "ContactoApellidos" }
+        ,{ "name" : "ContactoEmailPpal" }
+        ,{ "name" : "ContactoTelfPpal" }
+        ,{ "name" : "ContactoEmailOtro" }
+        ,{ "name" : "ContactoTelfOtro" }
+        ,{ "name" : "ContactoDirecc1" }
+        ,{ "name" : "ContactoDirecc2" }
+      ],
+      "globalActions" : [
+        {
+          "module" : "Cliente",
+          "name" : "DelAll",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        },
+        {
+          "module" : "Cliente",
+          "name" : "ModAll",
+          "params" : [
+            { "name" : "Id", "value" : "$Id" }
+          ]
+        }
+      ],
+      "params" : [
+        { "name" : "Id", "value" : "$Id" }
+      ]
+    },
+    {
+      "name" : "ListAll",
+      "type" : "list",
+      "fields" : [ 
+        { "name" : "Name" }
+        ,{ "name" : "IdMetodoPago" }
+        ,{ "name" : "InfoMetodoPago" }
+        ,{ "name" : "IdEstado" }
+        ,{ "name" : "IdPais" }
+        ,{ "name" : "IdIdioma" }
+        ,{ "name" : "ContactoNombre" }
+        ,{ "name" : "ContactoApellidos" }
+        ,{ "name" : "ContactoEmailPpal" }
+        ,{ "name" : "ContactoTelfPpal" }
+        ,{ "name" : "ContactoEmailOtro" }
+        ,{ "name" : "ContactoTelfOtro" }
+        ,{ "name" : "ContactoDirecc1" }
+        ,{ "name" : "ContactoDirecc2" }
+      ],
+      "onClick" : {
+        "module" : "Cliente",
+        "actionName" : "ViewAll",
+        "params" : [
+          { "name" : "Id", "value" : "$Id" }
+        ]
+      },
+      "globalActions" : [
+        {
+          "module" : "Cliente",
+          "name" : "AddAll"
+        },
+        {
+          "module" : "Cliente",
+          "name" : "Import"
+        }
+      ]
+    }
+  ],
+  "values" : {
+    "sqlOrder" : 10050
+  }
+}
