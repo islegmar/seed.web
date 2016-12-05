@@ -61,18 +61,24 @@ $('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
       '_completeFK' : true
     }, 
     function(data) {
-      renderData($container, null);
-      renderData($container, data);
+      if ( data.errors ) {
+        displayFormErrorMessages(data.errors, $('#p{CurrentWidgetID}Errors'));
+        $('#{CurrentWidgetID} ._mainContent').hide();
+        $('#{CurrentWidgetID} .page-title').hide();
+      } else {
+        renderData($container, null);
+        renderData($container, data);
 
-      // Render the global actions
-      ## This is the source of the data that will be used when build the urls in for
-      ## the global actions
-      buildGlobalActions(
-        $('#p{CurrentWidgetID}GlobalActions'), 
-        $('#p{CurrentWidgetID}Errors'),
-        {GlobalActions(widgetData["actionParams"])}, 
-        widgetData['User']
-      );
+        // Render the global actions
+        ## This is the source of the data that will be used when build the urls in for
+        ## the global actions
+        buildGlobalActions(
+          $('#p{CurrentWidgetID}GlobalActions'), 
+          $('#p{CurrentWidgetID}Errors'),
+          {GlobalActions(widgetData["actionParams"])}, 
+          widgetData['User']
+        );
+      }
 
       $container.trigger('custom.dataLoaded', [data, widgetData]); 
     }
