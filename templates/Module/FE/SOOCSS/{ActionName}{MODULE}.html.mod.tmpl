@@ -51,45 +51,50 @@ $('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
       '_completeFK' : true
     }, 
     function(data) {
-      renderData($form, null);
-      // renderData(form, data);
-      $form.jsonform({
-        'createEmptyRepeatedElement' : false,
-        'validateFormUsingClientBrowser' : false,
-        'url2UploadFiles' : '{urlBE(/service/UploadFileDB)}',
-        'hash4PwdFields' : false,
-        'preSave' : function () {
-          hideFormErrorMessages($('#p{CurrentWidgetID}Errors'));
-          // Disable the submit button to avoid multiple clicks
-          $('#frm{CurrentWidgetID} button[type=submit]').attr("disabled", true);          
-          return true;
-        },
-        'cbSave' : function(data) {
-          if ( data.errors )  {
-            displayFormErrorMessages(data.errors, $('#p{CurrentWidgetID}Errors'));
-            $('#frm{CurrentWidgetID} button[type=submit]').attr("disabled", false);
-            return;
-          } else {
-            // Go to the next url with the code of the message that need to be shown
-            storeMsgOK('{i18n({MODULE}:{ActionName}:OK)}'.translate(data));
-            document.location = {OnActionDoneURL(data)};
-          }         
-        } // cbSave
-      }); // jsonform()
+      if ( data.errors ) {
+        displayFormErrorMessages(data.errors, $('#p{CurrentWidgetID}Errors'));
+        $('#{CurrentWidgetID} ._mainContent').hide();
+        $('#{CurrentWidgetID} .page-title').hide();
+      } else {
+        renderData($form, null);
+        // renderData(form, data);
+        $form.jsonform({
+          'createEmptyRepeatedElement' : false,
+          'validateFormUsingClientBrowser' : false,
+          'url2UploadFiles' : '{urlBE(/service/UploadFileDB)}',
+          'hash4PwdFields' : false,
+          'preSave' : function () {
+            hideFormErrorMessages($('#p{CurrentWidgetID}Errors'));
+            // Disable the submit button to avoid multiple clicks
+            $('#frm{CurrentWidgetID} button[type=submit]').attr("disabled", true);          
+            return true;
+          },
+          'cbSave' : function(data) {
+            if ( data.errors )  {
+              displayFormErrorMessages(data.errors, $('#p{CurrentWidgetID}Errors'));
+              $('#frm{CurrentWidgetID} button[type=submit]').attr("disabled", false);
+              return;
+            } else {
+              // Go to the next url with the code of the message that need to be shown
+              storeMsgOK('{i18n({MODULE}:{ActionName}:OK)}'.translate(data));
+              document.location = {OnActionDoneURL(data)};
+            }         
+          } // cbSave
+        }); // jsonform()
 
-      ## // Render after the form is generated, otherwise the del button (that
-      ## // is added in _template with jsonform()) is not added in the existing
-      ## // elements 
-      ## // renderData(form, data);
-      ## // IL - 12/03/14 - Throw always events, then it is much easier to hook
-      ## // IL - 15/04/15 - Add data coming from parrams 
-      ## //renderData(form, data, null, null, true, null, null, {'notFillIfAlreadyHaveValue' : true});
-      renderData(
-        $form, 
-        $.extend(data, {ActionParamsObject(widgetData['actionParams'],ignoreRuntimeValuesIfPresent)}), 
-        null, null, true, null, null, {'notFillIfAlreadyHaveValue' : false}
-      );
-
+        ## // Render after the form is generated, otherwise the del button (that
+        ## // is added in _template with jsonform()) is not added in the existing
+        ## // elements 
+        ## // renderData(form, data);
+        ## // IL - 12/03/14 - Throw always events, then it is much easier to hook
+        ## // IL - 15/04/15 - Add data coming from parrams 
+        ## //renderData(form, data, null, null, true, null, null, {'notFillIfAlreadyHaveValue' : true});
+        renderData(
+          $form, 
+          $.extend(data, {ActionParamsObject(widgetData['actionParams'],ignoreRuntimeValuesIfPresent)}), 
+          null, null, true, null, null, {'notFillIfAlreadyHaveValue' : false}
+        );
+      } // data.errors
   		      
       // IL - 13/03/14 - When the init is done, throw an event to the form
       $form.trigger('custom.dataLoaded', [data, widgetData]); 

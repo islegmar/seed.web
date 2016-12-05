@@ -83,11 +83,17 @@ $('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
       '_completeFK' : true
     }, 
     function(data) {
-      // Clean the form
-      renderData($form, null);
+      if ( data.errors ) {
+        displayFormErrorMessages(data.errors, $('#p{CurrentWidgetID}Errors'));
+        $('#{CurrentWidgetID} ._mainContent').hide();
+        $('#{CurrentWidgetID} .page-title').hide();
+      } else {
+        // Clean the form
+        renderData($form, null);
       
-      renderData($form, data, 
-        null, null, true, null, null, {'notFillIfAlreadyHaveValue' : true});
+        renderData($form, data, 
+          null, null, true, null, null, {'notFillIfAlreadyHaveValue' : true});
+      } // data.errors
 
       $form.trigger('custom.dataLoaded', [data, widgetData]); 
     } // function(data)
