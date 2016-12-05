@@ -38,11 +38,7 @@ EOD;
     $data = array();
     {ParamValues4Query($data,$this->getParamValue)}
 
-    try {
-      return FactoryObject::newObject('{MODULE}')->getOne($sql, $data);
-    } catch (Exception $e) {
-      return FactoryObject::newObject('{MODULE}');
-    }
+    return FactoryObject::newObject('{MODULE}')->getOne($sql, $data);
   }
 
   ## @TODO : Remove the parameter $db, probably irt is not needed
