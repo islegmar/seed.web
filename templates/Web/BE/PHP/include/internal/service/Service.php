@@ -3,6 +3,8 @@ require_once(EXTERNAL_ROOT_DIR . '/log4php/Logger.php');
 require_once(INTERNAL_ROOT_DIR . '/utils/FactoryObject.php');
 require_once(INTERNAL_ROOT_DIR . '/utils/Params.php');
 require_once(INTERNAL_ROOT_DIR . '/utils/WebSession.php');
+require_once(INTERNAL_ROOT_DIR . '/utils/ValidateBeanData.php');
+require_once(INTERNAL_ROOT_DIR . '/BeanValidateException.php');
 
 /**
  * Base clase for all the services. 
@@ -12,6 +14,8 @@ require_once(INTERNAL_ROOT_DIR . '/utils/WebSession.php');
  * @author islegmar@gmail.com
  */
 abstract class Service {
+  protected $serviceValidate = null;
+
   // @todo : it's a bit chaos what params can be; until now it can be:
   // @TODODELAMUERTE : it's a bit chaos what params can be; until now it can be:
   // - instance of WebParam 
@@ -26,6 +30,8 @@ abstract class Service {
 		$this->logger = Logger::getLogger("main");
     
 		$this->params = new Params(array());
+
+                $this->serviceValidate = new ValidateBeanData();
 
 		if ( $this->logger->isDebugEnabled() ) {
 			$this->logger->debug('Created a instance of the service "' . get_class($this) . '"');
@@ -168,17 +174,23 @@ abstract class Service {
       throw $e;
     }
 
+    $retVal = null;
     try {
-  	  $retVal = $this->performImpl(); 
-      
-      $this->logActionOK($this->getAction4Logger());
-
-      return $retVal; 
+      $retVal = $this->performImpl(); 
+    // Unexpected Exception
     } catch (Exception $e) {
       $this->logActionERROR($this->getAction4Logger(), $e);
 
       throw $e;
     }
+
+    // Check if there are controlled errors
+    $this->assertNoErrors();
+
+    // Everything OK
+    $this->logActionOK($this->getAction4Logger());
+
+    return $retVal; 
   }
 
   /**
@@ -228,6 +240,30 @@ abstract class Service {
 
   protected function getParamsAsString() {
     return "";
+  }
+
+  // --------------------------------------------------------- Error Validations
+  protected function getServiceValidate() {
+    return $this->serviceValidate;
+  }
+
+  protected function addErrorCode($code, $fieldName=null, $vars=null, $values=null) {
+    $this->serviceValidate->addErrorCode($code, $fieldName, $vars, $values);
+  }
+
+  protected function addErrorMsg($msg, $fieldName=null) {
+    $this->serviceValidate->addErrorCode($msg, $fieldName);
+  }
+
+  // If there are errors, log an exception
+  protected function assertNoErrors() {
+    $errors = $this->serviceValidate->getErrors(); 
+    if ( !empty($errors) ) {
+      $ex = new BeanValidateException($errors);;
+      $this->logActionERROR($this->getAction4Logger(), $ex);
+
+      throw $ex;
+    }
   }
 
   // ---------------------------------------------------------- Abstract Methods
