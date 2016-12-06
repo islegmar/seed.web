@@ -52,6 +52,8 @@ class _MailServer extends __MailServer {
         //$body             = eregi_replace("[\]",'',$body);
 
 
+       $mail->CharSet = 'UTF-8';
+
        $mail->Host       = $this->getHost();      // SMTP server
        $mail->SMTPAuth   = $this->getAuth();      // enable SMTP authentication
        $mail->SMTPSecure = $this->getSecure();    // sets the prefix to the servier
@@ -68,11 +70,11 @@ class _MailServer extends __MailServer {
        $mail->SetFrom   ($this->getUsername(), 'mail');
        $mail->AddReplyTo($this->getUsername(),"mail");
 
-       $mail->Subject    = $strSubject;
+       $mail->Subject    = utf8_decode($strSubject);
 
        $mail->AltBody    = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
 
-       $mail->MsgHTML($strBody);
+       $mail->MsgHTML(utf8_decode($strBody));
 
        //$mail->Body    = 'This is the HTML message body <b>in bold!</b>';
 
