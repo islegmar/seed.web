@@ -11,9 +11,11 @@ class _{ActionName}{MODULE}Srv extends ServiceWebrad {
   protected function performImpl() {
     $id = $this->getParamValue('Id', null);
 
+    $obj = null;
     if ( !is_null($id) ) {
       try {
-        FactoryObject::newObject('{MODULE}')->loadById($id)->deleteInDatabase();       
+        $obj = FactoryObject::newObject('{MODULE}')->loadById($id);
+        $obj->deleteInDatabase();       
       } catch(Exception $e) {
         throw new BeanValidateException (
           array (
@@ -23,13 +25,17 @@ class _{ActionName}{MODULE}Srv extends ServiceWebrad {
       }
     } 
 
-    return array(
-      "msgOK" => "{i18n({MODULE}:{ActionName}:OK)}"
-    );    
+    return $this->getReturnData($obj);
   }
 
   protected function getPermissionNeeded () {
     return '{PermissionName}';
+  }
+
+  protected function getReturnData($obj) {
+    return array(
+      "msgOK" => "{i18n({MODULE}:{ActionName}:OK)}"
+    );
   }
 
   // Methods for log info

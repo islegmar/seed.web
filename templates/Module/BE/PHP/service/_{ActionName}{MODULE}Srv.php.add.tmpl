@@ -26,10 +26,7 @@ class _{ActionName}{MODULE}Srv extends ServiceWebrad {
     $this->createInDatabase($obj);
 
     // Return the minimum info
-    return array(
-      "Id" => $obj->getId(),
-      "msgOK" => "{i18n({MODULE}:{ActionName}:OK)}"
-    );    
+    return $this->getReturnData($obj);
   }
 
   protected function getPermissionNeeded () {
@@ -79,6 +76,14 @@ class _{ActionName}{MODULE}Srv extends ServiceWebrad {
   public function createInDatabase($obj) {
     $obj->createInDatabase();
   } 
+
+  // The data returned by the service
+  protected function getReturnData($obj) {
+    return array(
+      "Id" => $obj->getId(),
+      "msgOK" => "{i18n({MODULE}:{ActionName}:OK)}"
+    );    
+  }
 
   // Methods for log info
   protected function getAction4Logger() {

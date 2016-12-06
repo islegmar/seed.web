@@ -8,7 +8,7 @@ require_once(INTERNAL_ROOT_DIR . '/security/ActionDeniedException.php');
 class _{ActionName}{MODULE}Srv extends ServiceWebrad {
   // ------------------------------------------------------------------- Service
   protected function performImpl() {
-    return array();
+    return $this->getReturnData();
   }
 
   protected function getPermissionNeeded () {
@@ -18,6 +18,10 @@ class _{ActionName}{MODULE}Srv extends ServiceWebrad {
   // Methods for log info
   protected function getAction4Logger() {
     return "{MODULE}:{ActionName}";
+  }
+
+  protected function getReturnData() {
+    return array();
   }
 
   protected function getParamsAsString() {
