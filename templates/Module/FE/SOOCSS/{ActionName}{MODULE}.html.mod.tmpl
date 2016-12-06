@@ -45,6 +45,11 @@
 <script>
 $('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
   var $form = $('#frm{CurrentWidgetID}');
+ 
+  $form.on('custom.dataLoaded', function() {
+    cancelLoader($('#{CurrentWidgetID}'));
+  });
+
   $.getJSON(
     {LoadDataURL},
     {

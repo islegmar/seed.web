@@ -78,6 +78,8 @@ $.getJSON(
     var renderer = new Graph.Renderer.Raphael('canvas', g, 800, 800);
     layouter.layout();
     renderer.draw();
+
+    cancelLoader($('#{CurrentWidgetID}'));
   } 
 ); 
 </script>

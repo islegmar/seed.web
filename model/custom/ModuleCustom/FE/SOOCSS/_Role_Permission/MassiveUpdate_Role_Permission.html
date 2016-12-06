@@ -61,6 +61,8 @@ $('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
           $row.append($('<td></td>').append($cb));  
         }
       }
+
+      cancelLoader($('#{CurrentWidgetID}'));
     } 
   );
 
