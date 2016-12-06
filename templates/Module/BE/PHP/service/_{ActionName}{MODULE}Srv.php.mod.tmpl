@@ -32,10 +32,7 @@ class _{ActionName}{MODULE}Srv extends ServiceWebrad {
     $this->fillBean($obj);
     $this->updateInDatabase($obj);
 
-    // Return the minimum info 
-    return array(
-      "msgOK" => "{i18n({MODULE}:{ActionName}:OK)}"
-    );    
+    return $this->getReturnData($obj);
   }
 
   protected function getPermissionNeeded () {
@@ -97,6 +94,12 @@ EOD;
   public function updateInDatabase($obj) {
     $obj->updateInDatabase();
   }  
+
+  protected function getReturnData($obj) {
+    return array(
+      "msgOK" => "{i18n({MODULE}:{ActionName}:OK)}"
+    );    
+  }
 
   // Methods for log info
   protected function getAction4Logger() {
