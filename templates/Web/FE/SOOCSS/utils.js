@@ -733,10 +733,10 @@ $(formId).on("custom.dataLoaded", function(e, formData) {
 // -----------------------------------------------------------------------------
 // Widget Loader
 // -----------------------------------------------------------------------------
-function showLoaderIfTooLong($ele, timeout=2000) {
+function showLoaderIfTooLong($ele, timeout) {
   var t = setTimeout(function(pWidget){
     showWidgetLoader(pWidget);
-  }, timeout, $ele);
+  }, !timeout ? 2000 : timeout, $ele);
   $ele.data('widget-loader-timeout', t);
 }
 
