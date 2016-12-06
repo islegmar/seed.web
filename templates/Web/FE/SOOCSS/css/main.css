@@ -18,6 +18,47 @@ img._goHome {
 }
 
 /* -------------------------------------------------------------------------- */
+/* Spinner*/
+/* -------------------------------------------------------------------------- */
+.widget-loader {
+  position: absolute;
+  z-index:10000;
+  display:none;
+
+  background-color:grey;
+  opacity: 0.6;
+  filter: alpha(opacity=60); /* For IE8 and earlier */
+
+  width:100%;
+  height:100%;
+
+  text-align:center;
+}
+
+.widget-loader > div {
+  display: inline-block;
+  margin-top:40px;
+
+  border: 16px solid white; /* Light grey */
+  border-top: 16px solid black; /* Blue */
+  border-radius: 50%;
+
+  width: 120px;
+  height: 120px;
+
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(72deg); }
+  40% { transform: rotate(144deg); }
+  60% { transform: rotate(216deg); }
+  80% { transform: rotate(288deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* -------------------------------------------------------------------------- */
 /* Modify some pages' layout */
 /* -------------------------------------------------------------------------- */
 

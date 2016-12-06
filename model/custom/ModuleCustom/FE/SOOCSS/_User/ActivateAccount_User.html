@@ -28,6 +28,7 @@ $('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
     "{urlBE(/service/{MODULE}/service/ActivateByCode{MODULE})}",
     {ActionParamsObject(widgetData)},
     function(data) {
+      cancelLoader($('#{CurrentWidgetID}'));
       if ( data.errors )  {
         displayFormErrorMessages(data.errors, $('#p{CurrentWidgetID}Errors'));
         return;

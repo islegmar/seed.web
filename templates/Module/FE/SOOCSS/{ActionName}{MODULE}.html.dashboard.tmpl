@@ -9,6 +9,7 @@
     
 <script>
 $('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
+  cancelLoader($('#{CurrentWidgetID}'));
 });
 </script>
 

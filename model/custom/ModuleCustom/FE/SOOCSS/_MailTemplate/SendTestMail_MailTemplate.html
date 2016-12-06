@@ -26,6 +26,8 @@
 
 <script>
 $('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
+  cancelLoader($('#{CurrentWidgetID}'));
+
   var $form = $('#frm{CurrentWidgetID}');
   renderData($form, {ActionParamsObject(widgetData['actionParams'])}, null, null, true, null, null, {'notFillIfAlreadyHaveValue' : false});
 

@@ -48,6 +48,9 @@
   ## 
   ## So the solution is (I do not know it there is a better one) to clone 
   ## widgetData
+
+  showLoaderIfTooLong($('#{CurrentWidgetID}'));
+
   $(document).on('custom.ready', function(evt, pWidgetData){
     // Clone it, see comment above
     var widgetData=$.extend({},pWidgetData);
@@ -96,3 +99,7 @@
       <span class="ci ci-error"></span>
       <span class="fwb"></span>
     </div>
+    <div class="widget-loader">
+      <div></div>
+    </div>
+

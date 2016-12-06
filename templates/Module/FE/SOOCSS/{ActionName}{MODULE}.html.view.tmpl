@@ -55,6 +55,11 @@
 <script>
 $('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
   var $container = $('#frm{CurrentWidgetID}');
+
+  $container.on('custom.dataLoaded', function() {
+    cancelLoader($('#{CurrentWidgetID}'));
+  });
+
   $.getJSON(
     {LoadDataURL},
     {

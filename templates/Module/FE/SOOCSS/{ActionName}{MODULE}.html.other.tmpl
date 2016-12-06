@@ -27,11 +27,13 @@
 <script>
 $('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
   @@if {IsPropertyDefined(feOnly,true)}
+  cancelLoader($('#{CurrentWidgetID}'));
   @@else
   $.getJSON(
     "{urlBE(/service/{MODULE}/service/{ActionName}{MODULE})}",
     {ActionParamsObject(widgetData)},
     function(data) {
+      cancelLoader($('#{CurrentWidgetID}'));
     } 
   ); 
   @@endif

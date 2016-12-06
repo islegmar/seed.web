@@ -47,6 +47,8 @@ $('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
       }         
     } // cbSave
   }); // jsonform()
+
+  cancelLoader($('#{CurrentWidgetID}'));
 }); // custom.ready
 </script>
 

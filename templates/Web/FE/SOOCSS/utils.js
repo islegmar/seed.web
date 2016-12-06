@@ -729,3 +729,27 @@ $(formId).on("custom.dataLoaded", function(e, formData) {
 });
 
 }
+
+// -----------------------------------------------------------------------------
+// Widget Loader
+// -----------------------------------------------------------------------------
+function showLoaderIfTooLong($ele, timeout=2000) {
+  var t = setTimeout(function(pWidget){
+    showWidgetLoader(pWidget);
+  }, timeout, $ele);
+  $ele.data('widget-loader-timeout', t);
+}
+
+function cancelLoader($ele) {
+  var t = $ele.data('widget-loader-timeout');
+  clearTimeout(t);
+  hideWidgetLoader($ele);
+}
+
+function showWidgetLoader($ele) {
+  $ele.find('.widget-loader').show();
+}
+
+function hideWidgetLoader($ele) {
+  $ele.find('.widget-loader').hide();
+}

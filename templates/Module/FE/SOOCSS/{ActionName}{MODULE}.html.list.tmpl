@@ -211,6 +211,9 @@
 ## =============================================================================
 <script>
 $('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
+  // List has its own sponner
+  cancelLoader($('#{CurrentWidgetID}'));
+
   // Reset the search form
   $('#{CurrentWidgetID} ._clearFilter').click(function(){
     $('#p{CurrentWidgetID}Filter form')[0].reset();
