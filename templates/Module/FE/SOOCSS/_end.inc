@@ -11,7 +11,7 @@
           &copy;Issi4u - <a href="http://www.issi4u.com">www.iss4u.com</a>
         </div>
         <div class="col-md-6 footer-right hidden-xs hidden-sm">
-          Powered by webrad
+          Powered by <a href="https://github.com/islegmar/seed.web">seed.web</a>
         </div>
       </div>
     </div>
