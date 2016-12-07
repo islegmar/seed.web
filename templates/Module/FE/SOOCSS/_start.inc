@@ -6,8 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{i18n(APP_WEB_TITLE)}</title>
   <!-- !CSS -->
+  @@if {IsPublic}
   <link href="{urlSoocss(/css/soocss.min.css)}" rel="stylesheet">
   <link href="{urlSoocss(/css/style.css)}" rel="stylesheet">
+  @@else
+  <link href="{urlSoocss(/css/soocss.min.css)}" rel="stylesheet">
+  <link href="{urlSoocss(/css/style.css)}" rel="stylesheet">
+  @@endif
   
   <link href="{urlSoocss(/css/jquery-ui.min.css)}" rel="stylesheet">
   <link href="{urlSoocss(/css/jquery-ui.structure.min.css)}" rel="stylesheet">
@@ -93,7 +98,11 @@
   });
   </script>
   <!-- Custom CSS -->
+  @@if {IsPublic}
   <link href="{urlFE(/css/main.css)}" rel="stylesheet">
+  @@else
+  <link href="{urlFE(/css/main.css)}" rel="stylesheet">
+  @@endif
   <link href="{urlBE(/action/_ConfigApp/controller/GetCss)}" rel="stylesheet">
   <!--
   ==================================================== 
