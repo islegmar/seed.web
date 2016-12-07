@@ -35,6 +35,8 @@ class Resolver:
     self.regexEndIf=re.compile(r" *@@endif")
 
     self.regexVariable=re.compile(r"{\w+}")
+
+    self.regexSwpFile=re.compile("^\..*\.swp$")
     
     # Utility : DISABLED : the cfgModule is updated in the resolvers, if we keep
     # here a reference, it will be out of date!!!!
@@ -86,6 +88,10 @@ class Resolver:
       # in the destination folder once transformed
       for file in files:
         srcFile=os.path.join(path,file)
+        # Skip the .*.swp files (from vi)
+        if self.regexSwpFile.match(file):
+          continue
+        
         dstFile=self.getDstPath(srcFile)
         # The current status is transform the files
         if transformFiles:
