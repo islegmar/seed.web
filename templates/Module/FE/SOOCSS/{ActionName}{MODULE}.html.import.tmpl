@@ -75,6 +75,8 @@
 ## =============================================================================
 <script>
 $('#{CurrentWidgetID}').on("custom.widgetReady", function(evt, widgetData){
+  cancelLoader($('#{CurrentWidgetID}'));
+
   var $form = $('#p{CurrentWidgetID}UploadCSV form');
   var $pProgress = $('#p{CurrentWidgetID}UploadCSV ._progressInfo');
   var timer;
