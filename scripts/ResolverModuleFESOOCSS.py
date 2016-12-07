@@ -575,6 +575,12 @@ $(document).on('custom.ready', function(evt, widgetData){{""".format(**locals())
   
     return className
 
+  def printIsPublic(self):
+    if not self.currentItemCfg:
+      raise Exception("No currentItemCfg")
+
+    return "" if self.currentItemCfg['permission'] else "true"
+
   def printCollapsedClass(self):
     # Do not add anything, the panel will be shown as usual
     if not self.currentItemCfg or not self.currentItemCfg['collapsable']:

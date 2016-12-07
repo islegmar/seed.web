@@ -46,6 +46,9 @@ class ResolverWebFESOOCSS(ResolverWeb):
   def printPageID(self):
     return ""  
 
+  def printIsPublic(self):
+    return "true"
+
   # Return the value for body/@class (<body class="{PageClassname}">)
   def printPageClassname(self):
     return ""  
