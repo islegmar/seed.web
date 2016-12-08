@@ -21,7 +21,9 @@ class _{ActionName}{MODULE}Srv extends ServiceWebrad {
   }
 
   protected function getReturnData() {
-    return array();
+    return array(
+      "msgOK" => "{i18n({MODULE}:{ActionName}:OK)}"
+    );
   }
 
   protected function getParamsAsString() {
