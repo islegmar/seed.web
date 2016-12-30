@@ -20,20 +20,24 @@ Install
 Step 1 : build the image
 ------------------------
 
-    sudo docker build -t <image-name> --build-arg UID=$UID --build-arg GID=$GID .
+    sudo docker build -t <image-name> --build-arg UID=$UID --build-arg GID=<gid> .
+
+NOTE: sometimes, if the user belongs to only one group, the environment variable $GID
+is defined but in most of the cases the user belongs to more that one. To see all the 
+groups and get a numeric value execute 'id' from the command line.
 
 Example:
 
-    sudo docker build -t seed.web-dev --build-arg UID=$UID --build-arg GID=$GID .
+    sudo docker build -t seed.web-dev --build-arg UID=$UID --build-arg GID=1091400513 .
 
 Step 2: Start a container
 -------------------------
 
-    sudo docker run -it -p 9090:80  -u $UID -v <local folder>:/home/developer/project <image-name>º
+    sudo docker run -it -p 9090:80  -v <local folder>:/home/developer/project <image-name>
 
 Example, if I have done a clone of the project into /home/ilegido/projects/webrad then the command will be
 
-    sudo docker run -it -p 9090:80  -u $UID -v ~/projects/seed.web:/home/developer/project seed.web-dev
+    sudo docker run -it -p 9090:80  -v ~/projects/seed.web:/home/developer/project seed.web-dev
 
 you'll see tracces like
 
