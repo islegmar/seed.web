@@ -1,0 +1,55 @@
+# ------------------------------------------------------------------------------
+# Model file for a more comples use case
+#
+# The model file defines the ENTIRE data model and is the input file to generate
+# the base model/<MODULE>.json files
+# 
+# SYNTAX:
+# - Comment lines : lines starting with # are ignored
+# - Empty lines : ignored
+# - Start a module's definition : lines containing [<MODULE>]. Following lines 
+#   are the fields' definitions
+# - Field definition:
+#   + <Name> : defines a String of 255
+#   + <Name>:<Type> : defines a field of type <Type> with no arguments
+#   + <Name>:<Type>(<arg1>, ....) : defines a field of type <Type> with 
+#     some configuration parameters (depending on the type)
+#
+# List of <Type>
+# - String (this is the default, if the type is not specified, String will be used)
+# - FK. In this case it has the format FK(<module>,<field>,association|aggregation)
+#   It will generate a link of type 'association' or 'aggregation' to the module
+#   <module>, where <field> will be the field shown when building the 'selects'.
+# - Image
+# - File
+# - Integer 
+# - Text
+# - Date : it will generate a field of type DateTime with format dd/MM/yy HH:mm
+#
+# Generate the config files.
+# Once this file is ready execute
+#
+#   cd scripts
+#   python genConfig.py --file ../model/model_full.txt --i18n
+#   python genI18N.py --regenerate
+#   python createWebProject.py --full
+#   python createWebModule.py --full
+#
+# Then in the default docker configuration go to
+#
+#   http://localhost:9090/fe
+#
+# Execute 'python python genConfig.py -h' for more help
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------
+# Enums
+# ------------------------------------------------
+
+[Tale]
+Title
+Created:Date
+Word1
+Word2
+Word3
+Contents:Text
