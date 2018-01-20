@@ -96,7 +96,22 @@ class ValidateBeanData {
   }
 
   /**
-   * Integer value : check 
+   * Validate value is an Float
+   */
+  public function validateIsFloat($fieldName, $fieldValue, $errorMsg=null) {
+    if ( empty($fieldValue) ) return;
+
+    if ( !filter_var($fieldValue, FILTER_VALIDATE_FLOAT) ) {
+      if ( is_null($errorMsg) ) {
+        $this->addErrorCode( $fieldName . 'IsNotFloat', $fieldName);
+      } else {
+        $this->addErrorMsg( $errorMsg, $fieldName);        
+      }
+    }
+  }
+
+  /**
+   * Numeric value : check 
    *   value >=min_val
    */
   public function validateIsNumberNotTooSmall($fieldName, $fieldValue, $min_value, $errorMsg=null) {
@@ -112,7 +127,7 @@ class ValidateBeanData {
   }
 
   /**
-   * Integer value : check 
+   * Numeric value : check 
    *   value <=max_val
    */
   public function validateIsNumberNotTooBig($fieldName, $fieldValue, $max_value, $errorMsg=null) {
