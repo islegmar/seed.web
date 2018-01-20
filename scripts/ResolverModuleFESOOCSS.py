@@ -799,7 +799,7 @@ and be sure widgetData is accessible in your code""")
         buff += "<select"
       elif varData['type']=='Bool':
         buff += "<input type='checkbox' value='1'"
-      elif varData['type']=='Integer':
+      elif varData['type']=='Integer' or varData['type']=='Float':
         buff += "<input type='number'"
         # Min/Max value if specified
         if 'min_val' in varData:

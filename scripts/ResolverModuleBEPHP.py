@@ -59,7 +59,7 @@ class ResolverModuleBEPHP(ResolverModule):
     for varData in self.cfgModule['fields']:
       # Set a default value
       if 'default' in varData:
-        if varData['type']=='Integer':
+        if varData['type']=='Integer' or varData['type']=='Float':
           buff += """
     protected ${name} = {default}; // {type}""".format(**varData)
         else:
@@ -416,23 +416,29 @@ class ResolverModuleBEPHP(ResolverModule):
           buff += """
     {varNameBeanValidate}->validateIsEmail('{name}', $this->getParamValue('{name}',null), "{i18nError}");""".format(**locals())
 
-        if varData['type']=='Integer':
-          i18nError=self.i18n(i18nErrorPrefix + 'IsNotInteger')
-          buff += """
+        if varData['type']=='Integer' or varData['type']=='Float':
+          if varData['type']=='Integer':
+            i18nError=self.i18n(i18nErrorPrefix + 'IsNotInteger')
+            buff += """
     {varNameBeanValidate}->validateIsInteger('{name}', $this->getParamValue('{name}',null), "{i18nError}");""".format(**locals())
+          elif varData['type']=='Float':
+            i18nError=self.i18n(i18nErrorPrefix + 'IsNotFloat')
+            buff += """
+    {varNameBeanValidate}->validateIsFloat('{name}', $this->getParamValue('{name}',null), "{i18nError}");""".format(**locals())
+
           # Validate min value
           if 'min_val' in varData:
             min_val=varData['min_val']
-            i18nError=self.i18n(i18nErrorPrefix + 'IsIntegerTooSmall')
+            i18nError=self.i18n(i18nErrorPrefix + 'IsNumberTooSmall')
             buff += """
-    {varNameBeanValidate}->validateIsIntegerNotTooSmall('{name}', $this->getParamValue('{name}',null), {min_val}, "{i18nError}");""".format(**locals())
+    {varNameBeanValidate}->validateIsNumberNotTooSmall('{name}', $this->getParamValue('{name}',null), {min_val}, "{i18nError}");""".format(**locals())
 
           # Validate max value
           if 'max_val' in varData:
             max_val=varData['max_val']
-            i18nError=self.i18n(i18nErrorPrefix + 'IsIntegerTooBig')
+            i18nError=self.i18n(i18nErrorPrefix + 'IsNumberTooBig')
             buff += """
-    {varNameBeanValidate}->validateIsIntegerNotTooBig('{name}', $this->getParamValue('{name}',null), {max_val}, "{i18nError}");""".format(**locals())
+    {varNameBeanValidate}->validateIsNumberNotTooBig('{name}', $this->getParamValue('{name}',null), {max_val}, "{i18nError}");""".format(**locals())
         
         if 'unique' in varData and varData['unique']:
           i18nError=self.i18n(i18nErrorPrefix + 'IsNotUnique')

@@ -330,6 +330,13 @@ def _genFullModuleConfig(moduleName, allBasicModulesCfg, sqlOrder, isMinimal, i1
       "name" : "{name}",
       "type" : "Integer"
     }}""".format(**fieldCfg)
+    # Is a Float
+    elif type=='Float':
+      cfg += """
+    {{
+      "name" : "{name}",
+      "type" : "Float"
+    }}""".format(**fieldCfg)
     # Is a Text
     elif type=='Text':
       cfg += """
