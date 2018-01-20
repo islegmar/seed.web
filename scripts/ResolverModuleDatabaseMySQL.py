@@ -66,6 +66,8 @@ class ResolverModuleDatabaseMySQL(ResolverModule):
         buff += "  {name} text "
       elif varType=="Integer":
         buff += "  {name} int"
+      elif varType=="Float":
+        buff += "  {name} float"
       elif varType=="FK" or varType=="ParentK" or varType=="File" or varType=="Image":
         buff += "  {name} int unsigned "
       # Date, store the timestamp

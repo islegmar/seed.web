@@ -99,12 +99,12 @@ class ValidateBeanData {
    * Integer value : check 
    *   value >=min_val
    */
-  public function validateIsIntegerNotTooSmall($fieldName, $fieldValue, $min_value, $errorMsg=null) {
+  public function validateIsNumberNotTooSmall($fieldName, $fieldValue, $min_value, $errorMsg=null) {
     if ( empty($fieldValue) ) return;
 
-    if ( intval($fieldValue)<intval($min_value)) {
+    if ( floatval($fieldValue)<floatval($min_value)) {
       if ( is_null($errorMsg) ) {
-        $this->addErrorCode( $fieldName . 'IsIntegerTooSmall', $fieldName);
+        $this->addErrorCode( $fieldName . 'IsNumberTooSmall', $fieldName);
       } else {
         $this->addErrorMsg( $errorMsg, $fieldName);        
       }
@@ -115,12 +115,12 @@ class ValidateBeanData {
    * Integer value : check 
    *   value <=max_val
    */
-  public function validateIsIntegerNotTooBig($fieldName, $fieldValue, $max_value, $errorMsg=null) {
+  public function validateIsNumberNotTooBig($fieldName, $fieldValue, $max_value, $errorMsg=null) {
     if ( empty($fieldValue) ) return;
 
-    if ( intval($fieldValue)>intval($max_value)) {
+    if ( floatval($fieldValue)>floatval($max_value)) {
       if ( is_null($errorMsg) ) {
-        $this->addErrorCode( $fieldName . 'IsIntegerTooBig', $fieldName);
+        $this->addErrorCode( $fieldName . 'IsNumberTooBig', $fieldName);
       } else {
         $this->addErrorMsg( $errorMsg, $fieldName);        
       }
