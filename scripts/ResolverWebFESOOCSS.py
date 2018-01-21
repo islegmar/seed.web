@@ -42,9 +42,8 @@ class ResolverWebFESOOCSS(ResolverWeb):
     return ""    
 
   # Return the value for body/@id (<body id="{PageID}">)
-  # @TODO : return a value based on the file name?
   def printPageID(self):
-    return ""  
+    return os.path.splitext(os.path.basename(self.currDstFile))[0]
 
   def printIsPublic(self):
     return "true"
