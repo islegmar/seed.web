@@ -65,6 +65,7 @@ class ResolverModule(ResolverWebrad):
       # @TODO : chapuza :-( add some missing values
       if not 'values' in cfgModule: cfgModule['values'] = {}
       if not 'prjName' in  cfgModule['values']: cfgModule['values']['prjName'] = self.cfgModule['values']['prjName']
+      if not 'urlBE' in  cfgModule['values'] and 'urlBE' in self.cfgModule['values']: cfgModule['values']['urlBE'] = self.cfgModule['values']['urlBE']
       self.allModulesConfig[otherName]=cfgModule
 
       # Dump this in a file

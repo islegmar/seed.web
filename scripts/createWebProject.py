@@ -37,7 +37,7 @@ def removeFolderContentKeepFolderItself(dir):
 # Main
 # ==============================================================================
 
-def main(prjName=None,templatesDir=None,components={},createDB=False, verbose=False, rmDstFolder=False):  
+def main(prjName=None,templatesDir=None,components={},createDB=False, verbose=False, rmDstFolder=False,additionalConfigValues=None):
   # Check the environment has been set properly
   if not 'PRJ_NAME' in os.environ:
     raise Exception("Environment not set. Please execute '. setenv.sh' first!")
@@ -105,7 +105,7 @@ def main(prjName=None,templatesDir=None,components={},createDB=False, verbose=Fa
     if not os.path.exists(dst):
       print 'Destination folder {dst} does not exist, create it.'.format(**locals())
       os.makedirs(dst)
-    
+
     # --- Generate code using template
     # @TODO : change genModule.py so we can call it as a python module
     for dir in templatesDir:
@@ -117,7 +117,10 @@ def main(prjName=None,templatesDir=None,components={},createDB=False, verbose=Fa
 [{compoName} : Web Project]
 {template}
 ---------------------------------------------------""".format(**locals())
-        cmd="{python} genModule.py -r ResolverWeb{compoName}{type} -t {template} -d {dst} {prjName}".format(**locals())
+       
+        cmd="{python} genModule.py -r ResolverWeb{compoName}{type} -t {template} -d {dst}".format(**locals())
+        if additionalConfigValues: cmd += " -v " + additionalConfigValues
+        cmd += " " + prjName
         utils.system(cmd)
   
     # --- Add custom code if any  
@@ -130,7 +133,9 @@ def main(prjName=None,templatesDir=None,components={},createDB=False, verbose=Fa
 [{compoName} : Custom Web Project]
 {custom}
 ---------------------------------------------------""".format(**locals())
-        cmd="{python} genModule.py -r ResolverWeb{compoName}{type} -t {custom} -d {dst} {prjName}".format(**locals())
+        cmd="{python} genModule.py -r ResolverWeb{compoName}{type} -t {custom} -d {dst}".format(**locals())
+        if additionalConfigValues: cmd += " -v " + additionalConfigValues
+        cmd += " "  + prjName
         utils.system(cmd)
 
   # ----------------------------------------------------- Other Optional Actions
@@ -157,6 +162,7 @@ if __name__ == "__main__":
   parser.add_argument('--templates', help='Folder where the templates are located. Several locations separated by ,')
   parser.add_argument('--verbose',action="store_true", help='Print verbose messages')
   parser.add_argument('--full',action="store_true", help='Same as --createDB and removes the build folder')
+  parser.add_argument('--values', help='Values overwritten the config')
 
   args = parser.parse_args()
 
@@ -185,5 +191,6 @@ if __name__ == "__main__":
     components,
     args.createDB or args.full,
     args.verbose,
-    args.full
+    args.full,
+    args.values
   )
