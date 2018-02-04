@@ -55,7 +55,10 @@ class ResolverWebFESOOCSS(ResolverWeb):
   # These functions are called by FE pages that are in [appContext]/fe, like
   # can be index.html or login.html
   def urlBE(self,vars):
-    return '../be' + vars
+    if 'values' in self.cfgModule and 'urlBE' in self.cfgModule['values']:
+      return self.cfgModule['values']['urlBE'] + vars
+    else:
+      return '../be' + vars
     
   def urlFE(self, vars):
     return '.' + vars  
