@@ -306,6 +306,13 @@ class ResolverModule(ResolverWebrad):
       if not 'goOnActionDone' in actionCfg:
         actionCfg['goOnActionDone']='back'
 
+      # Possible values:
+      # - self : in the same page
+      # - new_tab : in a new tab
+      # - new_window : in a new window
+      if not 'whereOpenAction' in actionCfg:
+        actionCfg['whereOpenAction']="self"
+
       # ------------------------------------------------------------ itemActions
       if 'itemActions' in actionCfg:
         validStyles = ['onrow', 'outrow']
