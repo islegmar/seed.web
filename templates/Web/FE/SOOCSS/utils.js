@@ -547,55 +547,62 @@ function askConfirmation(title, text, onYesAction) {
  * Executes an action
  */
 function executeAction(actionCfg, $pErrors) {
-  // This action has not FE, so execute the BE via AJAX
-  if ( actionCfg['beOnly'] ) {
-    // @TODO : control OK/KO messages
-    $.getJSON(actionCfg['url'], function(data){
-      if ( data.errors )  {
-        displayFormErrorMessages(data.errors, $pErrors);
-        $('#pAskConfirmation').modal('hide');
-        return;
-      // After the action is done ok, what next?
-      } else {
-        if ( 'download-content' in data ) {
-          var cfg = data['download-content'];
-            
-          var url=null;      
-          if ( 'base64Encoded' in cfg && cfg['base64Encoded'] ) {
-            url='data:' + cfg['mimetype'] +';base64,' + cfg['data'] ; 
-          } else {
-            url='data:' + cfg['mimetype'] +',' + escape(cfg['data']); 
-          }       
-          var link = document.getElementById("downloadLink");
-          link.setAttribute("href", url);
-          link.setAttribute("download", cfg['filename']);
-          link.click();
-        } else {
-          var url; 
-
-          // Go back
-          if ( actionCfg['goOnActionDone']=='back' ) {
-            url = document.referrer;
-          // Refresh the current page    
-          } else if ( actionCfg['goOnActionDone']=='refresh' ) {
-            url = document.location.href;
-          } else if ( actionCfg['goOnActionDone'] ) {
-            url = actionCfg['goOnActionDone'];
-          }
-
-          // We have received an OK message in the response, add it in the url
-          if ( 'msgOK' in data ) {
-            storeMsgOK(data.msgOK.translate(data));
-          }
-
-          // Go to the next page
-          document.location = url;
-        }
-      }         
-    });
-  // Go to the FE page  
+  // In a new tab
+  if ( actionCfg['whereOpenAction']=='new_tab' ) {
+    window.open(actionCfg['url'],'_blank');
+  } else if ( actionCfg['whereOpenAction']=='new_window' ) {
+    window.open(actionCfg['url'],'_blank', 'location=yes');
   } else {
-    document.location.href=actionCfg['url'];
+    // This action has not FE, so execute the BE via AJAX
+    if ( actionCfg['beOnly'] ) {
+      // @TODO : control OK/KO messages
+      $.getJSON(actionCfg['url'], function(data){
+        if ( data.errors )  {
+          displayFormErrorMessages(data.errors, $pErrors);
+          $('#pAskConfirmation').modal('hide');
+          return;
+        // After the action is done ok, what next?
+        } else {
+          if ( 'download-content' in data ) {
+            var cfg = data['download-content'];
+              
+            var url=null;      
+            if ( 'base64Encoded' in cfg && cfg['base64Encoded'] ) {
+              url='data:' + cfg['mimetype'] +';base64,' + cfg['data'] ; 
+            } else {
+              url='data:' + cfg['mimetype'] +',' + escape(cfg['data']); 
+            }       
+            var link = document.getElementById("downloadLink");
+            link.setAttribute("href", url);
+            link.setAttribute("download", cfg['filename']);
+            link.click();
+          } else {
+            var url; 
+
+            // Go back
+            if ( actionCfg['goOnActionDone']=='back' ) {
+              url = document.referrer;
+            // Refresh the current page    
+            } else if ( actionCfg['goOnActionDone']=='refresh' ) {
+              url = document.location.href;
+            } else if ( actionCfg['goOnActionDone'] ) {
+              url = actionCfg['goOnActionDone'];
+            }
+
+            // We have received an OK message in the response, add it in the url
+            if ( 'msgOK' in data ) {
+              storeMsgOK(data.msgOK.translate(data));
+            }
+
+            // Go to the next page
+            document.location = url;
+          }
+        }         
+      });
+    // Go to the FE page  
+    } else {
+      document.location.href=actionCfg['url'];
+    }
   }
 }
 

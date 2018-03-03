@@ -167,6 +167,8 @@ class ResolverModuleFESOOCSS(ResolverModule):
       # going with the params, so I will "cherry pick"
       if 'goOnActionDone' in cfg:
         cfgAction['goOnActionDone'] = cfg['goOnActionDone']       
+      if 'whereOpenAction' in cfg:
+        cfgAction['whereOpenAction'] = cfg['whereOpenAction']       
 
       # Check if this action requires a confirmation or not
       if cfgAction['askConfirmation']:
@@ -177,6 +179,7 @@ class ResolverModuleFESOOCSS(ResolverModule):
       beOnly = "true" if cfgAction['beOnly'] else "false"
       permission = cfgAction['permission']
       goOnActionDone = cfgAction['goOnActionDone']
+      whereOpenAction = cfgAction['whereOpenAction']
       paramsAsJson = json.dumps(queryParams)
 
       # ---------------------------------------------------------- CheckSecurity
@@ -281,7 +284,6 @@ The variable {varName} has not defined a value
       else:
         checkSecurityAsString = "null" 
       
-
       buff += """
     {{
       "actionName" : "{actionName}",
@@ -289,6 +291,7 @@ The variable {varName} has not defined a value
       "url"  : {fullquery},
       "name" : "{i18nActionLabel}".translate(),
       "askConfirmation" : "{i18nAskConfirmation}",
+      "whereOpenAction" : "{whereOpenAction}",
       "beOnly" : {beOnly},
       "permission" : "{permission}",
       "goOnActionDone" : "{goOnActionDone}",
