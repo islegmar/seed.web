@@ -78,11 +78,11 @@ class ValidateBeanData {
       // represents a relative URL
       if ( parse_url($fieldValue, PHP_URL_SCHEME) != '' || 
            !filter_var('http://www.example.com/'.ltrim($fieldValue,'/'), FILTER_VALIDATE_URL) ) {
-        isOk=False;
+        $isOk=False;
       }
     }
 
-    if ( !isOk ) {
+    if ( !$isOk ) {
       if ( is_null($errorMsg) ) {
         $this->addErrorCode( $fieldName . 'IsNotLink', $fieldName);
       } else {
