@@ -71,7 +71,18 @@ class ValidateBeanData {
   public function validateIsURL($fieldName, $fieldValue, $errorMsg=null) {
     if ( empty($fieldValue) ) return;
 
+    $isOk=True;
+
     if ( !filter_var($fieldValue, FILTER_VALIDATE_URL) ) {
+      // If the URL does NOT contain http/https, let's check if it
+      // represents a relative URL
+      if ( parse_url($fieldValue, PHP_URL_SCHEME) != '' || 
+           !filter_var('http://www.example.com/'.ltrim($fieldValue,'/'), FILTER_VALIDATE_URL) ) {
+        isOk=False;
+      }
+    }
+
+    if ( !isOk ) {
       if ( is_null($errorMsg) ) {
         $this->addErrorCode( $fieldName . 'IsNotLink', $fieldName);
       } else {
