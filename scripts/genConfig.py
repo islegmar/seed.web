@@ -610,6 +610,20 @@ def _genFullModuleConfig(moduleName, allBasicModulesCfg, sqlOrder, isMinimal, i1
       "type" : "import",{cfgTransformer}
     }},""".format(**locals())
 
+      # --------------------------------------------------------------- [Export]
+      # Export
+      # i18nKeys["{moduleName}:Export:Title".format(**locals())]="Import {moduleName}".format(**locals())
+      # i18nKeys["{moduleName}:Export:Submit".format(**locals())]="Import"
+      # i18nKeys["{moduleName}:Export:Button".format(**locals())]="Import"
+      # i18nKeys["{moduleName}:Export:OK".format(**locals())]="$totRecords records have been imported successfully"
+
+      cfgTransformer = _genTransformer(fieldsCfg)
+      cfg += """
+    {{
+      "name" : "Export",
+      "type" : "export",{cfgTransformer}
+    }},""".format(**locals())
+
       # --------------------------------------------------------------- [AddAll]
       # AddAll
       i18nKeys["{moduleName}:AddAll:Title".format(**locals())]="Add {moduleName}".format(**locals())
