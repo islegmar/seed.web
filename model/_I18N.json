@@ -87,6 +87,16 @@
         { "name" : "Id_Lang" }
       ],
       "onClick" : null,
+      "globalActions" : [
+        {
+          "module" : "_I18N",
+          "name" : "Import"
+        },
+        {
+          "module" : "_I18N",
+          "name" : "Export"
+        }
+      ],
       "itemActions" : [
         {
           "module" : "_I18N",
@@ -117,6 +127,34 @@
     { 
       "name" : "Import",
       "type" : "import",
+      "transformer" : {
+        "fields" : [
+          {
+            "name" : "Name", 
+            "indexes" : [ { "index" : 0 } ], 
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "Text", 
+            "indexes" : [ { "index" : 1 } ], 
+            "transformer" : "TransformString"
+          },
+          {
+            "name" : "Id_Lang", 
+            "transformer" : "TransformField2PKId",
+            "value" : "es",
+            "config" : {
+              "beanName"  : "_Lang",
+              "fieldName" : "Locale"          
+            }
+          }
+        ]
+      }
+    },
+    { 
+      "name" : "Export",
+      "type" : "export",
+      "beOnly" : true,
       "transformer" : {
         "fields" : [
           {

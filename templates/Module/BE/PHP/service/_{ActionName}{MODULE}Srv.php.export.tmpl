@@ -1,0 +1,106 @@
+<?php
+require_once(INTERNAL_ROOT_DIR . '/service/ServiceWebrad.php');
+require_once(INTERNAL_ROOT_DIR . '/security/ActionDeniedException.php');
+
+/**
+ * Generic service for {MODULE} - generated code
+ */
+## @TODO: convert it into a ETL as Import
+class _{ActionName}{MODULE}Srv extends ServiceWebrad {
+  // ------------------------------------------------------------------- Service
+  protected function performImpl() {
+    ## EXAMPLE:
+    ## "fields" : [
+    ##   {
+    ##     "name" : "IdProveedor",
+    ##     "indexes" : [ { "index" : "IdProveedor" } ], => Index NOOT numeric, it does it mean it comes from a parameter
+    ##     "transformer" : "TransformInteger"
+    ##   },
+    ##   {
+    ##     "name" : "IdCliente",
+    ##     "indexes" : [ { "index" : 0 } ],
+    ##     "transformer" : "TransformField2PKId", => We have to get data from other bean
+    ##     "config" : {
+    ##       "beanName"  : "Cliente",
+    ##       "fieldName" : "Nombre"
+    ##     }
+    ##   },
+    ##   {
+    ##     "name" : "CodArticulo",
+    ##     "indexes" : [ { "index" : 1 } ],
+    ##     "transformer" : "TransformString" => Just keep the data
+    ##   },
+    ## ]
+    $transformers=json_decode('{Transformers}', true);
+    // Get all data to be exported
+    /*
+    var_dump($this->params);
+    foreach ($this->getAllParamsAsArray() as $key => $value) {
+      print ("key : " . $key . ", value : " . $value);
+    }
+    */
+    ## @TODO: full export, it does not take into account the filter in the list
+    ## @TODO: what's happen when export a big ammount of data? Is it not better
+    ## to print in the response as when we print? zip the answer?
+    ## @TODO: use CSV classes insteas String
+    $sep='|';
+    $csv='';
+    ## Get all data
+    $all{MODULE} = FactoryObject::newObject('{MODULE}')->getAll();
+    foreach ($all{MODULE} as $ind => $d{MODULE} ) {
+      $line='';
+      ## Current Transformers
+      ## - TransformString.php
+      ## - TransformInteger.php
+      ## - TransformFloat.php
+      ## - TransformField2PKId.php
+      ## - TransformConcat.php
+      foreach ( $transformers['fields'] as $fieldCfg ) {
+        $value=$d{MODULE}[$fieldCfg['name']];
+        $str=NULL;
+        if ( $fieldCfg['transformer']=='TransformString' or 
+             $fieldCfg['transformer']=='TransformInteger' or 
+             $fieldCfg['transformer']=='TransformInteger' ) {
+          $str = $value;
+        } elseif ( $fieldCfg['transformer']=='TransformField2PKId' ) {
+          $beanName=$fieldCfg['config']['beanName'];
+          $fieldName=$fieldCfg['config']['fieldName'];
+          $str = FactoryObject::newObject($beanName)->getById($value)[$fieldName];
+        }
+
+        if ( !is_null($str) ) {
+          if ( strlen($line)>0 ) {
+            $line .= $sep;
+          }
+          $line .= $str;
+        }
+      }
+      $csv .= $line;
+      $csv .= PHP_EOL;
+    }
+
+    return array(
+      "msgOK" => "{i18n({MODULE}:{ActionName}:OK)}",
+      "download-content" => array (
+        "base64Encoded" => true,
+        "mimetype" => "text/csv",
+        "filename" => "{MODULE}.csv",
+        "data" => base64_encode($csv)  
+      )
+    );
+  }
+
+  protected function getPermissionNeeded () {
+    return '{PermissionName}';
+  }
+
+  // Methods for log info
+  protected function getAction4Logger() {
+    return "{MODULE}:{ActionName}";
+  }
+
+  protected function getParamsAsString() {
+    return {ParamsAsString4Log};
+  }
+}
+?>
