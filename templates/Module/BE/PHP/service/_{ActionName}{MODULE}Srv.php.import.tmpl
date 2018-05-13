@@ -32,6 +32,7 @@ class _{ActionName}{MODULE}Srv extends ETLCSVExtractorSrv {
 
     $loader->config( 
       array(
+        'removeData' => $this->params->getParam('removeData',0),
         'beanName' => '{MODULE}'
       )
     );
