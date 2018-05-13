@@ -1,6 +1,7 @@
 <?php
 require_once(INTERNAL_ROOT_DIR . '/etl/ILoader.php');
 require_once(INTERNAL_ROOT_DIR . '/db/NoRowSelectedException.php');
+require_once(EXTERNAL_ROOT_DIR . '/log4php/Logger.php');
 
 /**
  * In this implementation, the data is stored in the database using a a persistent
@@ -21,6 +22,16 @@ class LoaderDBBean implements ILoader {
     if ( array_key_exists('fieldUnique', $cfg) ) {
       $this->fieldUnique =  $cfg['fieldUnique'];     
     }
+
+    // logger produces a silent error and stop execution ????
+    // error_log('Before getLogger');
+    // $logger = Logger::getLogger("main");
+    if ( intval($cfg['removeData']) ) {
+      //$loger->debug("All data from " .  $this->beanName . ' will be removed!');
+      // error_log("All data from " .  $this->beanName . ' will be removed!');
+      $obj=FactoryObject::newObject($this->beanName);
+      $obj->deleteAll();
+    } 
 	}
 
   /**

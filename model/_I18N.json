@@ -142,7 +142,7 @@
           {
             "name" : "Id_Lang", 
             "transformer" : "TransformField2PKId",
-            "value" : "es",
+            "indexes" : [ { "index" : 2 } ], 
             "config" : {
               "beanName"  : "_Lang",
               "fieldName" : "Locale"          
